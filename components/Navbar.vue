@@ -13,10 +13,10 @@
                 <NuxtLink  to="/About">
                     About
                 </NuxtLink>
-                <a href="/contact">
+                <a href="/About">
                     Contact
                 </a>
-                <a href="/account">
+                <a href="/About">
                     Account
                 </a>
             </div>

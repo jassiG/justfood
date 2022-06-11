@@ -20,6 +20,30 @@ import Explore from '~~/components/Explore.vue'
 export default {
     name: "Home",
     components: { Navbar, Heading, Explore },
+    async asyncData({ $axios, app }) {
+        try {
+            const response = await $axios.$get(
+                process.env.BASE_URL + 'all-dishes'
+            )
+            // console.log(response)
+            let dishes = response.list
+            let topDishes = []
+            // console.log(dishes)
+            dishes.forEach((dish, index) => {
+                if (dish.isTop[0].key === "1") {
+                    topDishes.push(dish)
+                    dishes.splice(index, 1)
+                }
+            })
+            console.log(dishes)
+            console.log(topDishes)
+            return {
+                dishes
+            }
+        } catch (e) {
+            console.log(e.message)
+        }
+    },
 }
 </script>
 <style lang="scss">
