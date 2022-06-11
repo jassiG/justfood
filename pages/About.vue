@@ -42,7 +42,7 @@ export default {
             width: 100%;
             background-image: url('../assets/aboutBG.png') ;
             background-blend-mode: darken;
-            background-color: rgb(250, 215, 224);
+            background-color: #FFD8D8;
             background-size: contain;
             background-repeat: no-repeat;
             flex-grow: 20;
