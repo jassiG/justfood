@@ -1,11 +1,13 @@
 <template>
     <div class="top-picks">
-        <TopPickCard v-for="(dish,index) in topDishes" :key="index" :dish="dish"
-            :title="dish.subject"
-            :description="dish.description"
-            :tags= "dish.tag"
-            :dishImage="dish.dishImage.url"
-        />
+        <nuxt-link v-for="(dish,index) in topDishes" :key="index" :to="'/recipe/' + dish.topics_id">
+            <TopPickCard 
+                :title="dish.subject"
+                :description="dish.description"
+                :tags= "dish.tag"
+                :dishImage="dish.dishImage.url"
+            />
+        </nuxt-link>
     </div>    
 </template>
 <script>

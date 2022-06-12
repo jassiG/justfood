@@ -44,9 +44,9 @@ export default {
             align-items: center;
             justify-content: center;
             width: 100%;
-            background-image: url('../assets/aboutBG.png') ;
+            // background-image: url('../assets/aboutBG.png') ;
             background-blend-mode: darken;
-            background-color: #FFD8D8;
+            // background-color: #FFD8D8;
             background-size: contain;
             background-repeat: no-repeat;
             flex-grow: 20;
@@ -54,8 +54,9 @@ export default {
                 width: 680px;
                 height: 400px;
                 background: rgba(255, 255, 255, 0.4);
-                box-shadow: 0px 0px 11px 5px rgba(113, 113, 113, 0.15);
-                backdrop-filter: blur(6px);
+                box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.35);
+                // backdrop-filter: blur(6px);
+                background-color: #FFD8D8;
                 border-radius: 30px;
                 display: flex;
                 flex-direction: column;

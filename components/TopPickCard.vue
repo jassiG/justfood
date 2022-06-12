@@ -16,7 +16,7 @@
             <div class="image-panel">
                 <img class="image" :src="dishImage" alt="Unsplash computer image with cat" />      
             </div>
-        </div>
+    </div>
 </template>
 <script>
 export default {
@@ -42,6 +42,12 @@ export default {
         box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.35);
         margin: 10px 20px;  
         border-radius: 20px;
+        transition: 0.1s ease-in-out all;
+        
+        &:hover {
+            transform: scale(1.01);
+            box-shadow: 0px 2px 8px rgba(176, 176, 176, 0.55);
+        }
         .info-panel{
             display: flex;
             flex-direction: column;

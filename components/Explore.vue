@@ -1,53 +1,13 @@
 <template>
     <div class="explore">
-        <ExploreCard v-for="(dish,index) in dishes" :key="index" :dish="dish"
-            :title="dish.subject"
-            :description="dish.description"
-            :tags= "dish.tag"
-            :dishImage="dish.dishImage.url"
-        />
-        <!-- <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <ExploreCard
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        /> -->
+        <nuxt-link v-for="(dish,index) in dishes" :key="index" :to="{path:'/recipe/' + dish.topics_id, props:{dish: dish}}" >
+            <ExploreCard
+                :title="dish.subject"
+                :description="dish.description"
+                :tags= "dish.tag"
+                :dishImage="dish.dishImage.url"
+            />
+        </nuxt-link>
     </div>
 </template>
 <script>

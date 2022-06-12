@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Loading v-if="$fetchState.pending"/>
+        <!-- <Loading v-if="$fetchState.pending"/> -->
         <!-- navbar -->
-        <div v-else class="home">
+        <div class="home">
             <Navbar  />
             <Heading title="Today's Top Picks"/>
             <TopPicks :topDishes="this.topDishes"/>

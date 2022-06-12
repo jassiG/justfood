@@ -39,6 +39,11 @@ export default {
         height: 400px;
         box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.35);
         margin: 40px 20px;  
+        transition: 0.1s ease-in-out all;
+        &:hover {
+            transform: scale(1.01);
+            box-shadow: 0px 2px 8px rgba(176, 176, 176, 0.55);
+        }
         .info-panel{
             display: flex;
             flex-direction: column;
