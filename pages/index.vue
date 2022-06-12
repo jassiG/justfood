@@ -1,47 +1,58 @@
 <template>
     <div>
-        <Loading v-if="false"/>
+        <Loading v-if="$fetchState.pending"/>
         <!-- navbar -->
-        <div class="home">
+        <div v-else class="home">
             <Navbar  />
             <Heading title="Today's Top Picks"/>
-            <TopPicks/>
+            <TopPicks :topDishes="this.topDishes"/>
             <Heading title="Explore"/>
-            <Explore />
+            <Explore :dishes="this.dishes"/>
         </div>
     </div>
 </template>
 
 <script>
-
+import axios from 'axios'
 import Navbar from '~~/components/Navbar.vue'
 import Heading from '~~/components/Heading.vue'
 import Explore from '~~/components/Explore.vue'
 export default {
     name: "Home",
     components: { Navbar, Heading, Explore },
-    async asyncData({ $axios, app }) {
-        try {
-            const response = await $axios.$get(
-                process.env.BASE_URL + 'all-dishes'
-            )
-            // console.log(response)
-            let dishes = response.list
-            let topDishes = []
-            // console.log(dishes)
-            dishes.forEach((dish, index) => {
-                if (dish.isTop[0].key === "1") {
-                    topDishes.push(dish)
-                    dishes.splice(index, 1)
-                }
-            })
-            console.log(dishes)
-            console.log(topDishes)
-            return {
-                dishes
+    data() {
+        return {
+            dishes: [],
+            topDishes: [],
+        }
+    },
+    async fetch(){
+        await this.getDishes()
+        return
+    },
+    fetchDelay: 500,
+    methods: {
+        async getDishes() {
+            try {
+                const response = await axios.get(
+                    process.env.BASE_URL + 'all-dishes'
+                )
+                // console.log("response", response)
+                if (!this.dishes) {this.dishes = []}
+                if (!this.topDishes) {this.topDishes = []}
+                this.dishes = response.data.list
+                // console.log("Dishes", this.dishes)
+                this.dishes.forEach((dish, index) => {
+                    if (dish.isTop[0].key === "1") {
+                        this.topDishes.push(dish)
+                        this.dishes.splice(index, 1)
+                    }
+                })
+                // console.log("Top Dishes", this.topDishes)
+            } catch (e) {
+                console.log(e.message)
             }
-        } catch (e) {
-            console.log(e.message)
+            return
         }
     },
 }

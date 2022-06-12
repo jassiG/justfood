@@ -1,22 +1,10 @@
 <template>
     <div class="top-picks">
-        <TopPickCard 
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <TopPickCard 
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
-        />
-        <TopPickCard 
-            title="Dish Name" 
-            description="This is a description of the dish which is a lot of text to make it look like it is a description of the dish."
-            :tags= '["25 minutes", "Medium Difficulty"]'
-            dishImage="https://source.unsplash.com/gySMaocSdqs/600x300"
+        <TopPickCard v-for="(dish,index) in topDishes" :key="index" :dish="dish"
+            :title="dish.subject"
+            :description="dish.description"
+            :tags= "dish.tag"
+            :dishImage="dish.dishImage.url"
         />
     </div>    
 </template>
@@ -25,6 +13,12 @@ import TopPickCard from '~~/components/TopPickCard.vue'
 export default {
     name: 'TopPicks',
     components: { TopPickCard },
+    props: {
+        topDishes: [],
+    },
+    fetch(){
+        // console.log("Recipe Data", this.recipeData)
+    }
 }
 </script>
 <style lang="scss">
