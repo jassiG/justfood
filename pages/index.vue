@@ -6,7 +6,7 @@
             <Navbar  />
             <!-- Search -->
             <div class="container search">
-                <input type="text" placeholder="Search Dishes" v-model.lazy="searchInput" />
+                <input @keyup.escape="reset" type="text" placeholder="Search Dishes" v-model.lazy="searchInput" />
                 <button class="button" @click="search">Search</button>
                 <button class="button" @click="reset">Reset</button>
             </div>
