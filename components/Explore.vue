@@ -1,7 +1,7 @@
 <template>
     <div class="explore">
-        <nuxt-link v-for="(dish,index) in dishes" :key="index" :to="{path:'/recipe/' + dish.topics_id, props:{dish: dish}}" >
-            <ExploreCard
+        <nuxt-link v-for="(dish,index) in dishes" :key="index" :to="'/recipe/' + dish.topics_id" >
+            <ExploreCard v-if="(dish.subject + dish.topic).toLowerCase().includes(searchInput.toLowerCase())"
                 :title="dish.subject"
                 :description="dish.description"
                 :tags= "dish.tag"
@@ -17,6 +17,7 @@ export default {
     components: { ExploreCard },
     props: {
         dishes: [],
+        searchInput: String,
     }
 }
 </script>

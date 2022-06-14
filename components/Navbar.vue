@@ -56,7 +56,7 @@ export default {
     background-color: rgb(255, 255, 255);
 
     box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.25);
-    
+    min-width: 700px;
     .navbar-container{
         display: flex;
         flex-direction: row;
@@ -70,6 +70,7 @@ export default {
             font-size: 48px;
             max-width: 200px;
             flex-grow: 1;
+            padding: 0px 10px;
         }
         .nav-text{
             font-family: 'Poppins', sans-serif;

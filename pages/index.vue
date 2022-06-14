@@ -4,10 +4,16 @@
         <!-- navbar -->
         <div class="home">
             <Navbar  />
+            <!-- Search -->
+            <div class="container search">
+                <input type="text" placeholder="Search Dishes" v-model.lazy="searchInput" />
+                <button class="button" @click="search">Search</button>
+                <button class="button" @click="reset">Reset</button>
+            </div>
             <Heading title="Today's Top Picks"/>
             <TopPicks :topDishes="this.topDishes"/>
             <Heading title="Explore"/>
-            <Explore :dishes="this.dishes"/>
+            <Explore :dishes="this.dishes" :searchInput="this.searchInput"/>
         </div>
     </div>
 </template>
@@ -24,16 +30,18 @@ export default {
         return {
             dishes: [],
             topDishes: [],
+            searchInput: '',
         }
     },
     async fetch(){
-        await this.getDishes()
-        return
+            await this.getDishes()
     },
     fetchDelay: 500,
     methods: {
         async getDishes() {
             try {
+                // REMOVE THIS LINE POSITIVELY WHEN DONE!!
+                if (!process.env.BASE_URL) {process.env.BASE_URL = 'https://sample-jassi.g.kuroco.app/rcms-api/5/'}
                 const response = await axios.get(
                     process.env.BASE_URL + 'all-dishes'
                 )
@@ -53,6 +61,12 @@ export default {
                 console.log(e.message)
             }
             return
+        },
+        async search() {
+            this.searchInput = this.searchInput.toLowerCase()
+        },
+        async reset() {
+            this.searchInput = ''
         }
     },
 }
@@ -70,6 +84,31 @@ export default {
 a {
     text-decoration: none;
     color: #302939;
+}
+.search {
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    display: flex;
+    width: 350px;
+    flex-direction: row;
+    justify-content: flex-start;
+    // padding: 10px 16px;
+    box-shadow: 0px 0px 8px rgba(170, 170, 170, 0.2);
+    input {
+        padding: 12px 6px;
+        font-size: 14px;
+        border: none;
+        &:focus {
+        outline: none;
+        }
+        flex-grow: 3;
+    }
+    .button {
+        padding: 0px 4px;
+        border: 1px solid  #ffffff;
+        background-color: #FFD8D8;
+    }
 }
 .home{
     display: flex;
