@@ -6,13 +6,9 @@
             <div class="top-image">
                 <img :src="this.dish.dishImage.url" alt="dish image" />
             </div>
-            <div class="title">
-                {{ this.dish.subject }}
-            </div>
-            <hr>
-            <div class="main-content">
-                {{ dish.mainContent }}
-            </div>
+            <div class="title">{{ this.dish.subject }}</div>
+            <div class="description">{{ this.dish.description }}</div>
+            <div class="main-content">{{dish.mainContent}}</div>
         </div>
     </div>
 </template>
@@ -46,7 +42,7 @@ export default {
                 )
                 this.dish = response.data.details
                 this.tags = this.dish.tag
-                // console.log("Dish\n", this.dish)
+                // console.log("Dish\n", this.dish.mainContent.trim())
             } catch (error) {
                 console.log(error)
             }
@@ -102,11 +98,17 @@ export default {
             }
             .title{
                 width: 100%;
-                font-size: 2em;
+                font-size: 3em;
                 font-family: 'Poppins', sans-serif;
                 font-weight: bold;
-                padding: 10px;
                 color: #302939;
+            }
+            .description{
+                width: 100%;
+                font-size: 1.5em;
+                color: #625f66;
+                font-family: 'Poppins', sans-serif;
+                margin-bottom: 30px;
             }
             // .hr{
             //     width: 100%;
