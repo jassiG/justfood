@@ -1,7 +1,8 @@
 <template>
     <div class="recipe">
         <Navbar />
-        <div class="content-block">
+        <Loading v-if="$fetchState.pending"/>
+        <div v-else class="content-block">
             <div class="top-image">
                 <img :src="this.dish.dishImage.url" alt="dish image" />
             </div>
@@ -17,6 +18,7 @@
 </template>
 <script>
 import NavBar from '~~/components/Navbar.vue'
+import Loading from '~~/components/Loading.vue'
 import axios from 'axios'
 export default {
     name: "Recipe",
@@ -33,6 +35,7 @@ export default {
         await this.getDish()
         return
     },
+    fetchDelay: 500,
     methods: {
         async getDish() {
             try {
@@ -43,7 +46,7 @@ export default {
                 )
                 this.dish = response.data.details
                 this.tags = this.dish.tag
-                console.log("Dish\n", this.dish)
+                // console.log("Dish\n", this.dish)
             } catch (error) {
                 console.log(error)
             }
