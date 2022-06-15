@@ -8,14 +8,16 @@
             </div>
             <div class="title">{{ this.dish.subject }}</div>
             <div class="description">{{ this.dish.description }}</div>
-            <div class="main-content">{{dish.mainContent}}</div>
+            <hr>
+            <div class="main-content" v-html="$md.render(this.dish.mainContent)"></div>
         </div>
     </div>
 </template>
 <script>
 import NavBar from '~~/components/Navbar.vue'
 import Loading from '~~/components/Loading.vue'
-import axios from 'axios'
+import axios from 'axios' 
+// import md from '@nuxtjs/markdownit'
 export default {
     name: "Recipe",
     components: { NavBar },
@@ -24,6 +26,7 @@ export default {
             dishId: Number,
             dish: {},
             tags: [],
+            mainContent: String,
         }
     },
     async fetch(){
@@ -44,7 +47,8 @@ export default {
                 // REMOVE THIS LINE POSITIVELY WHEN DONE!!
                 this.dish.dishImage.url = 'https://via.placeholder.com/450'
                 this.tags = this.dish.tag
-                // console.log("Dish\n", this.dish.mainContent.trim())
+                // this.mainContent = await md.render(this.dish.mainContent)
+                console.log("Main Content\n", this.mainContent)
             } catch (error) {
                 console.log(error)
             }
@@ -89,6 +93,7 @@ export default {
                 align-items: center;
                 width: 100%;
                 height: 400px;
+                margin-top: 40px;
                 // background-color: rgb(215, 255, 255);
                 img{
                     width: auto;
@@ -112,24 +117,26 @@ export default {
                 font-family: 'Poppins', sans-serif;
                 margin-bottom: 30px;
             }
-            // .hr{
-            //     width: 100%;
-            //     border: 0.5px solid #302939;
-            //     margin: 10px 0px;
-            // }
+            hr{
+                width: 100%;
+                border: 0.5px solid #a6a2aa;
+                margin: 10px 0px;
+            }
             .main-content{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: center;
+                // align-items: center;
                 width: 100%;
                 height: auto;
                 // background-color: rgb(215, 255, 222);
                 // padding: 20px;
-                font-family: 'Poppins', sans-serif;
-                white-space:pre-wrap;
+                // white-space:pre-wrap;
                 font-family: 'Poppins', sans-serif;
                 color: #302939;
+                h{
+                    font-weight: 400;
+                }
             }
         }
     }
