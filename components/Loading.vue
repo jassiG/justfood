@@ -26,7 +26,7 @@ export default {}
     height: 70px;
     border-radius: 50%;
     border: 2px solid transparent;
-    border-top-color: rgb(131, 131, 131);
+    border-top-color: bisque;
     animation: circle-loading 1200ms ease infinite;
   }
 }

@@ -41,6 +41,8 @@ export default {
                     process.env.BASE_URL + 'get-dish/' + this.$route.params.recipeid
                 )
                 this.dish = response.data.details
+                // REMOVE THIS LINE POSITIVELY WHEN DONE!!
+                this.dish.dishImage.url = 'https://via.placeholder.com/450'
                 this.tags = this.dish.tag
                 // console.log("Dish\n", this.dish.mainContent.trim())
             } catch (error) {

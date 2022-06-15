@@ -18,9 +18,6 @@ export default {
     props: {
         topDishes: [],
     },
-    fetch(){
-        // console.log("Recipe Data", this.recipeData)
-    }
 }
 </script>
 <style lang="scss">

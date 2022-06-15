@@ -10,7 +10,7 @@
                 <div class="justfood">JustFood</div>
                 <div class="product-by">A product by YetToCome Inc</div>
                 <div class="content">hope that we were some help in bringing joy and taste to you table.</div>
-                <div class="feedback">Send you love and feedback 💌</div>
+                <div class="feedback">Send you love and feedback</div>
                 <div class="email">support@yettocomecompany.com</div>
             </div>
         </div>
