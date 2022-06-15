@@ -114,13 +114,15 @@ export default {
             width: 50%;
             height: 100%;
             background-color: #FFD8D8;
-            object-fit: fill;
+            // object-fit: cover;
             overflow: hidden;
-            text-align: center;
+            // text-align: center;
             border-radius: 0px 20px 20px 0px;
             .image{
-                object-fit: fill;
-                margin: 0 -100%;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                // margin: 0 -100%;
             }
         }
     }

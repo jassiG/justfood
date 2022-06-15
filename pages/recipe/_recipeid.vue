@@ -96,8 +96,8 @@ export default {
                 margin-top: 40px;
                 // background-color: rgb(215, 255, 255);
                 img{
-                    width: auto;
-                    height: auto;
+                    width: 100%;
+                    height: 100%;
                     object-fit: cover;
                     overflow: hidden;
                     // background-color: beige;
@@ -119,7 +119,7 @@ export default {
             }
             hr{
                 width: 100%;
-                border: 0.5px solid #a6a2aa;
+                border: 0.5px solid #bcb8c0;
                 margin: 10px 0px;
             }
             .main-content{
@@ -133,9 +133,13 @@ export default {
                 // padding: 20px;
                 // white-space:pre-wrap;
                 font-family: 'Poppins', sans-serif;
-                color: #302939;
+                color: #58535e;
                 h{
-                    font-weight: 400;
+                    font-weight: 300;
+                }
+                p{
+                    margin-bottom: 5px;
+                    line-height: 1.7em;
                 }
             }
         }

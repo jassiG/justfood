@@ -111,13 +111,17 @@ export default {
             width: 100%;
             height: 50%;
             background-color: #D8FFFF;
-            object-fit: fill;
-            object-position: center;
+            // object-fit: cover;
+            // object-position: center;
             overflow: hidden;
-            text-align: center;
+            // text-align: center;
+            // border: 1px solid #cc6db7;
             .image{
-                object-fit: fill;
-                margin: 0 -100%;
+                width: 100%;
+                height: 100%;
+                // opacity: 0.5;
+                object-fit: cover;
+                // margin: 0 -100%;
             }
         }
     }
