@@ -24,6 +24,7 @@ export default {
         margin-bottom: 10px;
         font-family: 'Poppins', sans-serif;
         font-size: 20px;
+        color: #302939;
         .line{
             width: 40px;
             height: 2px;

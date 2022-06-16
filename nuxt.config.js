@@ -38,13 +38,17 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/style-resources'
   ],
   markdownit: {
     preset: 'default',
     linkify: true,
     breaks: true,
     runtime: true,
+  },
+  styleResources: {
+    scss: ['./assets/css/*.scss']
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -56,6 +60,9 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
+  css: [
+    '@/assets/css/main.scss'
+  ],
   privateRuntimeConfig: {
     baseURL: process.env.BASE_URL
   },

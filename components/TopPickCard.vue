@@ -39,6 +39,7 @@ export default {
 }
 </script>
 <style lang="scss">
+$card-color: #ffd8d8; //#D8FFFF;
     .top-pick-card{
         display: flex;
         flex-direction: row;
@@ -64,7 +65,7 @@ export default {
             align-items: stretch;
             width: 50%;
             height: 100%;
-            background-color: #FFD8D8;
+            background-color: $primary-color;
             border-radius: 20px 0px 0px 20px;
             .info-text{
                 .info-panel-title{
@@ -113,7 +114,7 @@ export default {
         .image-panel{
             width: 50%;
             height: 100%;
-            background-color: #FFD8D8;
+            background-color: $primary-color;
             // object-fit: cover;
             overflow: hidden;
             // text-align: center;

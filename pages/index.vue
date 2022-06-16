@@ -87,6 +87,8 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
@@ -147,17 +149,20 @@ a {
         display: flex;
         flex-direction: row;
         margin: 0px 6px;   
-        background-color: #FFD8D8;
         .chip{
             font-family: 'Poppins', sans-serif;
             font-size: 14px;
             padding: 2px 4px;
             font-weight: 300;
-            color: #ebebeb;
+            color: #302939;
             text-align: center;
-            background-color: #868b8d;
+            background-color: $primary-color;
             border-radius: 8px;
             margin: 2px 2px;
+            &:hover{
+                // border: #d8ffff 2px solid;
+                box-shadow: #d8ffff 0px 0px 6px;
+            }
         }
     }
 }

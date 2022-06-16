@@ -40,6 +40,8 @@ export default {
 }
 </script>
 <style lang="scss">
+// variables
+$card-color: #ffd8d8; //#D8FFFF;
     .explore-card{
         display: flex;
         flex-direction: column;
@@ -62,7 +64,8 @@ export default {
             align-items: stretch;
             width: 100%;
             height: 50%;
-            background-color: #D8FFFF;
+            // background-color: #D8FFFF;
+            background-color: $secondary-color;
             .info-text{
                 .info-panel-title{
                     font-family: 'Poppins', sans-serif;
@@ -110,7 +113,8 @@ export default {
         .image-panel{
             width: 100%;
             height: 50%;
-            background-color: #D8FFFF;
+            // background-color: #D8FFFF;
+            background-color: $secondary-color;
             // object-fit: cover;
             // object-position: center;
             overflow: hidden;
