@@ -13,6 +13,7 @@
             <div class="ingredients">
                 <div class="ingredient" v-for="(ingredient,index) in [{name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'},]">
                     <div class="ingredient-name">{{ ingredient.name }}</div>
+                    <hr>
                     <div class="ingredient-amount">{{ ingredient.amount }}</div>
                 </div>
             </div>
@@ -136,8 +137,31 @@ a {
         }
         .ingredients{
             display: flex;
+            text-align: center;
+            justify-content: center;
             .ingredient{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 background-color: $primary-color;
+                font-family: 'Poppins', sans-serif;
+                font-size: 1em;
+                color: #302939;
+                padding: 6px;
+                text-align: center;
+                margin: 6px;
+                border-radius: 4px;
+                line-height: 1em;
+                hr{
+                    width: 60%;
+                    border: 0.5px solid #625f66;
+                    margin: 1px 0px;
+                }
+                .ingredient-amount{
+                    font-size: 0.8em;
+                    color: #58535e;
+                }
             }
         }
         .main-content{
