@@ -93,8 +93,9 @@ a {
         // background-color: antiquewhite;
         width: 50%;
         min-width: 650px;
-        padding: 0px 30px;
-        // box-shadow: 0px 0px 4px rgb(175, 175, 175, 0.15);
+        padding: 0px 50px;
+        // box-shadow: 0px 0px 4px rgb(175, 175, 175, 0.25);
+        clip-path: inset(0px -20px 0px -20px);
         // @media (min-width: 500px) {
         //     width: 90%;
         //     padding: 0px 10px;
@@ -138,6 +139,7 @@ a {
             width: 100%;
             flex-direction: row;
             justify-content: flex-start;
+            flex-wrap: wrap;
             // background-color: #302939;
             margin: 0px 6px;   
             .tag{
@@ -196,6 +198,7 @@ a {
             }
         }
         .main-content{
+            // background-color: #d8ffff;
             // display: flex;
             // flex-direction: column;
             // justify-content: center;
@@ -205,6 +208,7 @@ a {
             // padding: 20px;
             // white-space:pre-wrap;
             font-family: 'Poppins', sans-serif;
+            text-align: justify;
             color: #58535e;
             margin: 10px 0px;
             margin-bottom: 40px;
