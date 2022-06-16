@@ -58,7 +58,7 @@ export default {
                 this.dish.dishImage.url = 'https://via.placeholder.com/450'
                 this.tags = this.dish.tag
                 // this.mainContent = await md.render(this.dish.mainContent)
-                // console.log("Main Content\n", this.mainContent)
+                // console.log("Dish\n", this.dish)
             } catch (error) {
                 console.log(error)
             }
