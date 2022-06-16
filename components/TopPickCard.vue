@@ -6,7 +6,8 @@
                         {{ title }}
                     </div>
                     <div class="info-panel-description">
-                        <p>{{ description }}</p>
+                        {{description.slice(0, 100)}} 
+                        <span v-if="description.length  > 100">...</span>
                     </div>
                 </div>
                 <div class="info-tags">
@@ -75,6 +76,7 @@ $card-color: #ffd8d8; //#D8FFFF;
                     color: #302939;
                     margin: 15px 0px 5px 0px;
                     text-align: center;
+                    line-height: 1.2em;
                 }
                 .info-panel-description{
                     font-family: 'Poppins', sans-serif;

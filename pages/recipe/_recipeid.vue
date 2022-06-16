@@ -10,13 +10,14 @@
             <div class="description">{{ this.dish.description }}</div>
             <div class="tags">
                 <div class="tag" v-for="tag in this.dish.tag">{{ tag }}</div>
+                <div class="tag" v-for="tag in this.dish.aditionalTags">{{ tag }}</div>
             </div>
             <!-- <hr> -->
             <Heading title="Ingredients" />
             <!-- Replace with real ingredients once done -->
             <div class="ingredients">
-                <div class="ingredient" v-for="(ingredient,index) in [{name:'onion', amount:'5'}, {name:'custard', amount:'3 cups'}, {name:'soy sauce', amount:'whatever you like'}, {name:'cofee', amount:'bruh what'},]">
-                    <div class="ingredient-name">{{ ingredient.name }}</div>
+                <div class="ingredient" v-for="(ingredient,index) in this.dish.ingredient">
+                    <div class="ingredient-name">{{ ingredient.ingredient }}</div>
                     <div class="ingredient-amount">{{ ingredient.amount }}</div>
                 </div>
             </div>
@@ -91,7 +92,7 @@ a {
         justify-content: stretch;
         align-items: center;
         // background-color: antiquewhite;
-        width: 50%;
+        width: 55%;
         min-width: 650px;
         padding: 0px 50px;
         // box-shadow: 0px 0px 4px rgb(175, 175, 175, 0.25);
@@ -129,10 +130,10 @@ a {
         }
         .description{
             width: 100%;
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: #625f66;
             font-family: 'Poppins', sans-serif;
-            // margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         .tags{
             display: flex;
@@ -158,16 +159,12 @@ a {
                 }
             }
         }
-        hr{
-            width: 100%;
-            border: 0.5px solid #bcb8c0;
-            margin: 10px 0px;
-        }
         .ingredients{
             display: flex;
             text-align: center;
             justify-content: center;
             flex-wrap: wrap;
+            width: 95%;
             .ingredient{
                 display: flex;
                 flex-direction: column;
@@ -212,12 +209,16 @@ a {
             color: #58535e;
             margin: 10px 0px;
             margin-bottom: 40px;
+            line-height: 1.9em;
             h{
-                // font-weight: 300;
+                margin-left: 0px;
             }
             p{
                 margin-bottom: 5px;
                 line-height: 1.8em;
+            }
+            li{
+                margin-left: 20px;
             }
         }
     }
