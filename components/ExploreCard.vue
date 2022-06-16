@@ -1,9 +1,9 @@
 <template>
     <div class="explore-card">
             <div class="image-panel">
-                <!-- <img class="image" :src="dishImage" alt="Unsplash computer image with cat" />       -->
+                <img class="image" :src="dishImage" alt="Unsplash computer image with cat" />      
                 <!-- REMOVE THIS LINE POSITIVELY WHEN DONE!! -->
-                <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" />      
+                <!-- <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" />       -->
             </div>  
             <div class="info-panel">
                 <div class="info-text">

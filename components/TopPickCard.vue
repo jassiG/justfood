@@ -22,8 +22,8 @@
                 </div>
             </div>
             <div class="image-panel">
-                <!-- <img class="image" :src="dishImage" alt="Unsplash computer image with cat" />       -->
-                <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" />
+                <img class="image" :src="dishImage" alt="Unsplash computer image with cat" />      
+                <!-- <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" /> -->
             </div>
     </div>
 </template>

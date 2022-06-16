@@ -55,7 +55,7 @@ export default {
                 )
                 this.dish = response.data.details
                 // REMOVE THIS LINE POSITIVELY WHEN DONE!!
-                this.dish.dishImage.url = 'https://via.placeholder.com/450'
+                // this.dish.dishImage.url = 'https://via.placeholder.com/450'
                 this.tags = this.dish.tag
                 // this.mainContent = await md.render(this.dish.mainContent)
                 // console.log("Dish\n", this.dish)
