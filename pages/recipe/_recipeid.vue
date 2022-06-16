@@ -8,12 +8,15 @@
             </div>
             <div class="title">{{ this.dish.subject }}</div>
             <div class="description">{{ this.dish.description }}</div>
+            <div class="tags">
+                <div class="tag" v-for="tag in this.dish.tag">{{ tag }}</div>
+            </div>
             <!-- <hr> -->
             <Heading title="Ingredients" />
+            <!-- Replace with real ingredients once done -->
             <div class="ingredients">
-                <div class="ingredient" v-for="(ingredient,index) in [{name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'}, {name:'this', amount:'1 cup'},]">
+                <div class="ingredient" v-for="(ingredient,index) in [{name:'onion', amount:'5'}, {name:'custard', amount:'3 cups'}, {name:'soy sauce', amount:'whatever you like'}, {name:'cofee', amount:'bruh what'},]">
                     <div class="ingredient-name">{{ ingredient.name }}</div>
-                    <hr>
                     <div class="ingredient-amount">{{ ingredient.amount }}</div>
                 </div>
             </div>
@@ -128,7 +131,30 @@ a {
             font-size: 1.5em;
             color: #625f66;
             font-family: 'Poppins', sans-serif;
-            margin-bottom: 30px;
+            // margin-bottom: 30px;
+        }
+        .tags{
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: flex-start;
+            // background-color: #302939;
+            margin: 0px 6px;   
+            .tag{
+                font-family: 'Poppins', sans-serif;
+                font-size: 14px;
+                padding: 2px 4px;
+                font-weight: 300;
+                color: #302939;
+                text-align: center;
+                background-color: $secondary-color;
+                border-radius: 8px;
+                margin-right: 10px;
+                &:hover{
+                    // border: #d8ffff 2px solid;
+                    box-shadow: #d8ffff 0px 0px 6px;
+                }
+            }
         }
         hr{
             width: 100%;
@@ -139,28 +165,33 @@ a {
             display: flex;
             text-align: center;
             justify-content: center;
+            flex-wrap: wrap;
             .ingredient{
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
-                background-color: $primary-color;
+                align-items: stretch;
                 font-family: 'Poppins', sans-serif;
                 font-size: 1em;
                 color: #302939;
-                padding: 6px;
+                // padding: 6px;
                 text-align: center;
                 margin: 6px;
                 border-radius: 4px;
+                box-shadow: 0px 0px 10px rgb(175, 175, 175, 0.20);
+                // border: 2px solid #bcb8c0;
                 line-height: 1em;
-                hr{
-                    width: 60%;
-                    border: 0.5px solid #625f66;
-                    margin: 1px 0px;
+                .ingredient-name{
+                    background-color: $primary-color;
+                    padding: 2px 6px;
+                    border-radius: 4px 4px 0px 0px;
                 }
                 .ingredient-amount{
                     font-size: 0.8em;
                     color: #58535e;
+                    background-color: white;
+                    padding: 2px 6px;
+                    border-radius: 0px 0px 4px 4px;
                 }
             }
         }
@@ -175,6 +206,8 @@ a {
             // white-space:pre-wrap;
             font-family: 'Poppins', sans-serif;
             color: #58535e;
+            margin: 10px 0px;
+            margin-bottom: 40px;
             h{
                 // font-weight: 300;
             }
