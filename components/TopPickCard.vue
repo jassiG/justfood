@@ -6,8 +6,8 @@
                         {{ title }}
                     </div>
                     <div class="info-panel-description">
-                        {{description.slice(0, 100)}} 
-                        <span v-if="description.length  > 100">...</span>
+                        {{description.slice(0, cutLength)}} 
+                        <span v-if="description.length  > cutLength">...</span>
                     </div>
                 </div>
                 <div class="info-tags">
@@ -36,6 +36,17 @@ export default {
         description: String,
         tags: Array,
         dishImage: String,
+    },
+    data() {
+        return {
+            cutLength: 100,
+        }
+    },
+    fetch(){
+        if(this.title.length > 25){
+            this.cutLength = 70;
+        }
+
     },
 }
 </script>
@@ -71,7 +82,7 @@ $card-color: #ffd8d8; //#D8FFFF;
             .info-text{
                 .info-panel-title{
                     font-family: 'Poppins', sans-serif;
-                    font-size: 32px;
+                    font-size: 28px;
                     font-weight: bold;
                     color: #302939;
                     margin: 15px 0px 5px 0px;
@@ -80,10 +91,10 @@ $card-color: #ffd8d8; //#D8FFFF;
                 }
                 .info-panel-description{
                     font-family: 'Poppins', sans-serif;
-                    font-size: 15px;
+                    font-size: 14px;
                     color: #50595C;
                     margin: 0px 15px;
-                    line-height: 1.3em;
+                    line-height: 1.2em;
                 }   
             }
             .info-tags{

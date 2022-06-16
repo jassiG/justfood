@@ -62,14 +62,19 @@ export default {
                 if (!this.dishes) {this.dishes = []}
                 if (!this.topDishes) {this.topDishes = []}
                 this.dishes = response.data.list
-                // console.log("Dishes", this.dishes)
+                console.log("Total Normal Dishes Before: ", this.dishes.length)
                 this.dishes.forEach((dish, index) => {
+                    // console.log("Current Dish:", dish.subject)
                     if (dish.isTop[0].key === "1") {
                         this.topDishes.push(dish)
-                        this.dishes.splice(index, 1)
+                        // console.log("This Dish is TopDish:", dish.subject)
+                        this.dishes.slice(index, 1)
                     }
                 })
+                console.log("Total Normal Dishes After: ", this.dishes.length)
+                console.log("Total Top Dishes: ", this.topDishes.length)
                 // console.log("Top Dishes", this.topDishes)
+                // console.log("Other Dishes", this.dishes)
             } catch (e) {
                 console.log(e.message)
             }
