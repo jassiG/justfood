@@ -6,27 +6,26 @@
             <Navbar  />
             <!-- Search -->
             <div class="filters">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28px" height="28px"><g id="Layer_32" data-name="Layer 32"><path d="M33.5,19.14V12a1.5,1.5,0,0,0-3,0v7.14a6.07,6.07,0,0,0,0,11.74V52a1.5,1.5,0,0,0,3,0V30.88C39.52,29.34,39.52,20.67,33.5,19.14ZM32,28.07a3.07,3.07,0,0,1,0-6.13A3.07,3.07,0,0,1,32,28.07Z"/><path d="M53.5,32a6.07,6.07,0,0,0-4.56-5.87V12a1.5,1.5,0,0,0-3,0V26.13a6.07,6.07,0,0,0,0,11.74V52a1.5,1.5,0,0,0,3,0V37.87A6.07,6.07,0,0,0,53.5,32Zm-6,3.06a3.06,3.06,0,0,1,0-6.12A3.06,3.06,0,0,1,47.46,35.06Z"/><path d="M18.06,37V12a1.5,1.5,0,1,0-3,0V37a6.07,6.07,0,0,0,0,11.73V52a1.5,1.5,0,0,0,3,0V48.74A6.07,6.07,0,0,0,18.06,37Zm-1.5,8.94a3.07,3.07,0,0,1,0-6.13A3.07,3.07,0,0,1,16.56,45.94Z"/></g></svg>
+                <div class="icon ">
+                    <svg id="i-lightning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"  fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24px" height="24px"><path d="M18 13 L26 2 8 13 14 19 6 30 24 19 Z" /></svg>
                 </div>
                 <div class="filter-text">
-                    filters
+                    Quick Search
                 </div>
                 <div class="chips">
-                    <div class="chip">Under 30 minutes</div>
-                    <div class="chip">Beginner Friendly</div>
-                    <div class="chip">Vegan</div>
+                    <div class="chip" :style='toggleStyle(isEasyMode)' @click="easyMode">Beginner Friendly</div>
+                    <div class="chip" :style='toggleStyle(isHardMode)' @click="hardMode">Pro Mode</div>
                 </div>
             </div>
             <div class="search">
-                <input @keyup.escape="reset" type="text" placeholder="Search Dishes" v-model.lazy="searchInput" />
+                <input @keyup.escape="reset" @keyup.enter="search2(searchInput)" type="text" placeholder="Search Dishes" v-model.lazy="searchInput" />
                 <!-- <button class="button" @click="search">Search</button>
                 <button class="button" @click="reset">Reset</button> -->
             </div>
             <Heading title="Today's Top Picks"/>
             <TopPicks :topDishes="this.topDishes"/>
             <Heading title="Explore"/>
-            <Explore :dishes="this.dishes" :searchInput="this.searchInput"/>
+            <Explore :dishes="this.dishes" searchInput=""/>
         </div>
     </div>
 </template>
@@ -44,6 +43,9 @@ export default {
             dishes: [],
             topDishes: [],
             searchInput: '',
+            searchResult: {},
+            isEasyMode: false,
+            isHardMode: false,
         }
     },
     async fetch(){
@@ -62,7 +64,7 @@ export default {
                 if (!this.dishes) {this.dishes = []}
                 if (!this.topDishes) {this.topDishes = []}
                 this.dishes = response.data.list
-                console.log("Total Normal Dishes Before: ", this.dishes.length)
+                // console.log("Total Normal Dishes Before: ", this.dishes.length)
                 this.dishes.forEach((dish, index) => {
                     // console.log("Current Dish:", dish.subject)
                     if (dish.isTop[0].key === "1") {
@@ -71,8 +73,8 @@ export default {
                         this.dishes.slice(index, 1)
                     }
                 })
-                console.log("Total Normal Dishes After: ", this.dishes.length)
-                console.log("Total Top Dishes: ", this.topDishes.length)
+                // console.log("Total Normal Dishes After: ", this.dishes.length)
+                // console.log("Total Top Dishes: ", this.topDishes.length)
                 // console.log("Top Dishes", this.topDishes)
                 // console.log("Other Dishes", this.dishes)
             } catch (e) {
@@ -80,11 +82,81 @@ export default {
             }
             return
         },
+        toggleStyle(toggle){
+            if (toggle){
+                return 'background-color:#ffb1c1; border:1px solid #DEFCFC;'
+            }
+            else {
+                return 'background-color:#FFE6EB;'
+            }
+        },
         async search() {
             this.searchInput = this.searchInput.toLowerCase()
         },
+        async search2(query) {
+            this.isEasyMode = false
+            this.isHardMode = false
+            // REMOVE THIS LINE POSITIVELY WHEN DONE!!
+            if (!process.env.BASE_URL) {process.env.BASE_URL = 'https://sample-jassi.g.kuroco.app/rcms-api/5/'}
+            // Replace below endpoint URL with the one you have configured
+            this.$axios.get(
+                process.env.BASE_URL + "search", 
+                {
+            params: {
+                filter: this.buildFilterQuery(query)
+            }
+            }).then(response => {
+                this.dishes = response.data.list || {};
+                // console.log("Result", this.searchResult)
+                // console.log("Dishes", this.dishes)
+            }).catch(({ response }) => {
+            this.searchResult = !(response instanceof Object) || !Array.isArray(response.data.errors)
+                ? { errors: ['Unexpected error'] }
+                : response.data;
+            });
+        },
+        // Generate filter query
+        buildFilterQuery(query) {
+            return `title icontains "${query}" OR 
+                    description icontains "${query}" OR
+                    aditionalTags icontains "${query}" OR
+                    tag icontains "${query}"`;
+        },
+        async easyMode(){
+            this.isEasyMode = !this.isEasyMode
+            this.isHardMode = false
+            if (this.isEasyMode) {
+                this.search2("easy")
+                this.isEasyMode = true
+            } else {
+                this.reset()
+            }
+        },
+        async hardMode(){
+            this.isHardMode = !this.isHardMode
+            this.isEasyMode = false
+            if (this.isHardMode) {
+                this.search2("hard")
+                this.isHardMode = true
+            } else {
+                this.reset()
+            }
+        },
         async reset() {
             this.searchInput = ''
+            try {
+                // REMOVE THIS LINE POSITIVELY WHEN DONE!!
+                if (!process.env.BASE_URL) {process.env.BASE_URL = 'https://sample-jassi.g.kuroco.app/rcms-api/5/'}
+                const response = await axios.get(
+                    process.env.BASE_URL + 'all-dishes'
+                )
+                if (!this.dishes) {this.dishes = []}
+                if (!this.topDishes) {this.topDishes = []}
+                this.dishes = response.data.list
+            } catch (e) {
+                console.log(e.message)
+            }
+            return
         }
     },
 }
@@ -164,6 +236,7 @@ a {
             background-color: $primary-color;
             border-radius: 8px;
             margin: 2px 2px;
+            // cursor: pointer;
             &:hover{
                 // border: #d8ffff 2px solid;
                 box-shadow: #d8ffff 0px 0px 6px;

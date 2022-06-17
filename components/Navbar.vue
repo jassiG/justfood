@@ -13,12 +13,12 @@
                 <NuxtLink  to="/About">
                     About
                 </NuxtLink>
-                <a href="/About">
+                <!-- <a href="/About">
                     Contact
                 </a>
                 <a href="/About">
                     Account
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="social">
@@ -80,7 +80,7 @@ export default {
             align-items: flex-start;
             justify-content: space-between;
             padding: 0px;
-            max-width: 350px;
+            max-width: 150px;
             flex-grow: 1;
             // gap: 55px;
         }
