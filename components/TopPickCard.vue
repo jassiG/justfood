@@ -11,14 +11,8 @@
         </div>
       </div>
       <div class="info-tags">
-        <div v-for="(tag, index) in tags" :key="index" class="info-tag">
-          <div
-            v-if="
-              tag.toLowerCase().includes('minute') ||
-              tag.toLowerCase().includes('hour')
-            "
-            class="svg"
-          >
+        <div class="info-tag">
+          <div class="svg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 60.35 64"
@@ -47,7 +41,10 @@
               </g>
             </svg>
           </div>
-          <div v-else class="svg">
+          <div class="tag-text">{{ time + " Minutes" }}</div>
+        </div>
+        <div class="info-tag">
+          <div class="svg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
@@ -64,7 +61,7 @@
               <line class="st0" x1="19.5" y1="21" x2="20" y2="23.7" />
             </svg>
           </div>
-          <div class="tag-text">{{ tag }}</div>
+          <div class="tag-text">{{ difficulty.label + " Difficulty" }}</div>
         </div>
       </div>
     </div>
@@ -83,7 +80,8 @@ export default {
   props: {
     title: String,
     description: String,
-    tags: Array,
+    time: Number,
+    difficulty: Object,
     dishImage: String,
   },
   data() {

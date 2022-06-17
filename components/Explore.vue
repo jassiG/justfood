@@ -6,14 +6,10 @@
       :to="'/recipe/' + dish.topics_id"
     >
       <ExploreCard
-        v-if="
-          (dish.subject + dish.topic)
-            .toLowerCase()
-            .includes(searchInput.toLowerCase())
-        "
         :title="dish.subject"
         :description="dish.description"
-        :tags="dish.tag"
+        :time="dish.timeInMinutes"
+        :difficulty="dish.difficulty"
         :dishImage="dish.dishImage.url"
       />
     </nuxt-link>
@@ -26,7 +22,6 @@ export default {
   components: { ExploreCard },
   props: {
     dishes: [],
-    searchInput: String,
   },
 };
 </script>

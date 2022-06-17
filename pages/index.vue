@@ -34,7 +34,7 @@
       <div class="search">
         <input
           @keyup.escape="reset"
-          @keyup.enter="search2(searchInput)"
+          @keyup.enter="getDishes(searchInput)"
           type="text"
           placeholder="Search Dishes"
           v-model.lazy="searchInput"
@@ -43,7 +43,7 @@
       <Heading title="Today's Top Picks" />
       <TopPicks :topDishes="this.topDishes" />
       <Heading title="Explore" />
-      <Explore :dishes="this.dishes" searchInput="" />
+      <Explore :dishes="this.dishes" />
     </div>
   </div>
 </template>
@@ -71,23 +71,29 @@ export default {
   },
   fetchDelay: 500,
   methods: {
-    async getDishes() {
+    async getDishes(query = "") {
       try {
         // REMOVE THIS LINE POSITIVELY WHEN DONE!!
         if (!process.env.BASE_URL) {
           process.env.BASE_URL =
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
         }
-        const response = await axios.get(process.env.BASE_URL + "all-dishes");
+        const response = await axios.get(process.env.BASE_URL + "all-dishes", {
+          params: {
+            filter: `title icontains "${query}" OR 
+                    description icontains "${query}" OR
+                    aditionalTags icontains "${query}" OR
+                    difficulty icontains "${query}"`,
+          },
+        });
         if (!this.dishes) {
           this.dishes = [];
         }
-        if (!this.topDishes) {
-          this.topDishes = [];
-        }
+        this.topDishes = [];
         this.dishes = response.data.list;
+        // console.log(this.dishes[0]);
         this.dishes.forEach((dish, index) => {
-          if (dish.isTop[0].key === "1") {
+          if (dish.isTop.key === "1") {
             this.topDishes.push(dish);
             this.dishes.slice(index, 1);
           }
@@ -104,10 +110,7 @@ export default {
         return "background-color:#FFE6EB;";
       }
     },
-    async search() {
-      this.searchInput = this.searchInput.toLowerCase();
-    },
-    async search2(query) {
+    async searchByTags(query) {
       this.isEasyMode = false;
       this.isHardMode = false;
       // REMOVE THIS LINE POSITIVELY WHEN DONE!!
@@ -115,9 +118,10 @@ export default {
         process.env.BASE_URL = "https://sample-jassi.g.kuroco.app/rcms-api/5/";
       }
       this.$axios
-        .get(process.env.BASE_URL + "search", {
+        .get(process.env.BASE_URL + "all-dishes", {
           params: {
-            filter: this.buildFilterQuery(query),
+            filter: `aditionalTags icontains "${query}" OR
+                    difficulty icontains "${query}"`,
           },
         })
         .then((response) => {
@@ -131,18 +135,11 @@ export default {
               : response.data;
         });
     },
-    // Generate filter query
-    buildFilterQuery(query) {
-      return `title icontains "${query}" OR 
-                    description icontains "${query}" OR
-                    aditionalTags icontains "${query}" OR
-                    tag icontains "${query}"`;
-    },
     async easyMode() {
       this.isEasyMode = !this.isEasyMode;
       this.isHardMode = false;
       if (this.isEasyMode) {
-        this.search2("easy");
+        this.searchByTags("easy");
         this.isEasyMode = true;
       } else {
         this.reset();
@@ -152,7 +149,7 @@ export default {
       this.isHardMode = !this.isHardMode;
       this.isEasyMode = false;
       if (this.isHardMode) {
-        this.search2("hard");
+        this.searchByTags("hard");
         this.isHardMode = true;
       } else {
         this.reset();

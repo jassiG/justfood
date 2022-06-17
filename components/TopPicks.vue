@@ -8,7 +8,8 @@
       <TopPickCard
         :title="dish.subject"
         :description="dish.description"
-        :tags="dish.tag"
+        :time="dish.timeInMinutes"
+        :difficulty="dish.difficulty"
         :dishImage="dish.dishImage.url"
       />
     </nuxt-link>

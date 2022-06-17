@@ -9,7 +9,8 @@
       <div class="title">{{ this.dish.subject }}</div>
       <div class="description">{{ this.dish.description }}</div>
       <div class="tags">
-        <div class="tag" v-for="tag in this.dish.tag">{{ tag }}</div>
+        <div class="tag">{{ this.dish.timeInMinutes + " Minutes" }}</div>
+        <div class="tag">{{ this.dish.difficulty.label + " Difficulty" }}</div>
         <div class="tag" v-for="tag in this.dish.aditionalTags">{{ tag }}</div>
       </div>
       <Heading title="Ingredients" />
