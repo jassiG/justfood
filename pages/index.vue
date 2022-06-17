@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <Loading v-if="$fetchState.pending"/> -->
     <!-- navbar -->
     <div class="home">
       <Navbar />
@@ -40,8 +39,6 @@
           placeholder="Search Dishes"
           v-model.lazy="searchInput"
         />
-        <!-- <button class="button" @click="search">Search</button>
-                <button class="button" @click="reset">Reset</button> -->
       </div>
       <Heading title="Today's Top Picks" />
       <TopPicks :topDishes="this.topDishes" />
@@ -82,7 +79,6 @@ export default {
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
         }
         const response = await axios.get(process.env.BASE_URL + "all-dishes");
-        // console.log("response", response)
         if (!this.dishes) {
           this.dishes = [];
         }
@@ -90,19 +86,12 @@ export default {
           this.topDishes = [];
         }
         this.dishes = response.data.list;
-        // console.log("Total Normal Dishes Before: ", this.dishes.length)
         this.dishes.forEach((dish, index) => {
-          // console.log("Current Dish:", dish.subject)
           if (dish.isTop[0].key === "1") {
             this.topDishes.push(dish);
-            // console.log("This Dish is TopDish:", dish.subject)
             this.dishes.slice(index, 1);
           }
         });
-        // console.log("Total Normal Dishes After: ", this.dishes.length)
-        // console.log("Total Top Dishes: ", this.topDishes.length)
-        // console.log("Top Dishes", this.topDishes)
-        // console.log("Other Dishes", this.dishes)
       } catch (e) {
         console.log(e.message);
       }
@@ -125,7 +114,6 @@ export default {
       if (!process.env.BASE_URL) {
         process.env.BASE_URL = "https://sample-jassi.g.kuroco.app/rcms-api/5/";
       }
-      // Replace below endpoint URL with the one you have configured
       this.$axios
         .get(process.env.BASE_URL + "search", {
           params: {
@@ -134,8 +122,6 @@ export default {
         })
         .then((response) => {
           this.dishes = response.data.list || {};
-          // console.log("Result", this.searchResult)
-          // console.log("Dishes", this.dishes)
         })
         .catch(({ response }) => {
           this.searchResult =
@@ -220,9 +206,7 @@ a {
   max-width: 350px;
   flex-direction: row;
   justify-content: flex-start;
-  // expand
 
-  // padding: 10px 16px;
   box-shadow: 0px 0px 8px rgba(170, 170, 170, 0.2);
   input {
     padding: 12px 6px;
@@ -254,7 +238,6 @@ a {
     font-weight: 300;
     color: #302939;
     text-align: center;
-    // margin-top: 2px;
   }
   .chips {
     display: flex;
@@ -270,9 +253,7 @@ a {
       background-color: $primary-color;
       border-radius: 8px;
       margin: 2px 2px;
-      // cursor: pointer;
       &:hover {
-        // border: #d8ffff 2px solid;
         box-shadow: #d8ffff 0px 0px 6px;
       }
     }

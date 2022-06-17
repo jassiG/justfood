@@ -74,7 +74,6 @@
         :src="dishImage"
         alt="Unsplash computer image with cat"
       />
-      <!-- <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" /> -->
     </div>
   </div>
 </template>
@@ -177,15 +176,12 @@ $card-color: #ffd8d8; //#D8FFFF;
     width: 50%;
     height: 100%;
     background-color: $primary-color;
-    // object-fit: cover;
     overflow: hidden;
-    // text-align: center;
     border-radius: 0px 20px 20px 0px;
     .image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      // margin: 0 -100%;
     }
   }
 }

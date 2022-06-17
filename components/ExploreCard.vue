@@ -6,8 +6,6 @@
         :src="dishImage"
         alt="Unsplash computer image with cat"
       />
-      <!-- REMOVE THIS LINE POSITIVELY WHEN DONE!! -->
-      <!-- <img class="image" src='https://via.placeholder.com/400' alt="Unsplash computer image with cat" />       -->
     </div>
     <div class="info-panel">
       <div class="info-text">
@@ -15,7 +13,6 @@
           {{ title }}
         </div>
         <div class="info-panel-description">
-          <!-- <p>{{ description }}</p> -->
           {{ description.slice(0, 100) }}
           <span v-if="description.length > 100">...</span>
         </div>
@@ -105,7 +102,6 @@ $card-color: #ffd8d8; //#D8FFFF;
   margin: 40px 20px;
   transition: 0.1s ease-in-out all;
   &:hover {
-    // transform: scale(1.01);
     transform: translate(0px, -5px);
     box-shadow: 0px 2px 8px rgba(176, 176, 176, 0.55);
   }
@@ -116,7 +112,6 @@ $card-color: #ffd8d8; //#D8FFFF;
     align-items: stretch;
     width: 100%;
     height: 50%;
-    // background-color: #D8FFFF;
     background-color: $secondary-color;
     .info-text {
       .info-panel-title {
@@ -166,19 +161,12 @@ $card-color: #ffd8d8; //#D8FFFF;
   .image-panel {
     width: 100%;
     height: 50%;
-    // background-color: #D8FFFF;
     background-color: $secondary-color;
-    // object-fit: cover;
-    // object-position: center;
     overflow: hidden;
-    // text-align: center;
-    // border: 1px solid #cc6db7;
     .image {
       width: 100%;
       height: 100%;
-      // opacity: 0.5;
       object-fit: cover;
-      // margin: 0 -100%;
     }
   }
 }

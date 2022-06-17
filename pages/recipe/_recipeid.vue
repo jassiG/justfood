@@ -12,9 +12,7 @@
         <div class="tag" v-for="tag in this.dish.tag">{{ tag }}</div>
         <div class="tag" v-for="tag in this.dish.aditionalTags">{{ tag }}</div>
       </div>
-      <!-- <hr> -->
       <Heading title="Ingredients" />
-      <!-- Replace with real ingredients once done -->
       <div class="ingredients">
         <div
           class="ingredient"
@@ -33,7 +31,6 @@
 import NavBar from "~~/components/Navbar.vue";
 import Loading from "~~/components/Loading.vue";
 import axios from "axios";
-// import md from '@nuxtjs/markdownit'
 export default {
   name: "Recipe",
   components: { NavBar },
@@ -44,7 +41,6 @@ export default {
     };
   },
   async fetch() {
-    // this.dishId = this.$route.params.recipeid
     await this.getDish();
     return;
   },
@@ -61,11 +57,7 @@ export default {
           process.env.BASE_URL + "get-dish/" + this.$route.params.recipeid
         );
         this.dish = response.data.details;
-        // REMOVE THIS LINE POSITIVELY WHEN DONE!!
-        // this.dish.dishImage.url = 'https://via.placeholder.com/450'
         this.tags = this.dish.tag;
-        // this.mainContent = await md.render(this.dish.mainContent)
-        // console.log("Dish\n", this.dish)
       } catch (error) {
         console.log(error);
       }
@@ -97,19 +89,10 @@ a {
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
-    // background-color: antiquewhite;
     width: 55%;
     min-width: 650px;
     padding: 0px 50px;
-    // box-shadow: 0px 0px 4px rgb(175, 175, 175, 0.25);
     clip-path: inset(0px -20px 0px -20px);
-    // @media (min-width: 500px) {
-    //     width: 90%;
-    //     padding: 0px 10px;
-    // }
-    // @media (min-width: 1000px) {
-    //     width: 60%;
-    // }
     .top-image {
       display: flex;
       flex-direction: column;
@@ -118,13 +101,11 @@ a {
       width: 100%;
       height: 500px;
       margin-top: 40px;
-      // background-color: rgb(215, 255, 255);
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         overflow: hidden;
-        // background-color: beige;
       }
     }
     .title {
@@ -147,7 +128,6 @@ a {
       flex-direction: row;
       justify-content: flex-start;
       flex-wrap: wrap;
-      // background-color: #302939;
       margin: 0px 6px;
       .tag {
         font-family: "Poppins", sans-serif;
@@ -160,7 +140,6 @@ a {
         border-radius: 8px;
         margin-right: 10px;
         &:hover {
-          // border: #d8ffff 2px solid;
           box-shadow: #d8ffff 0px 0px 6px;
         }
       }
@@ -179,12 +158,10 @@ a {
         font-family: "Poppins", sans-serif;
         font-size: 1em;
         color: #302939;
-        // padding: 6px;
         text-align: center;
         margin: 6px;
         border-radius: 4px;
         box-shadow: 0px 0px 10px rgb(175, 175, 175, 0.2);
-        // border: 2px solid #bcb8c0;
         line-height: 1em;
         .ingredient-name {
           background-color: $primary-color;
@@ -201,15 +178,7 @@ a {
       }
     }
     .main-content {
-      // background-color: #d8ffff;
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      // align-items: center;
       width: 100%;
-      // background-color: rgb(215, 255, 222);
-      // padding: 20px;
-      // white-space:pre-wrap;
       font-family: "Poppins", sans-serif;
       text-align: justify;
       color: #58535e;

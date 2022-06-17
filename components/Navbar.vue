@@ -7,17 +7,10 @@
       <div class="nav-text">
         <a href="/"> Home </a>
         <NuxtLink to="/About"> About </NuxtLink>
-        <!-- <a href="/About">
-                    Contact
-                </a>
-                <a href="/About">
-                    Account
-                </a> -->
       </div>
     </div>
     <div class="social">
       <a href="https://www.facebook.com/">
-        <!-- <object data="../assets/icons/facebook-square-brands.svg" width="30" height="30"> </object> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
@@ -30,7 +23,6 @@
         </svg>
       </a>
       <a href="https://www.instagram.com/">
-        <!-- <object data="../assets/icons/instagram-square-brands.svg" width="30" height="30"> </object> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
@@ -43,7 +35,6 @@
         </svg>
       </a>
       <a href="https://www.twitter.com/">
-        <!-- <object data="../assets/icons/twitter-square-brands.svg" width="30" height="30"> </object> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
@@ -85,7 +76,6 @@ export default {
     padding: 0px 50px;
     flex-grow: 5;
     justify-content: space-between;
-    // gap: 766px;
     .navbar-logo {
       font-family: "Poor Story", cursive;
       font-size: 48px;
@@ -103,7 +93,6 @@ export default {
       padding: 0px;
       max-width: 150px;
       flex-grow: 1;
-      // gap: 55px;
     }
   }
   .social {
@@ -114,7 +103,6 @@ export default {
     padding: 0px 20px;
     flex-grow: 1;
     max-width: 120px;
-    // it was not registering a click without it
     object {
       pointer-events: none;
     }
