@@ -4,6 +4,7 @@
     <div class="home">
       <Navbar />
       <!-- Search -->
+      <div class="navbar-spacing"></div>
       <div class="filters">
         <div class="icon">
           <svg
@@ -56,6 +57,7 @@ import Explore from "~~/components/Explore.vue";
 export default {
   name: "Home",
   components: { Navbar, Heading, Explore },
+  // middleware: "auth",
   data() {
     return {
       dishes: [],
@@ -77,6 +79,7 @@ export default {
         if (!process.env.BASE_URL) {
           process.env.BASE_URL =
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
+          console.log("still requires BASE_URL hack");
         }
         const response = await axios.get(process.env.BASE_URL + "all-dishes", {
           params: {
@@ -116,6 +119,7 @@ export default {
       // REMOVE THIS LINE POSITIVELY WHEN DONE!!
       if (!process.env.BASE_URL) {
         process.env.BASE_URL = "https://sample-jassi.g.kuroco.app/rcms-api/5/";
+        console.log("still requires BASE_URL hack");
       }
       this.$axios
         .get(process.env.BASE_URL + "all-dishes", {
@@ -162,6 +166,7 @@ export default {
         if (!process.env.BASE_URL) {
           process.env.BASE_URL =
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
+          console.log("still requires BASE_URL hack");
         }
         const response = await axios.get(process.env.BASE_URL + "all-dishes");
         if (!this.dishes) {
@@ -193,6 +198,9 @@ export default {
 a {
   text-decoration: none;
   color: #302939;
+}
+.navbar-spacing {
+  height: 50px;
 }
 .search {
   position: absolute;

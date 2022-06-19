@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { BASE_URL } = process.env;
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -65,5 +67,8 @@ export default {
   ],
   privateRuntimeConfig: {
     baseURL: process.env.BASE_URL
+  },
+  env: {
+    BASE_URL
   },
 }

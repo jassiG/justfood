@@ -53,6 +53,7 @@ export default {
         if (!process.env.BASE_URL) {
           process.env.BASE_URL =
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
+          console.log("still requires BASE_URL hack");
         }
         const response = await axios.get(
           process.env.BASE_URL + "get-dish/" + this.$route.params.recipeid

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/markdownit": "^2.0.0",
     "core-js": "^3.19.3",
     "markdown-it-attrs": "^4.1.4",

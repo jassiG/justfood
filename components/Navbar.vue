@@ -5,7 +5,7 @@
         <a href="/"> JustFood </a>
       </div>
       <div class="nav-text">
-        <a href="/"> Home </a>
+        <NuxtLink to="/"> Home </NuxtLink>
         <NuxtLink to="/About"> About </NuxtLink>
       </div>
     </div>
@@ -59,6 +59,8 @@ export default {
 </script>
 <style lang="scss">
 .navbar {
+  position: fixed;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
