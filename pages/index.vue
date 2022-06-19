@@ -3,7 +3,6 @@
     <!-- navbar -->
     <div class="home">
       <Navbar />
-      <!-- Search -->
       <div class="navbar-spacing"></div>
       <div class="filters">
         <div class="icon">
@@ -32,6 +31,7 @@
           </div>
         </div>
       </div>
+      <!-- Search -->
       <div class="search">
         <input
           @keyup.escape="reset"

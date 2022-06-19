@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Navbar />
+    <div class="navbar-spacing"></div>
     <h1>Form page</h1>
 
     <form v-if="!submitted" ref="form">
@@ -49,6 +51,7 @@
 
       <div class="row--bottom-next">
         <button @click="handleOnSubmit">submit</button>
+        <NuxtLink to="/"> Home </NuxtLink>
       </div>
     </form>
 
@@ -82,7 +85,7 @@ const FORM_ID = 3; // ID of the form
 export default {
   async asyncData({ $axios }) {
     const response = await $axios.$get(
-      process.env.BASE_URL + `form/${FORM_ID}`
+      process.env.BASE_URL + `recipe-form/${FORM_ID}`
     );
     return {
       name: response.details.inquiry_name,
@@ -121,7 +124,7 @@ export default {
       try {
         // post data
         const { id } = await this.$axios.$post(
-          process.env.BASE_URL + `/rcms-api/2/form?id=${FORM_ID}`,
+          process.env.BASE_URL + `recipe-form?id=${FORM_ID}`,
           body
         );
         this.error = null;
@@ -144,7 +147,9 @@ input {
   width: 100%;
   border: none;
 }
-
+.navbar-spacing {
+  height: 60px;
+}
 .error {
   color: red;
 }

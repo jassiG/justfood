@@ -7,6 +7,8 @@
       <div class="nav-text">
         <NuxtLink to="/"> Home </NuxtLink>
         <NuxtLink to="/About"> About </NuxtLink>
+        <NuxtLink to="/login"> Login </NuxtLink>
+        <NuxtLink to="/form"> Form </NuxtLink>
       </div>
     </div>
     <div class="social">
@@ -93,7 +95,7 @@ export default {
       align-items: flex-start;
       justify-content: space-between;
       padding: 0px;
-      max-width: 150px;
+      max-width: 300px;
       flex-grow: 1;
     }
   }
