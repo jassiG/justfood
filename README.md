@@ -1,6 +1,7 @@
 # justfood
 
 A web app that provides cooking recipes. Made using Kuroco-Front and Nuxtjs-3.
+Technologies Used: Nuxtjs, Vue, Js, SCSS
 
 ## Running the app
 ```
