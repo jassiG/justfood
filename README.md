@@ -1,12 +1,15 @@
 # justfood
 
 A web app that provides cooking recipes. Made using Kuroco-Front and Nuxtjs-3.
+
 ## Running the app
 ```
 npm install
 npm run dev
 ```
 ## Design
-![image](https://user-images.githubusercontent.com/55924890/172948628-7476aef8-401c-45cf-9e51-d87a75e68431.png)
-![image](https://user-images.githubusercontent.com/55924890/172948636-3d11627c-548a-4089-b99c-fad08dfd9d1c.png)
-
+<p align="center">
+<img src="https://user-images.githubusercontent.com/55924890/174497378-f5e77f51-7af4-40ef-aca0-f4252068866b.png">
+<img src="https://user-images.githubusercontent.com/55924890/174497380-45b38083-c9af-4528-8222-ae5ddba30418.png">
+<img src="https://user-images.githubusercontent.com/55924890/174497382-3ae0c5bf-422a-41f5-a94d-2b547d7eea1b.png">
+</p>
