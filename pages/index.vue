@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div clas="main">
     <!-- navbar -->
-    <div class="home">
+    <Loading v-if="$fetchState.pending" />
+    <div v-else class="home">
       <Navbar />
       <div class="navbar-spacing"></div>
       <div class="filters">
@@ -45,6 +46,52 @@
       <TopPicks :topDishes="this.topDishes" />
       <Heading title="Explore" />
       <Explore :dishes="this.dishes" />
+      <div class="page-navigator">
+        <span class="button" @click="changePage(currentPage - 1)">
+          <svg
+            viewBox="0 0 24 24"
+            xml:space="preserve"
+            width="20px"
+            height="20px"
+          >
+            <polyline
+              fill="none"
+              points="17.5,3 8.5,12 17.5,21 "
+              stroke="#000000"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+          </svg>
+        </span>
+        <div class="pages">
+          <div
+            v-for="i in totalPages"
+            class="page"
+            :style="isSelectedPage(i)"
+            @click="changePage(i)"
+          >
+            {{ i }}
+          </div>
+        </div>
+        <span class="button" @click="changePage(currentPage + 1)">
+          <svg
+            viewBox="0 0 24 24"
+            xml:space="preserve"
+            width="20px"
+            height="20px"
+          >
+            <polyline
+              fill="none"
+              points="8.5,3 17.5,12 8.5,21 "
+              stroke="#000000"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+          </svg>
+        </span>
+      </div>
+      <div class="footer-spacing"></div>
+      <Footer />
     </div>
   </div>
 </template>
@@ -66,10 +113,13 @@ export default {
       searchResult: {},
       isEasyMode: false,
       isHardMode: false,
+      currentPage: 1,
+      totalPages: 1,
     };
   },
   async fetch() {
     await this.getDishes();
+    return;
   },
   fetchDelay: 500,
   methods: {
@@ -83,10 +133,11 @@ export default {
         }
         const response = await axios.get(process.env.BASE_URL + "all-dishes", {
           params: {
-            filter: `title icontains "${query}" OR 
+            filter: `title icontains "${query}" OR
                     description icontains "${query}" OR
                     aditionalTags icontains "${query}" OR
                     difficulty icontains "${query}"`,
+            pageID: this.currentPage,
           },
         });
         if (!this.dishes) {
@@ -94,6 +145,7 @@ export default {
         }
         this.topDishes = [];
         this.dishes = response.data.list;
+        this.totalPages = response.data.pageInfo.totalPageCnt;
         // console.log(this.dishes[0]);
         this.dishes.forEach((dish, index) => {
           if (dish.isTop.key === "1") {
@@ -126,6 +178,7 @@ export default {
           params: {
             filter: `aditionalTags icontains "${query}" OR
                     difficulty icontains "${query}"`,
+            pageID: this.currentPage,
           },
         })
         .then((response) => {
@@ -168,7 +221,11 @@ export default {
             "https://sample-jassi.g.kuroco.app/rcms-api/5/";
           console.log("still requires BASE_URL hack");
         }
-        const response = await axios.get(process.env.BASE_URL + "all-dishes");
+        const response = await axios.get(process.env.BASE_URL + "all-dishes", {
+          params: {
+            pageID: this.currentPage,
+          },
+        });
         if (!this.dishes) {
           this.dishes = [];
         }
@@ -180,6 +237,19 @@ export default {
         console.log(e.message);
       }
       return;
+    },
+    async changePage(page) {
+      page = page < 1 ? 1 : page;
+      page = page > this.totalPages ? this.totalPages : page;
+      this.currentPage = page;
+      this.getDishes();
+    },
+    isSelectedPage(page) {
+      if (page === this.currentPage) {
+        return "background-color: #ffe6eb;";
+      } else {
+        return "background-color: #FFFFFF;";
+      }
     },
   },
 };
@@ -195,12 +265,19 @@ export default {
   order: 0;
   flex-grow: 0;
 }
+.main {
+  position: relative;
+  height: 100%;
+}
 a {
   text-decoration: none;
   color: #302939;
 }
 .navbar-spacing {
   height: 50px;
+}
+.footer-spacing {
+  height: 150px;
 }
 .search {
   position: absolute;
@@ -250,6 +327,7 @@ a {
     margin: 0px 6px;
     .chip {
       font-family: "Poppins", sans-serif;
+      cursor: default;
       font-size: 14px;
       padding: 2px 4px;
       font-weight: 300;
@@ -261,6 +339,42 @@ a {
       &:hover {
         box-shadow: #d8ffff 0px 0px 6px;
       }
+    }
+  }
+}
+.page-navigator {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  .pages {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 6px;
+    .page {
+      // font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      padding: 2px 4px;
+      font-weight: bold;
+      color: #302939;
+      text-align: center;
+      border-radius: 6px;
+      margin-inline: 4px;
+      font-variant-numeric: tabular-nums;
+      cursor: default;
+    }
+  }
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 4px;
+    margin-inline: 4px;
+    // border: 1px solid #ffffff;
+    // background-color: $secondary-color;
+    font-weight: bold;
+    border-radius: 4px;
+    &:hover {
+      background-color: #ffd8d880;
     }
   }
 }

@@ -3,8 +3,8 @@
     <div class="image-panel">
       <img
         class="image"
-        :src="dishImage"
-        alt="Unsplash computer image with cat"
+        :src="dishImage + '?height=200&fit=cover'"
+        :alt="title"
       />
     </div>
     <div class="info-panel">
@@ -97,7 +97,7 @@ $card-color: #ffd8d8; //#D8FFFF;
   width: 300px;
   height: 400px;
   box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.35);
-  margin: 40px 20px;
+  margin: 30px 20px;
   transition: 0.1s ease-in-out all;
   &:hover {
     transform: translate(0px, -5px);
@@ -160,7 +160,7 @@ $card-color: #ffd8d8; //#D8FFFF;
     width: 100%;
     height: 50%;
     background-color: $secondary-color;
-    overflow: hidden;
+    // overflow: hidden;
     .image {
       width: 100%;
       height: 100%;

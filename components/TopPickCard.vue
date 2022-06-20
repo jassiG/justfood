@@ -68,8 +68,8 @@
     <div class="image-panel">
       <img
         class="image"
-        :src="dishImage"
-        alt="Unsplash computer image with cat"
+        :src="dishImage + '?height=250&fit=cover'"
+        :alt="title"
       />
     </div>
   </div>
