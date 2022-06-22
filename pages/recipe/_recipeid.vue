@@ -26,6 +26,7 @@
       <Heading title="Instructions" />
       <div class="main-content" v-html="this.dish.mainContent"></div>
     </div>
+    <Footer />
   </div>
 </template>
 <script>

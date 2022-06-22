@@ -52,6 +52,7 @@
           <div class="category" @click="setCategory('indian')">Indian</div>
           <div class="category" @click="setCategory('english')">English</div>
           <div class="category" @click="setCategory('japanese')">Japanese</div>
+          <div class="category" @click="setCategory('french')">French</div>
         </div>
         <div v-if="totalPages === 0" class="sad">
           <svg viewBox="0 0 64 64">
@@ -158,12 +159,9 @@
 
 <script>
 import axios from "axios";
-import Navbar from "~~/components/Navbar.vue";
-import Heading from "~~/components/Heading.vue";
-import Explore from "~~/components/Explore.vue";
 export default {
   name: "Home",
-  components: { Navbar, Heading, Explore },
+  // components: { Navbar, Heading, Explore },
   // middleware: "auth",
   data() {
     return {
@@ -182,7 +180,7 @@ export default {
     await this.getDishes();
     return;
   },
-  fetchDelay: 500,
+  // fetchDelay: 500,
   methods: {
     async getDishes() {
       console.log("getDishes called");
@@ -192,6 +190,14 @@ export default {
       } else {
         this.dishes = await this.getDishesByCategory();
         this.topDishes = await this.getDishesByCategory("top");
+      }
+    },
+    async getDishesWithoutTop() {
+      console.log("getDishes called");
+      if (this.category === "") {
+        await this.getAllDishes();
+      } else {
+        this.dishes = await this.getDishesByCategory();
       }
     },
     async getAllDishes() {
@@ -305,7 +311,8 @@ export default {
     async reset() {
       console.log("reset called");
       this.searchInput = "";
-      this.changePage(1);
+      this.currentPage = 1;
+      this.getDishesWithoutTop();
       return;
     },
     toggleStyle(toggle) {
@@ -337,11 +344,18 @@ export default {
       }
     },
     async changePage(page) {
-      console.log("changePage called");
+      console.log(
+        "changePage called for page: " + page,
+        "currentPage: ",
+        this.currentPage
+      );
       page = page < 1 ? 1 : page;
       page = page > this.totalPages ? this.totalPages : page;
+      if (this.currentPage === page) {
+        return;
+      }
       this.currentPage = page;
-      this.getDishes();
+      this.getDishesWithoutTop();
     },
     isSelectedPage(page) {
       if (page === this.currentPage) {
