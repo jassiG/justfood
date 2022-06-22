@@ -53,7 +53,7 @@ a {
       width: 680px;
       height: 400px;
       background: rgba(255, 255, 255, 0.4);
-      box-shadow: 0px 2px 6px rgba(176, 176, 176, 0.35);
+      box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
       background-color: $primary-color;
       border-radius: 30px;
       display: flex;

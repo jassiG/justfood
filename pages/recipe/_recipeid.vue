@@ -26,6 +26,7 @@
       <Heading title="Instructions" />
       <div class="main-content" v-html="this.dish.mainContent"></div>
     </div>
+    <div class="footer-spacing"></div>
     <Footer />
   </div>
 </template>
@@ -80,6 +81,9 @@ a {
   text-decoration: none;
   color: #302939;
 }
+.footer-spacing {
+  height: 150px;
+}
 .recipe {
   display: flex;
   flex-direction: column;
@@ -87,6 +91,7 @@ a {
   align-items: center;
   width: 100%;
   min-width: 700px;
+  position: relative;
   .content-block {
     display: flex;
     flex-direction: column;

@@ -6,34 +6,6 @@
       <Loading v-if="$fetchState.pending" />
       <div v-else class="body">
         <div class="navbar-spacing"></div>
-        <!-- Filters -->
-        <!-- <div class="filters">
-        <div class="icon">
-          <svg
-            id="i-lightning"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32"
-            fill="none"
-            stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            width="24px"
-            height="24px"
-          >
-            <path d="M18 13 L26 2 8 13 14 19 6 30 24 19 Z" />
-          </svg>
-        </div>
-        <div class="filter-text">Quick Search</div>
-        <div class="chips">
-          <div class="chip" :style="toggleStyle(isEasyMode)" @click="easyMode">
-            Beginner Friendly
-          </div>
-          <div class="chip" :style="toggleStyle(isHardMode)" @click="hardMode">
-            Pro Mode
-          </div>
-        </div>
-      </div> -->
         <!-- Search -->
         <div class="search">
           <input
@@ -305,8 +277,8 @@ export default {
     },
     async setSearch() {
       console.log("setSearch called");
-      this.changePage(1);
-      // this.getDishes();
+      this.currentPage = 1;
+      this.getDishesWithoutTop();
     },
     async reset() {
       console.log("reset called");
@@ -574,11 +546,11 @@ a {
 .body {
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
   padding: 0px;
   width: 100%;
   min-width: 700px;
-  position: relative;
   flex-grow: 1;
 }
 </style>

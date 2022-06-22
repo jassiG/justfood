@@ -59,22 +59,6 @@
 const FORM_ID = 3; // ID of the form
 
 export default {
-  // async asyncData({ $axios }) {
-  //   const response = await $axios.$get(process.env.BASE_URL + `post-dish/`, {
-  //     body: {
-  //       formId: FORM_ID,
-  //     },
-  //   });
-  //   return {
-  //     name: response.details.inquiry_name,
-  //     info: response.details.inquiry_info,
-  //     thanksText: response.details.thanks_text,
-  //     cols: Object.entries(response.details.cols).map(([k, v]) => ({
-  //       objKey: k,
-  //       ...v,
-  //     })),
-  //   };
-  // },
   data: () => {
     return {
       submitted: false,
