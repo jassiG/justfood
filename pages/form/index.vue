@@ -2,56 +2,32 @@
   <div>
     <Navbar />
     <div class="navbar-spacing"></div>
-    <h1>Form page</h1>
+    <!-- <h1>Form page</h1> -->
 
     <form v-if="!submitted" ref="form">
       <div v-if="error" class="error">
         <p v-for="(err, idx) in error" :key="idx">
-          {{ err }}
+          {{ err.message }}
         </p>
       </div>
-
-      <div class="row--status">
-        <h2>Form title</h2>
-        <div>{{ name }}</div>
-      </div>
-
-      <div class="row--status">
-        <h2>Description</h2>
-        <div>
+      <div class="form-container">
+        <div class="name">{{ name }}</div>
+        <div class="description">
           <p v-for="(line, idx) in textLines2texts(info)" :key="idx">
             {{ line }}
           </p>
         </div>
-      </div>
 
-      <div class="row--status">
-        <h2>Thank you message</h2>
-        <div>
-          <p v-for="(line, idx) in textLines2texts(thanksText)" :key="idx">
-            {{ line }}
-          </p>
+        <!-- Input Fields -->
+        <div v-for="col in cols" :key="col.objKey" class="row--form">
+          <!-- <h2>[{{ col.title }}]</h2> -->
+          <input :name="col.objKey" type="text" :placeholder="col.title" />
         </div>
-      </div>
 
-      <div class="row--status">
-        <h2>Form fields</h2>
-        <div class="row--internal">
-          <div v-for="col in cols" :key="col.key">
-            <p>[{{ col.title }}]</p>
-            <pre>{{ col }}</pre>
-          </div>
+        <div class="row--bottom-next">
+          <button @click="handleOnSubmit">submit</button>
+          <NuxtLink to="/"> Home </NuxtLink>
         </div>
-      </div>
-
-      <div v-for="col in cols" :key="col.objKey" class="row--form">
-        <h2>[{{ col.title }}]</h2>
-        <input :name="col.objKey" type="text" />
-      </div>
-
-      <div class="row--bottom-next">
-        <button @click="handleOnSubmit">submit</button>
-        <NuxtLink to="/"> Home </NuxtLink>
       </div>
     </form>
 
@@ -83,20 +59,22 @@
 const FORM_ID = 3; // ID of the form
 
 export default {
-  async asyncData({ $axios }) {
-    const response = await $axios.$get(
-      process.env.BASE_URL + `recipe-form/${FORM_ID}`
-    );
-    return {
-      name: response.details.inquiry_name,
-      info: response.details.inquiry_info,
-      thanksText: response.details.thanks_text,
-      cols: Object.entries(response.details.cols).map(([k, v]) => ({
-        objKey: k,
-        ...v,
-      })),
-    };
-  },
+  // async asyncData({ $axios }) {
+  //   const response = await $axios.$get(process.env.BASE_URL + `post-dish/`, {
+  //     body: {
+  //       formId: FORM_ID,
+  //     },
+  //   });
+  //   return {
+  //     name: response.details.inquiry_name,
+  //     info: response.details.inquiry_info,
+  //     thanksText: response.details.thanks_text,
+  //     cols: Object.entries(response.details.cols).map(([k, v]) => ({
+  //       objKey: k,
+  //       ...v,
+  //     })),
+  //   };
+  // },
   data: () => {
     return {
       submitted: false,
@@ -142,41 +120,39 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 input {
-  width: 100%;
+  // width: 100%;
   border: none;
+  flex-grow: 1;
 }
 .navbar-spacing {
   height: 60px;
 }
 .error {
-  color: red;
-}
-.error > *:first-child {
-  font-weight: bold;
+  color: rgb(223, 87, 87);
 }
 
-.row--status {
+.form-container {
   display: flex;
-  border-top: 1px solid black;
-}
-.row--status > *:first-child {
-  background-color: yellow;
-  min-width: 15rem;
-  max-width: 15rem;
-  border-right: 1px solid black;
-}
-
-.row--form {
-  display: flex;
-  border-top: 1px solid black;
-}
-.row--form > *:first-child {
-  background-color: aquamarine;
-  min-width: 15rem;
-  max-width: 15rem;
-  border-right: 1px solid black;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-inline: 2em;
+  border-radius: 1em;
+  background-color: $primary-color;
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+  font-family: "Poppins", sans-serif;
+  .name {
+    font-size: 1.5em;
+    color: #302939;
+    font-weight: bold;
+  }
+  .description {
+    font-size: 0.8em;
+    color: #302939;
+  }
 }
 
 .row--bottom-next {
@@ -188,13 +164,5 @@ input {
   padding: 8px 16px;
   display: flex;
   justify-content: flex-start;
-}
-
-.row--internal {
-  display: flex;
-}
-
-form > *:nth-last-child(2) {
-  border-bottom: 1px solid black;
 }
 </style>
