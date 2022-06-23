@@ -20,11 +20,19 @@
         <TopPicks :topDishes="this.topDishes" />
         <Heading title="Explore" />
         <div class="categories">
-          <div class="category" @click="setCategory('all')">All</div>
-          <div class="category" @click="setCategory('indian')">Indian</div>
-          <div class="category" @click="setCategory('english')">English</div>
-          <div class="category" @click="setCategory('japanese')">Japanese</div>
-          <div class="category" @click="setCategory('french')">French</div>
+          <div
+            v-for="(id, cat) in category_dict"
+            class="category"
+            @click="setCategory(cat)"
+            :style="getCategoryStyle(cat)"
+          >
+            {{ cat }}
+          </div>
+          <!-- <div class="category" @click="setCategory('Indian')">Indian</div>
+          <div class="category" @click="setCategory('English')">English</div>
+          <div class="category" @click="setCategory('Japanese')">Japanese</div>
+          <div class="category" @click="setCategory('French')">French</div>
+          <div class="category" @click="setCategory('Mexican')">Mexican</div> -->
         </div>
         <div v-if="totalPages === 0" class="sad">
           <svg viewBox="0 0 64 64">
@@ -146,6 +154,15 @@ export default {
       totalPages: 1,
       searchInput: "",
       category: "",
+      // used for tags / categories
+      category_dict: {
+        all: 0,
+        indian: 26,
+        japanese: 27,
+        english: 28,
+        french: 29,
+        mexican: 34,
+      },
     };
   },
   async fetch() {
@@ -175,13 +192,17 @@ export default {
     async getAllDishes() {
       console.log("getAllDishes called");
       try {
-        const response = await axios.get(process.env.BASE_URL + "all-dishes", {
+        const response = await axios.get(process.env.BASE_URL + "dish", {
           params: {
             // filter by keyword is not working in kuroco, doing it the simple way
             filter: `title icontains "${this.searchInput}" OR
                     description icontains "${this.searchInput}" OR
                     aditionalTags icontains "${this.searchInput}"`,
             pageID: this.currentPage,
+          },
+          headers: {
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         if (!this.dishes) {
@@ -201,48 +222,82 @@ export default {
       this.currentPage = 1;
       let response;
       if (category === "top") {
-        const dishResponse = await axios.get(
-          process.env.BASE_URL + `get-${category}`,
-          {
-            params: {
-              pageID: 1,
-            },
-          }
-        );
-        response = dishResponse.data.list;
-        let dishList = [];
-        response.forEach((dishId, index) => {
-          dishList.push(dishId.ext_1.module_id);
-        });
-        if (dishList.length === 0) {
-          return [];
-        }
+        // const dishResponse = await axios.get(
+        //   process.env.BASE_URL + `get-${category}`,
+        //   {
+        //     params: {
+        //       pageID: 1,
+        //     },
+        //     headers: {
+        //       "X-RCMS-API-ACCESS-TOKEN":
+        //         "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+        //     },
+        //   }
+        // );
+        // response = dishResponse.data.list;
+        // let dishList = [];
+        // response.forEach((dishId, index) => {
+        //   dishList.push(dishId.ext_1.module_id);
+        // });
+        // if (dishList.length === 0) {
+        //   return [];
+        // }
         // Get dishes data
-        const finalList = await axios.get(process.env.BASE_URL + "all-dishes", {
+        const finalList = await axios.get(process.env.BASE_URL + "dish", {
           params: {
-            id: dishList,
+            // id: dishList,
+            filter: `contents_type = 30 OR contents_type_2 = 30 OR contents_type_3 = 30`,
             pageID: 1,
+          },
+          headers: {
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         return finalList.data.list;
       } else {
-        const dishResponse = await axios.get(
-          process.env.BASE_URL + `get-${category}`,
-          {
+        try {
+          const response = await axios.get(process.env.BASE_URL + "dish", {
             params: {
+              // filter by keyword is not working in kuroco, doing it the simple way
+              filter: `(title icontains "${this.searchInput}" OR
+                    description icontains "${this.searchInput}" OR
+                    aditionalTags icontains "${this.searchInput}") AND
+                    contents_type = ${this.category_dict[category]}`,
               pageID: this.currentPage,
             },
-          }
-        );
-        response = dishResponse.data.list;
-        let dishList = [];
-        response.forEach((dishId, index) => {
-          dishList.push(dishId.ext_1.module_id);
-        });
+            headers: {
+              "X-RCMS-API-ACCESS-TOKEN":
+                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            },
+          });
+          this.totalPages = response.data.pageInfo.totalPageCnt;
+          return response.data.list;
+        } catch (e) {
+          console.log(e.message);
+        }
+        return;
+        // const dishResponse = await axios.get(
+        //   process.env.BASE_URL + `get-${category}`,
+        //   {
+        //     params: {
+        //       pageID: this.currentPage,
+        //     },
+        //     headers: {
+        //       "X-RCMS-API-ACCESS-TOKEN":
+        //         "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+        //     },
+        //   }
+        // );
+        // response = dishResponse.data.list;
+        // let dishList = [];
+        // response.forEach((dishId, index) => {
+        //   dishList.push(dishId.ext_1.module_id);
+        // });
 
-        console.log("dishList is: ", dishList);
-        // Get dishes data
-        const finalList = await this.getDishesFromId(dishList);
+        // console.log("dishList is: ", dishList);
+        // // Get dishes data
+        // const finalList = await this.getDishesFromId(dishList);
         console.log("FinalList is: ", finalList);
         return finalList;
       }
@@ -253,11 +308,15 @@ export default {
         this.totalPages = 0;
         return [];
       }
-      const response = await axios.get(process.env.BASE_URL + "all-dishes", {
+      const response = await axios.get(process.env.BASE_URL + "dish", {
         params: {
           id: idList,
           filter: `title icontains "${this.searchInput}" OR description icontains "${this.searchInput}" OR aditionalTags icontains "${this.searchInput}"`,
           pageID: this.currentPage,
+        },
+        headers: {
+          "X-RCMS-API-ACCESS-TOKEN":
+            "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
         },
       });
       this.totalPages = response.data.pageInfo.totalPageCnt;
@@ -274,6 +333,15 @@ export default {
         console.log("category is now " + this.category);
       }
       await this.reset();
+    },
+    getCategoryStyle(category) {
+      if (category === "all" && this.category === "") {
+        return "transform: translate(0px, -3px);";
+      } else if (category === this.category) {
+        return "transform: translate(0px, -3px);";
+      } else {
+        return "";
+      }
     },
     async setSearch() {
       console.log("setSearch called");
@@ -395,7 +463,7 @@ a {
   flex-direction: row;
   justify-content: center;
   .category {
-    padding: 2px 6px;
+    padding: 2px 8px;
     background-color: #ffd8d8;
     border-radius: 100vmax;
     margin: 4px;
@@ -403,8 +471,9 @@ a {
     font-family: "Poppins", sans-serif;
     font-weight: bold;
     cursor: pointer;
+    transition: all 0.1s ease-in-out;
     &:hover {
-      background-color: #ffe6eb;
+      box-shadow: inset 0px 0px 8px rgba(170, 170, 170, 0.2);
     }
   }
 }
@@ -439,6 +508,7 @@ a {
       background-color: $primary-color;
       border-radius: 8px;
       margin: 2px 2px;
+
       &:hover {
         box-shadow: #d8ffff 0px 0px 6px;
       }

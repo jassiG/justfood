@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { BASE_URL } = process.env;
+const { ACCESS_TOKEN} = process.env;
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -66,9 +67,11 @@ export default {
     '@/assets/css/main.scss'
   ],
   privateRuntimeConfig: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL,
+    accessToken: process.env.ACCESS_TOKEN
   },
   env: {
-    BASE_URL
+    BASE_URL,
+    ACCESS_TOKEN
   },
 }

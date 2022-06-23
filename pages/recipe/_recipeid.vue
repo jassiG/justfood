@@ -51,16 +51,17 @@ export default {
   methods: {
     async getDish() {
       try {
-        // REMOVE THIS LINE POSITIVELY WHEN DONE!!
-        if (!process.env.BASE_URL) {
-          process.env.BASE_URL =
-            "https://sample-jassi.g.kuroco.app/rcms-api/5/";
-          console.log("still requires BASE_URL hack");
-        }
         const response = await axios.get(
-          process.env.BASE_URL + "get-dish/" + this.$route.params.recipeid
+          process.env.BASE_URL + "dish/" + this.$route.params.recipeid,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // required to post file as a binary
+              "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+            },
+          }
         );
         this.dish = response.data.details;
+        console.log(this.dish);
         this.tags = this.dish.tag;
       } catch (error) {
         console.log(error);

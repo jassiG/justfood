@@ -12,6 +12,7 @@
         </div>
         <div class="feedback">Send you love and feedback</div>
         <div class="email">support@yettocomecompany.com</div>
+        <div class="button">Buy Me a coffee 🍵</div>
       </div>
     </div>
   </div>
@@ -102,7 +103,26 @@ a {
         font-family: "Poppins", sans-serif;
         font-size: 12px;
         font-weight: 100;
-        margin: 5px 0px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+      }
+      .button {
+        background-color: $secondary-color;
+        border: none;
+        padding: 10px 26px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 4px 2px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+        transition: all 0.1s ease-in-out;
+        &:hover {
+          transform: translate(0, 2px);
+        }
+        cursor: pointer;
       }
     }
   }

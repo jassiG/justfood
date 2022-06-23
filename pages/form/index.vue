@@ -3,13 +3,12 @@
     <Navbar />
     <div class="navbar-spacing"></div>
     <!-- <h1>Form page</h1> -->
-
     <form v-if="!submitted" ref="form" @submit.prevent="handleOnSubmit2">
-      <div v-if="error" class="error">
+      <!-- <div v-if="error" class="error">
         <p v-for="(err, idx) in error" :key="idx">
           {{ err.message }}
         </p>
-      </div>
+      </div> -->
       <div class="form-container">
         <div class="form-title">Submit Your Recipe</div>
         <div class="description">
@@ -21,8 +20,8 @@
         </div>
 
         <!-- Input Fields -->
-        <div class="row--form">
-          <!-- <h2>[{{ col.title }}]</h2> -->
+
+        <div class="input-row">
           <input
             v-model="form.title"
             name="title"
@@ -37,15 +36,20 @@
             placeholder="Description"
             required
           />
-          <textarea
-            v-model="form.mainContent"
+        </div>
+        <!-- <div class="input-row"> -->
+        <!-- <textarea
             name="mainContent"
             type="text"
             placeholder="Instructions"
             rows="30"
-            cols="90"
             required
-          />
+          /> -->
+        <div class="editor">
+          <editor v-model="form.mainContent" />
+        </div>
+        <!-- </div> -->
+        <div class="input-row">
           <input
             name="dishImage"
             type="file"
@@ -87,64 +91,75 @@
             <label for="hard">Hard</label>
           </div>
         </div>
-        <div v-for="i in num_ingredients" class="ingrediens">
-          <input
-            v-model="form.ingredient[i - 1]"
-            :name="'ingredient[' + i + '][ingredient]'"
-            type="text"
-            :placeholder="'ingredient ' + i"
-          />
-          <input
-            v-model="form.amount[i - 1]"
-            :name="'ingredient[' + i + '][amount]'"
-            type="text"
-            placeholder="Amount"
-          />
-        </div>
-        <div class="ingredient-buttons">
-          <button type="button" @click="changeIngredient('+')">Add</button>
-          <button type="button" @click="changeIngredient('-')">Remove</button>
-        </div>
-        <div v-for="i in num_tags" class="tags">
-          <input
-            v-model="form.aditionalTags[i - 1]"
-            :name="'aditionalTags[' + i + ']'"
-            type="text"
-            :placeholder="'Tag ' + i"
-          />
-        </div>
-        <div class="tag-buttons">
-          <button type="button" @click="changeTag('+')">Add</button>
-          <button type="button" @click="changeTag('-')">Remove</button>
+        <div class="input-row full-stretch">
+          <div class="input-column">
+            <div v-for="i in num_ingredients" class="ingrediens">
+              <input
+                v-model="form.ingredient[i - 1]"
+                :name="'ingredient[' + i + '][ingredient]'"
+                type="text"
+                :placeholder="'ingredient ' + i"
+              />
+              <input
+                v-model="form.amount[i - 1]"
+                :name="'ingredient[' + i + '][amount]'"
+                type="text"
+                placeholder="Amount"
+              />
+            </div>
+            <div class="ingredient-buttons">
+              <button type="button" @click="changeIngredient('+')">Add</button>
+              <button type="button" @click="changeIngredient('-')">
+                Remove
+              </button>
+            </div>
+          </div>
+          <div class="input-column">
+            <div v-for="i in num_tags" class="tags">
+              <input
+                v-model="form.aditionalTags[i - 1]"
+                :name="'aditionalTags[' + i + ']'"
+                type="text"
+                :placeholder="'Tag ' + i"
+              />
+            </div>
+            <div class="tag-buttons">
+              <button type="button" @click="changeTag('+')">Add</button>
+              <button type="button" @click="changeTag('-')">Remove</button>
+            </div>
+          </div>
         </div>
 
         <!-- Control Buttons -->
-        <div class="row--bottom-next">
+        <div class="button-row">
+          <div class="button">
+            <NuxtLink to="/"> Home </NuxtLink>
+          </div>
           <button @click="handleOnSubmit2">submit</button>
-          <NuxtLink to="/"> Home </NuxtLink>
+        </div>
+        <div v-if="error" class="error">
+          <p>Please fill the entire form appropriately.</p>
         </div>
       </div>
     </form>
-
     <form v-else>
-      <div class="row--status">
-        <h2>Inquiry ID</h2>
-        <div>
-          {{ submittedId }}
-        </div>
-      </div>
+      <div class="navbar-spacing"></div>
 
-      <div class="row--status">
-        <h2>Thank you message</h2>
-        <div>
-          <p v-for="(line, idx) in textLines2texts(thanksText)" :key="idx">
-            {{ line }}
-          </p>
+      <div class="success">
+        <img src="../../assets/party.png" width="200px" alt="" />
+        <div class="thank-you">
+          <h2>Your Recipe Has Been Submitted.</h2>
+          <div class="thank-you-subtitle">
+            <p>Thank You! We will keep it in our cookbook (●'◡'●)</p>
+          </div>
         </div>
-      </div>
-
-      <div class="row--bottom-back">
-        <button @click="handleOnBack">back</button>
+        <div></div>
+        <div class="inquiry-id">
+          <h2>Inquiry ID: {{ submittedId }}</h2>
+        </div>
+        <div class="button">
+          <NuxtLink to="/"> Home </NuxtLink>
+        </div>
       </div>
     </form>
     <div class="footer-spacing"></div>
@@ -153,9 +168,11 @@
 </template>
 
 <script>
-const FORM_ID = 3; // ID of the form
-
+import Editor from "../../components/Editor.vue";
 export default {
+  components: {
+    Editor,
+  },
   data: () => {
     return {
       submitted: false,
@@ -200,6 +217,8 @@ export default {
         {
           headers: {
             "Content-Type": "multipart/form-data", // required to post file as a binary
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         }
       );
@@ -208,6 +227,7 @@ export default {
     },
     async handleOnSubmit2(e) {
       e.preventDefault();
+      // console.log("Form main content: ", this.form.mainContent);
       // Additional Processing
       switch (this.form.difficulty.label) {
         case "Easy":
@@ -226,20 +246,19 @@ export default {
       }
       this.form.subject = this.form.title;
       this.form.timeInMinutes = parseInt(this.form.timeInMinutes);
-      // this.form.ingredient.map((ingredient) => {
-      //   ingredient =
-      //     "{ ingredient: " +
-      //     ingredient.ingredient +
-      //     ", amount: " +
-      //     ingredient.amount +
-      //     "}";
-      // });
+
       console.log("Handle Submit Final Form: ", this.form);
       try {
         // post data
         const { id } = await this.$axios.$post(
-          process.env.BASE_URL + `post-dish`,
-          this.form
+          process.env.BASE_URL + `dish/create`,
+          this.form,
+          {
+            headers: {
+              "X-RCMS-API-ACCESS-TOKEN":
+                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            },
+          }
         );
         this.error = null;
         this.submittedId = id;
@@ -268,35 +287,6 @@ export default {
         this.form.aditionalTags.pop();
       }
     },
-    textLines2texts(textLines = "") {
-      return textLines.split("\r\n");
-    },
-    // async handleOnSubmit(e) {
-    //   e.preventDefault();
-
-    //   // collect input elements
-    //   const formInputElements = Array.from(this.$refs.form.elements).filter(
-    //     (elm) => elm.tagName.toLowerCase() === "input"
-    //   );
-
-    //   // transform key:value inputs to an object
-    //   const body = formInputElements
-    //     .map((elm) => ({ [elm.name]: elm.value }))
-    //     .reduce((prev, cur) => ({ ...prev, ...cur }), {});
-
-    //   try {
-    //     // post data
-    //     const { id } = await this.$axios.$post(
-    //       process.env.BASE_URL + `recipe-form?id=${FORM_ID}`,
-    //       body
-    //     );
-    //     this.error = null;
-    //     this.submittedId = id;
-    //     this.submitted = true;
-    //   } catch (e) {
-    //     this.error = [`${e}`, ...e.response.data.errors];
-    //   }
-    // },
     handleOnBack(e) {
       e.preventDefault();
       this.submitted = false;
@@ -307,23 +297,81 @@ export default {
 
 <style scoped lang="scss">
 .body {
+  min-height: 100vh;
   position: relative;
 }
+
 .footer-spacing {
   height: 150px;
 }
-input {
+
+button {
+  background-color: $secondary-color;
   border: none;
-  flex-grow: 1;
+  padding: 10px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: translate(0, 2px);
+  }
+  cursor: pointer;
 }
-.navbar-spacing {
-  height: 60px;
+.button {
+  background-color: $secondary-color;
+  border: none;
+  padding: 10px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    transform: translate(0, 2px);
+  }
+  cursor: pointer;
 }
 .error {
   color: rgb(223, 87, 87);
+  font-size: 0.8em;
+  text-align: center;
 }
 textarea {
   resize: none;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  .thank-you {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem;
+    text-align: center;
+    .thank-you-subtitle {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #4d4a52;
+    }
+  }
+  .inquiry-id {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #99979c;
+    margin-bottom: 1rem;
+  }
 }
 
 .form-container {
@@ -351,6 +399,80 @@ textarea {
     color: #625f66;
     font-family: "Poppins", sans-serif;
     margin-bottom: 10px;
+  }
+  input {
+    border: none;
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 0.25rem;
+    // margin: 4px;
+    background-color: #fff4f5;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+  }
+  .navbar-spacing {
+    height: 60px;
+  }
+  .editor {
+    border: none;
+    box-sizing: border-box;
+    flex-grow: 1;
+    // width: 100%;
+    padding: 0.25rem;
+    // margin: 2px;
+    background-color: #fff4f5;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+  }
+  textarea {
+    border: none;
+    box-sizing: border-box;
+    flex-grow: 1;
+    // width: 100%;
+    padding: 0.25rem;
+    // margin: 2px;
+    background-color: #fff4f5;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+  }
+  .input-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    gap: 10px;
+    input {
+      min-height: 20px;
+      // margin-inline: 4px;
+      // max-width: 120px;
+    }
+  }
+  .input-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    gap: 10px;
+    input {
+      min-height: 20px;
+      min-width: 160px;
+      // margin-inline: 4px;
+      // max-width: 120px;
+    }
+    button {
+      width: 80px;
+      padding: 10px;
+    }
+  }
+  .button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+  .full-stretch {
+    align-items: stretch;
   }
 }
 

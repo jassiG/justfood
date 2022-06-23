@@ -12,6 +12,8 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/markdownit": "^2.0.0",
+    "@tiptap/starter-kit": "^2.0.0-beta.189",
+    "@tiptap/vue-2": "^2.0.0-beta.83",
     "core-js": "^3.19.3",
     "markdown-it-attrs": "^4.1.4",
     "markdown-it-div": "^1.1.0",
