@@ -172,7 +172,7 @@ export default {
   // fetchDelay: 500,
   methods: {
     async getDishes() {
-      console.log("getDishes called");
+      // console.log("getDishes called");
       if (this.category === "") {
         let lol;
         [lol, this.topDishes] = await Promise.all([
@@ -187,7 +187,7 @@ export default {
       }
     },
     async getDishesWithoutTop() {
-      console.log("getDishes called");
+      // console.log("getDishes called");
       if (this.category === "") {
         await this.getAllDishes();
       } else {
@@ -195,7 +195,7 @@ export default {
       }
     },
     async getAllDishes() {
-      console.log("getAllDishes called");
+      // console.log("getAllDishes called");
       try {
         let tempQuery = "";
         if (this.searchInput !== "") {
@@ -226,7 +226,7 @@ export default {
     },
 
     async getDishesByCategory(category = this.category) {
-      console.log("getDishesByCategory called for category: " + category);
+      // console.log("getDishesByCategory called for category: " + category);
       // Get dishes Ids
       this.currentPage = 1;
       let response;
@@ -294,7 +294,7 @@ export default {
     },
     async getDishesFromId(idList = []) {
       if (idList.length === 0) {
-        console.log("idList is empty");
+        // console.log("idList is empty");
         this.totalPages = 0;
         return [];
       }
@@ -321,12 +321,12 @@ export default {
 
     // Helper Functions
     async setCategory(category) {
-      console.log("setCategory called");
+      // console.log("setCategory called");
       if (category === "all") {
         this.category = "";
       } else {
         this.category = category;
-        console.log("category is now " + this.category);
+        // console.log("category is now " + this.category);
       }
       await this.reset();
     },
@@ -340,12 +340,12 @@ export default {
       }
     },
     async setSearch() {
-      console.log("setSearch called");
+      // console.log("setSearch called");
       this.currentPage = 1;
       this.getDishesWithoutTop();
     },
     async reset() {
-      console.log("reset called");
+      // console.log("reset called");
       this.searchInput = "";
       this.currentPage = 1;
       this.getDishesWithoutTop();
@@ -380,11 +380,11 @@ export default {
       }
     },
     async changePage(page) {
-      console.log(
-        "changePage called for page: " + page,
-        "currentPage: ",
-        this.currentPage
-      );
+      // console.log(
+      //   "changePage called for page: " + page,
+      //   "currentPage: ",
+      //   this.currentPage
+      // );
       page = page < 1 ? 1 : page;
       page = page > this.totalPages ? this.totalPages : page;
       if (this.currentPage === page) {
