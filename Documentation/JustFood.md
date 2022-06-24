@@ -1,10 +1,27 @@
 # JustFood
 
+## Contents
+
+- Getting Started
+- Adding COntent Structure
+- Adding Content
+- Register an API
+- Adding Endpoints
+- Building Home UI
+- Adding Filters and Categories
+- Styling
+- Image Processing
+- Adding Recipe Submission Form
+- Other Common Problems
+- Problems That are Yet to be Resolved
+
 # Getting Started
 
 [Follow along this guide](https://kuroco.app/docs/tutorials/beginners-guide/)
 
 ## Setup the environment
+
+[Use this guide as a reference](https://kuroco.app/docs/tutorials/beginners-guide/)
 
 ### Install Nuxt.js
 
@@ -97,7 +114,7 @@ Now you can see your site by clicking this button on the bottom of the kuroco da
 
 ![](images/Pastedimage20220622192640.png)
 
-## Adding Content Structure
+# Adding Content Structure
 
 click on content structure
 
@@ -130,7 +147,7 @@ Once you have added the content structure, note down it's ID, It will be useful 
 
 **This ID is called topic_group_id in many parts of the kuroco dashboard, and it is required for content API calls.**
 
-## Adding Content
+# Adding Content
 
 Now that we have added the content structure, we can now add the content itself, to do this, jst click on the content structure in the content tab:
 
@@ -161,7 +178,7 @@ I am getting recipe data from Luke Smith's amazing cooking website [Based Cookin
 
 ![](images/Pastedimage20220622191941.png)
 
-## Register an API
+# Register an API
 
 click on default API and then click on the Add button on the top right to make a new API.
 
@@ -196,7 +213,7 @@ these values are:
 Also add GET, POST, and OPTIONS methods in the second field.
 **Caution: Do not add forward slash "/" at the end of these URLs.**
 
-## Adding Endpoints
+# Adding Endpoints
 
 ### Main Endpoint
 
@@ -312,7 +329,7 @@ If I split every 12 results, what are the chances that I will get 3 top recipes 
 **Solution:**
 search for different categories seperately. This way, we can have different recipe lists for top and other recipes.
 
-## Building Home UI with the API Responses
+# Building Home UI with the API Responses
 
 Now that we have the APIs, we can start building the homepage.
 First we will have to fetch and store the data.
@@ -463,7 +480,7 @@ This is how it looks:
 
 ![](images/Pastedimage20220624113014.png)
 
-## Adding Filters, Categories in Home Page
+# Adding Filters, Categories in Home Page
 
 ### Getting top Dishes:
 
@@ -525,7 +542,7 @@ difficultyDict: {
 },
 ```
 
-## Styling
+# Styling
 
 ```CSS
 display: flex;
@@ -593,7 +610,7 @@ form textarea {
 }
 ```
 
-## Image Processing Using Kuroco
+# Image Processing Using Kuroco
 
 We should optimize ever image asset that you are using for the website to keep it fast and responsive. To do this, we can get help from the built-in Image processing functionalities of Kuroco.
 I found this guide to prrocess images dynamically using kuroco
@@ -608,7 +625,7 @@ using `?width=300&height=200&fit=cover` querry doesn't work because `fit` query 
 
 only use height and fit.
 
-## Adding Recipe Submission Form
+# Adding Recipe Submission Form
 
 Setup the API endpoint:
 
@@ -910,7 +927,7 @@ You should add `type="button"` to your `<button>`.
 
 If you don't specify a `type` of a `<button>` in a `<form>`, it will behave like a submit button by default, which refreshes the page.
 
-## Other Common Problems
+# Other Common Problems
 
 ### Why was I getting undefined in place of my baseUrl
 
@@ -964,7 +981,7 @@ Whenever swagger UI show you this error, most likely ou will need to enable some
 
 ![](images/Pastedimage20220620003219.png)
 
-## Problems That Are Yet to Be Resolved
+# Problems That Are Yet to Be Resolved
 
 ### Post, Login, Update Problem
 
@@ -986,9 +1003,3 @@ I am getting this error
 
 unknown middleware: auth;
 It's not showing this error anymore but now it's freezing the entire web app
-
-### Links That Helped
-
-https://github.com/LukeSmithxyz/based.cooking
-
-https://dev.to/paramo/using-sass-global-variables-in-nuxt-js-j0k
