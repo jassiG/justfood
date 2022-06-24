@@ -231,30 +231,10 @@ export default {
       this.currentPage = 1;
       let response;
       if (category === "top") {
-        const dishResponse = await axios.get(
-          process.env.BASE_URL + `get-${category}`,
-          {
-            params: {
-              pageID: 1,
-            },
-            headers: {
-              "X-RCMS-API-ACCESS-TOKEN":
-                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-            },
-          }
-        );
-        response = dishResponse.data.list;
-        let dishList = [];
-        response.forEach((dishId, index) => {
-          dishList.push(dishId.ext_1.module_id);
-        });
-        if (dishList.length === 0) {
-          return [];
-        }
         // Get dishes data
         const finalList = await axios.get(process.env.BASE_URL + "dish", {
           params: {
-            id: dishList,
+            tag_id: [4],
             pageID: 1,
           },
           headers: {
@@ -276,7 +256,7 @@ export default {
             params: {
               // filter by keyword is not working in kuroco, doing it the simple way
               filter: `${tempQuery}
-                    contents_type = ${this.category_dict[category]}`,
+                    contents_type = ${[this.category_dict[category]]}`,
               pageID: this.currentPage,
             },
             headers: {
