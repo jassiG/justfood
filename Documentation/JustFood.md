@@ -106,6 +106,7 @@ click on content structure
 You will get different type of content structures, these define the structure of your data.
 
 ![](images/Pastedimage20220622190341.png)
+
 You can add your own content structure by clicking on the `Add` button in the top-right.
 You can now type the name, description etc of your content structure.
 
@@ -402,7 +403,7 @@ Some other functions are used as well but theyy all share the same flow.
 we can set categories by setting a category variable and using a category dictionary.
 
 ```json
-category: ""
+category: "",
 category_dict: {
 	all: 0,
 	indian: 26,
@@ -480,6 +481,15 @@ Follow the same procedure, give thr recipe a category and filter by it's id
 
 ![](images/Pastedimage20220624075555.png)
 
+#### Previous Approach:
+
+Filtering by contents type.
+e.g. content type for `mexican category` is 34.
+
+![](images/Pastedimage20220623203914.png)
+
+**Problem With this Approach:** this was not working. Seems like we can't use this column for filtering.
+
 ### Filter By Recipe Time
 
 Add a range input, and bind it with a data (`cookTime`) with v-model:
@@ -500,7 +510,7 @@ Add a range input, and bind it with a data (`cookTime`) with v-model:
 now we can search through all dishes with an additional filter:
 
 ```json
-filter: `timeInMinutes <= ${cookTime}`
+filter: "timeInMinutes <= ${cookTime}"
 ```
 
 ### Filter By Difficulty
@@ -627,7 +637,7 @@ After testing, I changed it with an environment variable for securit reasons.
 
 ![](images/Pastedimage20220624092945.png)
 
-```json
+```js
 headers: {
 	"X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
 },
@@ -771,29 +781,29 @@ Now you would be able to use `v-model` with the editor.
 
 we can use v-model to connect the form inputs and our data variables. Let's sa ouur form data is this:
 
-```json
+```js
 form: {
-        subject: "",
-        contents_type: 18,
-        topics_flg: 1,
-        contents: "",
-        title: "",
-        description: "",
-        mainContent: "",
-        dishImage: {
-          file_id: "",
-          file_nm: "",
-          desc: "",
-        },
-        timeInMinutes: "",
-        difficulty: {
-          key: "",
-          label: "",
-        },
-        ingredient: [""],
-        amount: [""],
-        aditionalTags: [""],
-      },
+  subject: "",
+  contents_type: 18,
+  topics_flg: 1,
+  contents: "",
+  title: "",
+  description: "",
+  mainContent: "",
+  dishImage: {
+    file_id: "",
+    file_nm: "",
+    desc: "",
+  },
+  timeInMinutes: "",
+  difficulty: {
+    key: "",
+    label: "",
+  },
+  ingredient: [""],
+  amount: [""],
+  aditionalTags: [""],
+},
 ```
 
 Now we can update it's values using v-model, i.e:
@@ -967,6 +977,7 @@ whenever I am submitting a form or trying to login through the api, it gives me 
 I was following keyword search and I got stuck in a step
 
 ![](images/Pastedimage20220620011956.png)
+
 I am getting this error
 
 ![](images/Pastedimage20220620012020.png)
@@ -976,102 +987,8 @@ I am getting this error
 unknown middleware: auth;
 It's not showing this error anymore but now it's freezing the entire web app
 
-# References
-
 ### Links That Helped
 
 https://github.com/LukeSmithxyz/based.cooking
 
 https://dev.to/paramo/using-sass-global-variables-in-nuxt-js-j0k
-
-## Scribble Area
-
-![](images/Pastedimage20220623044435.png)
-
-![](images/Pastedimage20220623044445.png)
-
-Filtering by contents type.
-e.g. content type for `mexican category` is 34.
-
-![](images/Pastedimage20220623203914.png)
-**Problem:** this is not working. seems like we can't use this column in filtering.
-
-# Graveyard
-
-# Initial Design phase
-
-**This was my initial plan for the project, It has been changed dramatically but it shows my initial thaought process so I am leaving it here. Start from Current Design**
-
-## First Design
-
-![](images/Pastedimage20220622183403.png)
-
-![](images/Pastedimage20220622183406.png)
-
-## API endpoints and Routes
-
-1. /all-recipes: provide all recipes
-2. /top-picks: provide top 3 recommended dishes
-3. /recipe/id: provide the main content of a specific recipe (I may merge it with all-recipes because it only provides one extra data)
-
-recipee datastructure that was proposed suring project planning:
-
-```JSON
-{
-	'id': 'recipe id'
-	'image': 'recipe image link',
-	'title': 'recipe title',
-	'timeRequired': 'time neede to follow the recipe in seconds',
-	'difficulty': 'recipe difficulty',
-	'description': 'a short recipe description',
-	'mainContent': 'main content of the recipe itself'
-}
-```
-
-## Current Data Structure (Now Not Used)
-
-It's a relational database.
-
-![](images/Pastedimage20220621225043.png)
-
-**ScreenShots of relational Data Categories and Fields:**
-
-![](images/Pastedimage20220622171155.png)
-
-![](images/Pastedimage20220622171055.png)
-
-![](images/Pastedimage20220622171058.png)
-
-### Using post processing to give only requierd data in responce
-
-I am only giving `ext_1` column in the response which only contains recipe id in main databse. To do this just add `list.ext_1` variable in the Post Processing Whitelist of the API enndpoint.
-
-![](images/Pastedimage20220623013037.png)
-
-### Splitting All dishes into different Categories
-
-I am storing the recipes in different topic groups. These groups will contain recipes as relational data. It will prevent extra data storage and the data will be easier to handle due to a single repository.
-
-Then if I need to display one category, I will call the api (e.g. `get-indian` api ), which wil give me this type of response:
-
-```json
-{
-  "list": [
-    {
-      "ext_1": {
-        "module_id": 11,
-        "module_type": "topics"
-      }
-    }
-  ]
-}
-```
-
-now I will store all the `module_id` in an array and wil fire up the `all-dishes` api.
-~~While calling the api, I will also apply this API filter
-`id in array_containing_module_id`
-This will return the dishes which have the id in the given array.~~
-I found out about a better approach:
-
-![](images/Pastedimage20220622025234.png)
-I only have to pass the id and it will give me the required data.
