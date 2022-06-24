@@ -54,11 +54,6 @@
           >
             {{ cat }}
           </div>
-          <!-- <div class="category" @click="setCategory('Indian')">Indian</div>
-          <div class="category" @click="setCategory('English')">English</div>
-          <div class="category" @click="setCategory('Japanese')">Japanese</div>
-          <div class="category" @click="setCategory('French')">French</div>
-          <div class="category" @click="setCategory('Mexican')">Mexican</div> -->
         </div>
         <div v-if="totalPages === 0" class="sad">
           <svg viewBox="0 0 64 64">
@@ -167,8 +162,6 @@
 import axios from "axios";
 export default {
   name: "Home",
-  // components: { Navbar, Heading, Explore },
-  // middleware: "auth",
   data() {
     return {
       dishes: [],
@@ -205,7 +198,6 @@ export default {
   // fetchDelay: 500,
   methods: {
     async getDishes() {
-      console.log("getDishes called");
       if (this.category === "") {
         let lol;
         [lol, this.topDishes] = await Promise.all([
