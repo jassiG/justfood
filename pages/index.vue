@@ -222,31 +222,30 @@ export default {
       this.currentPage = 1;
       let response;
       if (category === "top") {
-        // const dishResponse = await axios.get(
-        //   process.env.BASE_URL + `get-${category}`,
-        //   {
-        //     params: {
-        //       pageID: 1,
-        //     },
-        //     headers: {
-        //       "X-RCMS-API-ACCESS-TOKEN":
-        //         "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-        //     },
-        //   }
-        // );
-        // response = dishResponse.data.list;
-        // let dishList = [];
-        // response.forEach((dishId, index) => {
-        //   dishList.push(dishId.ext_1.module_id);
-        // });
-        // if (dishList.length === 0) {
-        //   return [];
-        // }
+        const dishResponse = await axios.get(
+          process.env.BASE_URL + `get-${category}`,
+          {
+            params: {
+              pageID: 1,
+            },
+            headers: {
+              "X-RCMS-API-ACCESS-TOKEN":
+                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            },
+          }
+        );
+        response = dishResponse.data.list;
+        let dishList = [];
+        response.forEach((dishId, index) => {
+          dishList.push(dishId.ext_1.module_id);
+        });
+        if (dishList.length === 0) {
+          return [];
+        }
         // Get dishes data
         const finalList = await axios.get(process.env.BASE_URL + "dish", {
           params: {
-            // id: dishList,
-            filter: `contents_type = 30 OR contents_type_2 = 30 OR contents_type_3 = 30`,
+            id: dishList,
             pageID: 1,
           },
           headers: {
@@ -277,29 +276,6 @@ export default {
           console.log(e.message);
         }
         return;
-        // const dishResponse = await axios.get(
-        //   process.env.BASE_URL + `get-${category}`,
-        //   {
-        //     params: {
-        //       pageID: this.currentPage,
-        //     },
-        //     headers: {
-        //       "X-RCMS-API-ACCESS-TOKEN":
-        //         "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-        //     },
-        //   }
-        // );
-        // response = dishResponse.data.list;
-        // let dishList = [];
-        // response.forEach((dishId, index) => {
-        //   dishList.push(dishId.ext_1.module_id);
-        // });
-
-        // console.log("dishList is: ", dishList);
-        // // Get dishes data
-        // const finalList = await this.getDishesFromId(dishList);
-        console.log("FinalList is: ", finalList);
-        return finalList;
       }
     },
     async getDishesFromId(idList = []) {

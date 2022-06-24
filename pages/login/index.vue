@@ -9,10 +9,12 @@
     />
     <button type="submit">Login</button>
     <div><nuxt-link to="/About">About</nuxt-link></div>
+    <button type="button" @click="logout">Logout</button>
   </form>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   //   middleware: "auth",
   data() {
@@ -38,18 +40,16 @@ export default {
   },
   methods: {
     async login() {
-      // Dummy request(Succeed/fail after 1 sec.)
-      const shouldSuccess = true;
-      const request = new Promise((resolve, reject) =>
-        setTimeout(
-          () => (shouldSuccess ? resolve() : reject(Error("login failure"))),
-          1000
-        )
-      );
-
       try {
-        await request;
-        this.$store.commit("setProfile", { profile: {} });
+        const payload = {
+          email: this.email,
+          password: this.password,
+        };
+        await this.$store.dispatch("login", payload, {
+          // headers: {
+          //   "Access-Control-Allow-Origin": "*",
+          // },
+        });
         this.loginStatus = "success";
         this.resultMessage = "Login successful";
       } catch (e) {
@@ -57,6 +57,7 @@ export default {
         this.resultMessage = "Login failed";
       }
     },
+    ...mapActions(["logout"]),
   },
 };
 </script>
