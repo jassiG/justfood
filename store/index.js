@@ -19,7 +19,7 @@ export const mutations = {
         },
             setAccessTokenOnRequestHeader (state, { rcmsApiAccessToken }) {
                 this.$axios.defaults.headers.common = {
-                    'X-RCMS-API-ACCESS-TOKEN': rcmsApiAccessToken
+                    'X-RCMS-API-ACCESS-TOKEN': "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d"
                 }
     }
 }

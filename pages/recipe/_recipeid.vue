@@ -56,7 +56,7 @@ export default {
           {
             headers: {
               "Content-Type": "multipart/form-data", // required to post file as a binary
-              "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+              "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
             },
           }
         );

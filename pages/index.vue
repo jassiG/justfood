@@ -235,7 +235,7 @@ export default {
             pageID: this.currentPage,
           },
           headers: {
-            "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+            "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         if (!this.dishes) {
@@ -262,7 +262,7 @@ export default {
             pageID: 1,
           },
           headers: {
-            "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+            "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         return finalList.data.list;
@@ -287,7 +287,7 @@ export default {
               pageID: this.currentPage,
             },
             headers: {
-              "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+              "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
             },
           });
           this.totalPages = response.data.pageInfo.totalPageCnt;
@@ -317,7 +317,7 @@ export default {
           pageID: this.currentPage,
         },
         headers: {
-          "X-RCMS-API-ACCESS-TOKEN": process.env.ACCESS_TOKEN,
+          "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
         },
       });
       this.totalPages = response.data.pageInfo.totalPageCnt;
