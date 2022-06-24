@@ -52,10 +52,10 @@ git push -u origin main
 ### Integrate GitHub into Kuroco
 
 To integrate GitHub, go to the Kuroco admin panel and click [KurocoFront] -> [GitHub] in the left sidebar panel.
-![](images/Pasted image 20220622185223.png)
+![](images/Pastedimage20220622185223.png)
 And click Authorize GitHub repository, here you give access authorization of your project repo.
 After this step, click on Update and you're done.
-![](images/Pasted image 20220622185408.png)
+![](images/Pastedimage20220622185408.png)
 
 ### Deploy your code
 
@@ -81,54 +81,54 @@ Now add these lines in `kuroco_front.json` file:
 this file is use to set basic auth and IP restrictions.
 
 Now for `/.github/workflows/build.yaml`, copy this string from the previous menu:
-![](images/Pasted image 20220622185533.png)
+![](images/Pastedimage20220622185533.png)
 
 After this, you can push the changes into github and the workflow will run automatically.
 
 Now you can see your site by clicking this button on the bottom of the kuroco dashboard screen:
-![](images/Pasted image 20220622185734.png)
+![](images/Pastedimage20220622185734.png)
 
 **So far we have followed this flow to integrate Github into Kuroco:**
-![](images/Pasted image 20220622192640.png)
+![](images/Pastedimage20220622192640.png)
 
 ## Adding Content Structure
 
 click on content structure
-![](images/Pasted image 20220622190258.png)
+![](images/Pastedimage20220622190258.png)
 ou will get different type of content structures, these define the structure of your data.
-![](images/Pasted image 20220622190341.png)
+![](images/Pastedimage20220622190341.png)
 You can add your own content structure by clicking on the `Add` button in the top-right.
 You can now type the name, description etc of your content structure.
-![](images/Pasted image 20220622190540.png)
+![](images/Pastedimage20220622190540.png)
 You can add content items using the Add button here
-![](images/Pasted image 20220622190622.png)
+![](images/Pastedimage20220622190622.png)
 
 You can add different type of items in this list, e.g.:
-![](images/Pasted image 20220622190723.png)
+![](images/Pastedimage20220622190723.png)
 
 You can also specify the parent of the items, just add a parent item in the list, update the whole document using the `update` button. and then while adding a new item, you can add the parent item using the dropdown in the first column:
-![](images/Pasted image 20220622190908.png)
+![](images/Pastedimage20220622190908.png)
 
 Once you have added the content structure, note down it's ID, It will be useful for the next steps:
-![](images/Pasted image 20220622191018.png)
+![](images/Pastedimage20220622191018.png)
 **This ID is called topic_group_id in many parts of the kuroco dashboard, and it is required for content API calls.**
 
 ## Adding Content
 
 Now that we have added the content structure, we can now add the content itself, to do this, jst click on the content structure in the content tab:
-![](images/Pasted image 20220622191235.png)
+![](images/Pastedimage20220622191235.png)
 
 You will see an empty list in first, but we will add content and make look like this:
-![](images/Pasted image 20220622191245.png)
+![](images/Pastedimage20220622191245.png)
 
 To do this, just click on the add button, and add relevent information in the data fields.
-![](images/Pasted image 20220622191403.png)
-![](images/Pasted image 20220622191406.png)
-![](images/Pasted image 20220624095308.png)
+![](images/Pastedimage20220622191403.png)
+![](images/Pastedimage20220622191406.png)
+![](images/Pastedimage20220624095308.png)
 
 You have now added content to your content structure.
 These contents also have their own id:
-![](images/Pasted image 20220622191846.png)
+![](images/Pastedimage20220622191846.png)
 
 #### Data Source:
 
@@ -136,25 +136,25 @@ I am getting recipe data from Luke Smith's amazing cooking website [Based Cookin
 
 **Remember, content structure is like a blueprint to your actual content. ou can use the content structure id to access the entire list of content under that structure**
 
-![](images/Pasted image 20220622191941.png)
+![](images/Pastedimage20220622191941.png)
 
 ## Register an API
 
 click on default API and then click on the Add button on the top right to make a new API.
-![](images/Pasted image 20220622192752.png)
-![](images/Pasted image 20220622192837.png)
+![](images/Pastedimage20220622192752.png)
+![](images/Pastedimage20220622192837.png)
 
 Enter the relevent details:
-![](images/Pasted image 20220622192936.png)
+![](images/Pastedimage20220622192936.png)
 This will make a new api.
 Click on security
-![](images/Pasted image 20220622193010.png)
+![](images/Pastedimage20220622193010.png)
 And set cookies as auth method
-![](images/Pasted image 20220622193036.png)
+![](images/Pastedimage20220622193036.png)
 Open CORS menu
-![](images/Pasted image 20220622193055.png)
+![](images/Pastedimage20220622193055.png)
 And add these details:
-![](images/Pasted image 20220622193231.png)
+![](images/Pastedimage20220622193231.png)
 these values are:
 `http://localhost:3000`
 `https://YOUR-SITE.g.kuroco-front.app`
@@ -167,17 +167,17 @@ Also add GET, POST, and OPTIONS methods in the second field.
 
 this will give us the list of all recipes (we will need the topic_group_id of our list).
 click on `New Endpoint` and fill this info:
-![](images/Pasted image 20220624095016.png)
+![](images/Pastedimage20220624095016.png)
 You will have to fill this id according to your site:
-![](images/Pasted image 20220624095057.png)
+![](images/Pastedimage20220624095057.png)
 You can allow filtering for different columns of the list elements, e.g.
-![](images/Pasted image 20220624095228.png)
+![](images/Pastedimage20220624095228.png)
 
 ### Recipe Details
 
 Add another endpoint to for getting the details of a single recipe:
-![](images/Pasted image 20220624104929.png)
-![](images/Pasted image 20220624104932.png)
+![](images/Pastedimage20220624104929.png)
+![](images/Pastedimage20220624104932.png)
 These APIs will give us all the required data.
 
 ### Current API Response (changed, requires edit)
@@ -257,7 +257,7 @@ After some tweeks I finally got this type of response:
 ### What if there are too many entries in the response?
 
 This is the answer:
-![](images/Pasted image 20220620005038.png)
+![](images/Pastedimage20220620005038.png)
 You just have to use pagination, set the number of resukts per page, and you now get responses based on the given page number.
 
 ### Problem With Splitting Response into Pages
@@ -415,21 +415,21 @@ getCategoryStyle(category) {
 ```
 
 This is how it looks:
-![](images/Pasted image 20220624113014.png)
+![](images/Pastedimage20220624113014.png)
 
 ## Adding Filters, Categories in Home Page
 
 ### Getting top Dishes:
 
 Add `top` tag to them and filter by tag id:
-![](images/Pasted image 20220624074549.png)
-![](images/Pasted image 20220624074551.png)
-![](images/Pasted image 20220624074556.png)
+![](images/Pastedimage20220624074549.png)
+![](images/Pastedimage20220624074551.png)
+![](images/Pastedimage20220624074556.png)
 
 ### Search By Category:
 
 Follow the same procedure, give thr recipe a category and filter by it's id
-![](images/Pasted image 20220624075555.png)
+![](images/Pastedimage20220624075555.png)
 
 ### Filter By Recipe Time
 
@@ -484,12 +484,12 @@ position: absolute;
 made it possible to keep the search fixed elements in their place. You can also overlap elements using this.
 
 Keep the NavBar z index high to prevent elements peeking through it at some time.
-![](images/Pasted image 20220622180048.png)
+![](images/Pastedimage20220622180048.png)
 
 To keep the footer at the bottom, you can use `position: absolute`
-![](images/Pasted image 20220622180215.png)
+![](images/Pastedimage20220622180215.png)
 But to activate it, you need the set `position: relative` to the parent element. **important**
-![](images/Pasted image 20220622180314.png)
+![](images/Pastedimage20220622180314.png)
 
 ### Adding Global CSS Colors:
 
@@ -513,8 +513,8 @@ export default {
 ```
 
 now you can have a global scss file that contains your global css variables.
-![](images/Pasted image 20220624092751.png)
-![](images/Pasted image 20220624092822.png)
+![](images/Pastedimage20220624092751.png)
+![](images/Pastedimage20220624092822.png)
 
 ### Problem: Textarea At 100% Width Overflows Parent Container
 
@@ -546,11 +546,11 @@ only use height and fit.
 ## Adding Recipe Submission Form
 
 Setup the API endpoint:
-![](images/Pasted image 20220623013204.png)
+![](images/Pastedimage20220623013204.png)
 
 For this, only addtional thing we have to do is to have a file upload endpoint as well.
 For that, configure the endpoint like below:
-![](images/Pasted image 20220623013311.png)
+![](images/Pastedimage20220623013311.png)
 
 I was giving me `forbidden` error, so I had to enable `dynamic token` authentication for APIs and get a dynamic access token through smarty. After that I added it as a header like this:
 
@@ -567,7 +567,7 @@ process.env.BASE_URL + "file",
 ```
 
 After testing, I changed it with an environment variable for securit reasons.
-![](images/Pasted image 20220624092945.png)
+![](images/Pastedimage20220624092945.png)
 
 ```json
 headers: {
@@ -886,27 +886,27 @@ This problem occured when I was using kuroco forms, I am no longer using kuroco 
 The forms were not getting accepted, the API was returning NetworkError.
 **Solution:**  
 I had to keep the names of the two endpoints same, just like this:
-![](images/Pasted image 20220620015047.png)
+![](images/Pastedimage20220620015047.png)
 Initialy I had named them /get-form and /add-dish. Maybe that's why it was not taking submissions.
 
 ### NetworkError when attempting to fetch
 
 Whenever swagger UI show you this error, most likely ou will need to enable some authentication for the API and then request using auth tokens.
-![](images/Pasted image 20220620003219.png)
+![](images/Pastedimage20220620003219.png)
 
 ## Problems That Are Yet to Be Resolved
 
 ### Post, Login, Update Problem
 
 whenever I am submitting a form or trying to login through the api, it gives me this error:
-![](images/Pasted image 20220620003219.png)
+![](images/Pastedimage20220620003219.png)
 
 #### Another Reference for this error (Now Solved)
 
 I was following keyword search and I got stuck in a step
-![](images/Pasted image 20220620011956.png)
+![](images/Pastedimage20220620011956.png)
 I am getting this error
-![](images/Pasted image 20220620012020.png)
+![](images/Pastedimage20220620012020.png)
 
 ### Middleware
 
@@ -923,12 +923,12 @@ https://dev.to/paramo/using-sass-global-variables-in-nuxt-js-j0k
 
 ## Scribble Area
 
-![](images/Pasted image 20220623044435.png)
-![](images/Pasted image 20220623044445.png)
+![](images/Pastedimage20220623044435.png)
+![](images/Pastedimage20220623044445.png)
 
 Filtering by contents type.
 e.g. content type for `mexican category` is 34.
-![](images/Pasted image 20220623203914.png)
+![](images/Pastedimage20220623203914.png)
 **Problem:** this is not working. seems like we can't use this column in filtering.
 
 # Graveyard
@@ -939,8 +939,8 @@ e.g. content type for `mexican category` is 34.
 
 ## First Design
 
-![](images/Pasted image 20220622183403.png)
-![](images/Pasted image 20220622183406.png)
+![](images/Pastedimage20220622183403.png)
+![](images/Pastedimage20220622183406.png)
 
 ## API endpoints and Routes
 
@@ -965,18 +965,18 @@ recipee datastructure that was proposed suring project planning:
 ## Current Data Structure (Now Not Used)
 
 It's a relational database.
-![](images/Pasted image 20220621225043.png)
+![](images/Pastedimage20220621225043.png)
 
 **ScreenShots of relational Data Categories and Fields:**
-![](images/Pasted image 20220622171155.png)
+![](images/Pastedimage20220622171155.png)
 
-![](images/Pasted image 20220622171055.png)
-![](images/Pasted image 20220622171058.png)
+![](images/Pastedimage20220622171055.png)
+![](images/Pastedimage20220622171058.png)
 
 ### Using post processing to give only requierd data in responce
 
 I am only giving `ext_1` column in the response which only contains recipe id in main databse. To do this just add `list.ext_1` variable in the Post Processing Whitelist of the API enndpoint.
-![](images/Pasted image 20220623013037.png)
+![](images/Pastedimage20220623013037.png)
 
 ### Splitting All dishes into different Categories
 
@@ -1002,5 +1002,5 @@ now I will store all the `module_id` in an array and wil fire up the `all-dishes
 `id in array_containing_module_id`
 This will return the dishes which have the id in the given array.~~
 I found out about a better approach:
-![](images/Pasted image 20220622025234.png)
+![](images/Pastedimage20220622025234.png)
 I only have to pass the id and it will give me the required data.
