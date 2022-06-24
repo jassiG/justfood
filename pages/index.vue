@@ -197,12 +197,16 @@ export default {
     async getAllDishes() {
       console.log("getAllDishes called");
       try {
+        let tempQuery = "";
+        if (this.searchInput !== "") {
+          tempQuery = `title icontains "${this.searchInput}" OR
+                    description icontains "${this.searchInput}" OR
+                    aditionalTags icontains "${this.searchInput}"`;
+        }
         const response = await axios.get(process.env.BASE_URL + "dish", {
           params: {
             // filter by keyword is not working in kuroco, doing it the simple way
-            filter: `title icontains "${this.searchInput}" OR
-                    description icontains "${this.searchInput}" OR
-                    aditionalTags icontains "${this.searchInput}"`,
+            filter: `${tempQuery}`,
             pageID: this.currentPage,
           },
           headers: {
@@ -261,12 +265,17 @@ export default {
         return finalList.data.list;
       } else {
         try {
+          let tempQuery = "";
+          if (this.searchInput !== "") {
+            tempQuery = `(title icontains "${this.searchInput}" OR
+                    description icontains "${this.searchInput}" OR
+                    aditionalTags icontains "${this.searchInput}") AND `;
+          }
+
           const response = await axios.get(process.env.BASE_URL + "dish", {
             params: {
               // filter by keyword is not working in kuroco, doing it the simple way
-              filter: `(title icontains "${this.searchInput}" OR
-                    description icontains "${this.searchInput}" OR
-                    aditionalTags icontains "${this.searchInput}") AND
+              filter: `${tempQuery}
                     contents_type = ${this.category_dict[category]}`,
               pageID: this.currentPage,
             },
@@ -289,10 +298,16 @@ export default {
         this.totalPages = 0;
         return [];
       }
+      let tempQuery = "";
+      if (this.searchInput !== "") {
+        tempQuery = `title icontains "${this.searchInput}" OR
+                description icontains "${this.searchInput}" OR
+                aditionalTags icontains "${this.searchInput}"`;
+      }
       const response = await axios.get(process.env.BASE_URL + "dish", {
         params: {
           id: idList,
-          filter: `title icontains "${this.searchInput}" OR description icontains "${this.searchInput}" OR aditionalTags icontains "${this.searchInput}"`,
+          filter: `${tempQuery}`,
           pageID: this.currentPage,
         },
         headers: {
