@@ -174,11 +174,16 @@ export default {
     async getDishes() {
       console.log("getDishes called");
       if (this.category === "") {
-        await this.getAllDishes();
-        this.topDishes = await this.getDishesByCategory("top");
+        let lol;
+        [lol, this.topDishes] = await Promise.all([
+          this.getAllDishes(),
+          this.getDishesByCategory("top"),
+        ]);
       } else {
-        this.dishes = await this.getDishesByCategory();
-        this.topDishes = await this.getDishesByCategory("top");
+        [this.dishes, this.topDishes] = await Promise.all([
+          this.getDishesByCategory(),
+          this.getDishesByCategory("top"),
+        ]);
       }
     },
     async getDishesWithoutTop() {
@@ -439,7 +444,7 @@ a {
   flex-direction: row;
   justify-content: center;
   .category {
-    padding: 2px 8px;
+    padding: 4px 10px;
     background-color: #ffd8d8;
     border-radius: 100vmax;
     margin: 4px;
