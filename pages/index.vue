@@ -7,13 +7,39 @@
       <div v-else class="body">
         <div class="navbar-spacing"></div>
         <!-- Search -->
-        <div class="search">
+        <div class="search-field">
+          <div class="search">
+            <input
+              @keyup.escape="reset"
+              @keyup.enter="setSearch()"
+              type="text"
+              placeholder="Search Dishes"
+              v-model.lazy="searchInput"
+            />
+          </div>
+          <label for="points">Max Recipe Time: {{ cookTime }} minutes</label>
           <input
-            @keyup.escape="reset"
-            @keyup.enter="setSearch()"
-            type="text"
-            placeholder="Search Dishes"
-            v-model.lazy="searchInput"
+            v-model.lazy="cookTime"
+            type="range"
+            id="points"
+            name="points"
+            min="0"
+            max="240"
+            step="15"
+            @change="getDishes"
+          />
+          <label for="points"
+            >Max Difficulty: {{ difficultyDict[difficulty] }}</label
+          >
+          <input
+            v-model.lazy="difficulty"
+            type="range"
+            id="points"
+            name="points"
+            min="1"
+            max="3"
+            step="1"
+            @change="getDishes"
           />
         </div>
         <Heading title="Today's Top Picks" />
@@ -154,6 +180,13 @@ export default {
       totalPages: 1,
       searchInput: "",
       category: "",
+      cookTime: 240,
+      difficulty: 3,
+      difficultyDict: {
+        1: "Easy",
+        2: "Medium",
+        3: "Hard",
+      },
       // used for tags / categories
       category_dict: {
         all: 0,
@@ -172,7 +205,7 @@ export default {
   // fetchDelay: 500,
   methods: {
     async getDishes() {
-      // console.log("getDishes called");
+      console.log("getDishes called");
       if (this.category === "") {
         let lol;
         [lol, this.topDishes] = await Promise.all([
@@ -201,12 +234,12 @@ export default {
         if (this.searchInput !== "") {
           tempQuery = `title icontains "${this.searchInput}" OR
                     description icontains "${this.searchInput}" OR
-                    aditionalTags icontains "${this.searchInput}"`;
+                    aditionalTags icontains "${this.searchInput}" AND `;
         }
         const response = await axios.get(process.env.BASE_URL + "dish", {
           params: {
             // filter by keyword is not working in kuroco, doing it the simple way
-            filter: `${tempQuery}`,
+            filter: `${tempQuery}timeInMinutes <= ${this.cookTime} AND difficulty <= "${this.difficulty}"`,
             pageID: this.currentPage,
           },
           headers: {
@@ -256,7 +289,11 @@ export default {
             params: {
               // filter by keyword is not working in kuroco, doing it the simple way
               filter: `${tempQuery}
-                    contents_type = ${[this.category_dict[category]]}`,
+                    contents_type = ${[
+                      this.category_dict[category],
+                    ]} AND timeInMinutes <= ${
+                this.cookTime
+              } AND difficulty <= "${this.difficulty}"`,
               pageID: this.currentPage,
             },
             headers: {
@@ -282,12 +319,12 @@ export default {
       if (this.searchInput !== "") {
         tempQuery = `title icontains "${this.searchInput}" OR
                 description icontains "${this.searchInput}" OR
-                aditionalTags icontains "${this.searchInput}"`;
+                aditionalTags icontains "${this.searchInput}" AND `;
       }
       const response = await axios.get(process.env.BASE_URL + "dish", {
         params: {
           id: idList,
-          filter: `${tempQuery}`,
+          filter: `${tempQuery}timeInMinutes <= ${this.cookTime} AND difficulty <= "${this.difficulty}"`,
           pageID: this.currentPage,
         },
         headers: {
@@ -312,9 +349,9 @@ export default {
     },
     getCategoryStyle(category) {
       if (category === "all" && this.category === "") {
-        return "transform: translate(0px, -3px);";
+        return "transform: translate(0px, -3px); box-shadow: 0px 0px 6px rgba(0,0,0,0.15); background-color: #defcfc;";
       } else if (category === this.category) {
-        return "transform: translate(0px, -3px);";
+        return "transform: translate(0px, -3px); box-shadow: 0px 0px 6px rgba(0,0,0,0.15); background-color: #defcfc;";
       } else {
         return "";
       }
@@ -408,30 +445,34 @@ a {
 .footer-spacing {
   height: 150px;
 }
-.search {
+.search-field {
   position: absolute;
   top: 70px;
   right: 10px;
-  display: flex;
   width: 25%;
   max-width: 350px;
-  flex-direction: row;
-  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  .search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 
-  box-shadow: 0px 0px 8px rgba(170, 170, 170, 0.2);
-  input {
-    padding: 12px 6px;
-    font-size: 14px;
-    border: none;
-    &:focus {
-      outline: #d8ffffb9 solid 2px;
+    box-shadow: 0px 0px 8px rgba(170, 170, 170, 0.2);
+    input {
+      padding: 12px 6px;
+      font-size: 14px;
+      border: none;
+      &:focus {
+        outline: #d8ffffb9 solid 2px;
+      }
+      flex-grow: 3;
     }
-    flex-grow: 3;
-  }
-  .button {
-    padding: 0px 4px;
-    border: 1px solid #ffffff;
-    background-color: #ffd8d8;
+    .button {
+      padding: 0px 4px;
+      border: 1px solid #ffffff;
+      background-color: #ffd8d8;
+    }
   }
 }
 .categories {
