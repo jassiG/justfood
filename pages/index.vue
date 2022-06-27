@@ -240,16 +240,13 @@ export default {
           ? (tempQuery += "")
           : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
 
-        const response = await axios.get(process.env.BASE_URL + "dish", {
+        const response = await this.$axios.get(process.env.BASE_URL + "dish", {
           params: {
             // filter by keyword is not working in kuroco, doing it the simple way
             filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
             pageID: this.currentPage,
           },
-          headers: {
-            "X-RCMS-API-ACCESS-TOKEN":
-              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-          },
+          
         });
         if (!this.dishes) {
           this.dishes = [];
@@ -270,15 +267,12 @@ export default {
       if (category === "top") {
         // console.log("top is called");
         // Get dishes data
-        const finalList = await axios.get(process.env.BASE_URL + "dish", {
+        const finalList = await this.$axios.get(process.env.BASE_URL + "dish", {
           params: {
             tag_id: [4],
             pageID: 1,
           },
-          headers: {
-            "X-RCMS-API-ACCESS-TOKEN":
-              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-          },
+          
         });
         return finalList.data.list;
       } else {
@@ -292,7 +286,7 @@ export default {
           this.cookTime > 180
             ? (tempQuery += "")
             : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
-          const response = await axios.get(process.env.BASE_URL + "dish", {
+          const response = await this.$axios.get(process.env.BASE_URL + "dish", {
             params: {
               // filter by keyword is not working in kuroco, doing it the simple way
               filter: `${tempQuery}
@@ -301,10 +295,7 @@ export default {
                     ]} AND difficulty <= "${this.difficulty}"`,
               pageID: this.currentPage,
             },
-            headers: {
-              "X-RCMS-API-ACCESS-TOKEN":
-                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-            },
+            
           });
           this.totalPages = response.data.pageInfo.totalPageCnt;
           return response.data.list;
@@ -329,16 +320,13 @@ export default {
       this.cookTime > 180
         ? (tempQuery += "")
         : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
-      const response = await axios.get(process.env.BASE_URL + "dish", {
+      const response = await this.$axios.get(process.env.BASE_URL + "dish", {
         params: {
           id: idList,
           filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
           pageID: this.currentPage,
         },
-        headers: {
-          "X-RCMS-API-ACCESS-TOKEN":
-            "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-        },
+        
       });
       this.totalPages = response.data.pageInfo.totalPageCnt;
       return response.data.list;

@@ -51,16 +51,16 @@ export default {
   methods: {
     async getDish() {
       try {
-        const response = await axios.get(
+        const response = await this.$axios.get(
           process.env.BASE_URL + "dish/" + this.$route.params.recipeid,
           {
             headers: {
               "Content-Type": "multipart/form-data", // required to post file as a binary
-              "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
             },
           }
         );
         this.dish = response.data.details;
+        console.log("dish:", this.dish);
         console.log(this.dish);
         this.tags = this.dish.tag;
       } catch (error) {

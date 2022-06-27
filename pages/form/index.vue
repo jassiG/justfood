@@ -220,13 +220,6 @@ export default {
       const { file_id } = await this.$axios.$post(
         process.env.BASE_URL + `file`,
         fm,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // required to post file as a binary
-            "X-RCMS-API-ACCESS-TOKEN":
-              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-          },
-        }
       );
       this.form.dishImage.file_id = file_id;
       console.log("File ID: ", this.form.dishImage.file_id);
@@ -259,12 +252,7 @@ export default {
         const { id } = await this.$axios.$post(
           process.env.BASE_URL + `dish/create`,
           this.form,
-          {
-            headers: {
-              "X-RCMS-API-ACCESS-TOKEN":
-                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
-            },
-          }
+          
         );
         this.error = null;
         this.submittedId = id;
