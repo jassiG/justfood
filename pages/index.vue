@@ -16,14 +16,19 @@
             v-model.lazy="searchInput"
           />
         </div>
-        <label for="points">Max Recipe Time: {{ cookTime }} minutes</label>
+        <label v-if="cookTime > 180" for="points"
+          >Max Recipe Time: 180+ minutes</label
+        >
+        <label v-else for="points"
+          >Max Recipe Time: {{ cookTime }} minutes</label
+        >
         <input
           v-model.lazy="cookTime"
           type="range"
           id="points"
           name="points"
-          min="0"
-          max="240"
+          min="15"
+          max="195"
           step="15"
           @change="getDishesWithoutTop"
         />
@@ -172,7 +177,7 @@ export default {
       totalPages: 1,
       searchInput: "",
       category: "",
-      cookTime: 240,
+      cookTime: 180,
       difficulty: 3,
       difficultyDict: {
         1: "Easy",
@@ -231,10 +236,14 @@ export default {
                     description icontains "${this.searchInput}" OR
                     aditionalTags icontains "${this.searchInput}" AND `;
         }
+        this.cookTime > 180
+          ? (tempQuery += "")
+          : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
+
         const response = await axios.get(process.env.BASE_URL + "dish", {
           params: {
             // filter by keyword is not working in kuroco, doing it the simple way
-            filter: `${tempQuery}timeInMinutes <= ${this.cookTime} AND difficulty <= "${this.difficulty}"`,
+            filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
             pageID: this.currentPage,
           },
           headers: {
@@ -280,16 +289,16 @@ export default {
                     description icontains "${this.searchInput}" OR
                     aditionalTags icontains "${this.searchInput}") AND `;
           }
-
+          this.cookTime > 180
+            ? (tempQuery += "")
+            : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
           const response = await axios.get(process.env.BASE_URL + "dish", {
             params: {
               // filter by keyword is not working in kuroco, doing it the simple way
               filter: `${tempQuery}
                     contents_type = ${[
                       this.category_dict[category],
-                    ]} AND timeInMinutes <= ${
-                this.cookTime
-              } AND difficulty <= "${this.difficulty}"`,
+                    ]} AND difficulty <= "${this.difficulty}"`,
               pageID: this.currentPage,
             },
             headers: {
@@ -317,10 +326,13 @@ export default {
                 description icontains "${this.searchInput}" OR
                 aditionalTags icontains "${this.searchInput}" AND `;
       }
+      this.cookTime > 180
+        ? (tempQuery += "")
+        : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
       const response = await axios.get(process.env.BASE_URL + "dish", {
         params: {
           id: idList,
-          filter: `${tempQuery}timeInMinutes <= ${this.cookTime} AND difficulty <= "${this.difficulty}"`,
+          filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
           pageID: this.currentPage,
         },
         headers: {
@@ -492,42 +504,12 @@ a {
     }
   }
 }
-.filters {
-  position: absolute;
-  top: 70px;
-  left: 10px;
-  display: flex;
-  align-items: center;
-  .icon {
-    margin-top: 4px;
-  }
-  .filter-text {
+.search-field {
+  label {
+    font-size: 14px;
     font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    color: #302939;
-    text-align: center;
-  }
-  .chips {
-    display: flex;
-    flex-direction: row;
-    margin: 0px 6px;
-    .chip {
-      font-family: "Poppins", sans-serif;
-      cursor: default;
-      font-size: 14px;
-      padding: 2px 4px;
-      font-weight: 300;
-      color: #302939;
-      text-align: center;
-      background-color: $primary-color;
-      border-radius: 8px;
-      margin: 2px 2px;
-
-      &:hover {
-        box-shadow: #d8ffff 0px 0px 6px;
-      }
-    }
+    margin-top: 6px;
+    margin-left: 3px;
   }
 }
 .sad {

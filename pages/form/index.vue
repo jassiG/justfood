@@ -139,10 +139,8 @@
 
         <!-- Control Buttons -->
         <div class="button-row">
-          <div class="button">
-            <NuxtLink to="/"> Home </NuxtLink>
-          </div>
-          <button @click="handleOnSubmit2">submit</button>
+          <NuxtLink to="/" class="button"> Home </NuxtLink>
+          <button @click="handleOnSubmit2" class="button">Submit</button>
         </div>
         <div v-if="error" class="error">
           <p>Please fill the entire form appropriately.</p>
