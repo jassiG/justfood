@@ -65,30 +65,37 @@
           />
           <!-- Input Difficulty -->
           <div class="difficulty">
-            <input
-              v-model="form.difficulty.label"
-              type="radio"
-              id="easy"
-              name="difficulty"
-              value="Easy"
-            />
-            <label for="easy">Easy</label><br />
-            <input
-              v-model="form.difficulty.label"
-              type="radio"
-              id="medium"
-              name="difficulty"
-              value="Medium"
-            />
-            <label for="medium">Medium</label><br />
-            <input
-              v-model="form.difficulty.label"
-              type="radio"
-              id="hard"
-              name="difficulty"
-              value="Hard"
-            />
-            <label for="hard">Hard</label>
+            <label
+              ><input
+                v-model="form.difficulty.label"
+                type="radio"
+                id="easy"
+                name="difficulty"
+                value="Easy"
+              />
+              <span>Easy</span></label
+            >
+            <label
+              ><input
+                v-model="form.difficulty.label"
+                type="radio"
+                id="medium"
+                name="difficulty"
+                value="Medium"
+                checked
+              />
+              <span>Medium</span></label
+            >
+            <label
+              ><input
+                v-model="form.difficulty.label"
+                type="radio"
+                id="hard"
+                name="difficulty"
+                value="Hard"
+              />
+              <span>Hard</span></label
+            >
           </div>
         </div>
         <div class="input-row full-stretch">
@@ -370,6 +377,30 @@ textarea {
   background-color: $primary-color;
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
   font-family: "Poppins", sans-serif;
+  span {
+    display: flex;
+    align-items: center;
+    padding: 0.07em 0.15em;
+    margin: 2px;
+    border-radius: 99em; // or something higher...
+    transition: 0.25s ease;
+    &:hover {
+      // background-color: mix(#fff, $primary-color, 84%);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    &:before {
+      display: flex;
+      flex-shrink: 0;
+      content: "";
+      background-color: #fff;
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+      margin-right: 0.375em;
+      transition: 0.25s ease;
+      box-shadow: inset 0 0 0 0.125em $primary-color;
+    }
+  }
   .form-title {
     width: 100%;
     font-size: 2em;
@@ -393,6 +424,17 @@ textarea {
     // margin: 4px;
     background-color: #fff4f5;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+  }
+  input[type="radio"] {
+    position: absolute;
+    left: -9999px;
+    &:checked + span {
+      // background-color: mix(#fff, $primary-color, 84%);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+      &:before {
+        box-shadow: inset 0 0 0 0.4375em $secondary-color;
+      }
+    }
   }
   .navbar-spacing {
     height: 60px;

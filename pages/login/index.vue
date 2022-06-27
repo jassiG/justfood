@@ -1,30 +1,25 @@
 <template>
-  <div class="home">
-    <div class="body">
-      <div class="navbar-spacing"></div>
-      <div class="main-content">
-        <div class="form-container">
-          <div class="form-title">Login Section</div>
-          <form @submit.prevent="login">
-            <div class="input-column">
-              <input
-                v-model="email"
-                name="email"
-                type="email"
-                placeholder="email"
-              />
-              <input
-                v-model="password"
-                name="password"
-                type="password"
-                placeholder="password"
-              />
-              <button type="submit">Login</button>
-            </div>
-          </form>
+  <div class="body">
+    <form @submit.prevent="login">
+      <div class="form-container">
+        <div class="form-title">Login Section</div>
+        <div class="input-column">
+          <input
+            v-model="email"
+            name="email"
+            type="email"
+            placeholder="email"
+          />
+          <input
+            v-model="password"
+            name="password"
+            type="password"
+            placeholder="password"
+          />
+          <button type="submit" class="button">Login</button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -71,29 +66,30 @@ export default {
 };
 </script>
 <style lang="scss">
-input {
-  border: none;
-  flex-grow: 1;
-  max-width: 300px;
-  padding: 0.25rem;
-  // margin: 4px;
-  background-color: #fff4f5;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+.body {
+  min-height: 100vh;
+  position: relative;
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  max-width: 650px;
+  align-items: center;
+  max-width: 250px;
   margin: 30px auto;
-  padding: 1em 3.5em;
+  padding-inline: 2.5em;
   border-radius: 1em;
   background-color: $primary-color;
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
   font-family: "Poppins", sans-serif;
-  h1 {
-    text-align: center;
+  input {
+    border: none;
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 0.25rem;
+    // margin: 4px;
+    background-color: #fff4f5;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
   }
   .form-title {
     width: 100%;
@@ -101,7 +97,9 @@ input {
     font-family: "Poppins", sans-serif;
     font-weight: bold;
     color: #302939;
-    margin-top: 0.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    text-align: center;
   }
   .input-column {
     display: flex;
@@ -112,14 +110,16 @@ input {
     margin-top: 5px;
     gap: 10px;
     input {
-      min-height: 20px;
-      min-width: 160px;
+      min-height: 25px;
+      min-width: 250px;
+      margin-top: 1em;
       // margin-inline: 4px;
       // max-width: 120px;
     }
     button {
       width: 80px;
       padding: 10px;
+      margin: 1em;
     }
   }
 }

@@ -35,6 +35,7 @@ export const actions = {
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: access_token.value })
         const profileRes = await this.$axios.$get(process.env.BASE_URL + 'auth/profile')
         commit('setProfile', { profile: profileRes.data })
+        this.$router.push('/')
     },
     async logout ({ commit }) {
         try {
