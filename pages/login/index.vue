@@ -19,7 +19,7 @@
                 type="password"
                 placeholder="password"
               />
-              <button type="submit" class="button">Login</button>
+              <button type="submit">Login</button>
             </div>
           </form>
         </div>
