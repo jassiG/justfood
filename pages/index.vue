@@ -1,159 +1,157 @@
 <template>
-  <div clas="main">
-    <!-- navbar -->
-    <div class="home">
-      <Navbar />
-      <Loading v-if="$fetchState.pending" />
-      <div v-else class="body">
-        <div class="navbar-spacing"></div>
-        <!-- Search -->
-        <div class="search-field">
-          <div class="search">
-            <input
-              @keyup.escape="reset"
-              @keyup.enter="setSearch()"
-              type="text"
-              placeholder="Search Dishes"
-              v-model.lazy="searchInput"
-            />
-          </div>
-          <label for="points">Max Recipe Time: {{ cookTime }} minutes</label>
+  <!-- navbar -->
+  <div class="home">
+    <Navbar />
+    <Loading v-if="$fetchState.pending" />
+    <div v-else class="body">
+      <div class="navbar-spacing"></div>
+      <!-- Search -->
+      <div class="search-field">
+        <div class="search">
           <input
-            v-model.lazy="cookTime"
-            type="range"
-            id="points"
-            name="points"
-            min="0"
-            max="240"
-            step="15"
-            @change="getDishesWithoutTop"
-          />
-          <label for="points"
-            >Max Difficulty: {{ difficultyDict[difficulty] }}</label
-          >
-          <input
-            v-model.lazy="difficulty"
-            type="range"
-            id="points"
-            name="points"
-            min="1"
-            max="3"
-            step="1"
-            @change="getDishesWithoutTop"
+            @keyup.escape="reset"
+            @keyup.enter="setSearch()"
+            type="text"
+            placeholder="Search Dishes"
+            v-model.lazy="searchInput"
           />
         </div>
-        <Heading title="Today's Top Picks" />
-        <TopPicks :topDishes="this.topDishes" />
-        <Heading title="Explore" />
-        <div class="categories">
-          <div
-            v-for="(id, cat) in category_dict"
-            class="category"
-            @click="setCategory(cat)"
-            :style="getCategoryStyle(cat)"
-          >
-            {{ cat }}
-          </div>
-        </div>
-        <div v-if="totalPages === 0" class="sad">
-          <svg viewBox="0 0 64 64">
-            <title>sad</title>
-            <path
-              class="cls-1"
-              d="M11,23V51.87A9.13,9.13,0,0,0,20.13,61h2.93A3.94,3.94,0,0,0,27,57.06V54H37v3.06A3.94,3.94,0,0,0,40.94,61h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2h0A21,21,0,0,0,11,23Z"
-              id="id_173"
-              style="fill: rgb(255, 229, 232); stroke: rgb(255, 176, 189)"
-            ></path>
-            <path
-              class="cls-2"
-              d="M19,57.06a3.92,3.92,0,0,1-2,3.39,9.1,9.1,0,0,0,3.09.55h2.93A3.94,3.94,0,0,0,27,57.06V54H19Z"
-              id="id_174"
-            ></path>
-            <path
-              class="cls-2"
-              d="M32,2a21.09,21.09,0,0,0-4,.39A21,21,0,0,1,45,23V51.87a9.13,9.13,0,0,1-6,8.58,3.9,3.9,0,0,0,2,.55h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2Z"
-              id="id_175"
-            ></path>
-            <line
-              class="cls-3"
-              x1="24"
-              y1="54"
-              x2="40"
-              y2="54"
-              id="id_176"
-              style="stroke: rgb(235, 159, 176)"
-            ></line>
-            <circle class="cls-4" cx="20" cy="22" r="2" id="id_177"></circle>
-            <circle class="cls-4" cx="44" cy="22" r="2" id="id_178"></circle>
-            <path
-              class="cls-5"
-              d="M11,41v6a4,4,0,0,0,4,4h0a4,4,0,0,0,4-4V41Z"
-              id="id_179"
-              style="fill: rgb(255, 158, 174); stroke: rgb(240, 147, 162)"
-            ></path>
-            <path
-              class="cls-5"
-              d="M53,35v6a4,4,0,0,1-4,4h0a4,4,0,0,1-4-4V35Z"
-              id="id_180"
-              style="fill: rgb(255, 153, 170); stroke: rgb(240, 144, 160)"
-            ></path>
-            <path
-              class="cls-6"
-              d="M39,31.09C37.67,29.84,35,29,32,29a11.13,11.13,0,0,0-6.9,2"
-              id="id_181"
-              style="stroke: rgb(235, 103, 132)"
-            ></path>
-          </svg>
-          <div class="sad-text">No results found</div>
-        </div>
-        <Explore v-else :dishes="this.dishes" />
-        <div class="page-navigator">
-          <span class="button" @click="changePage(currentPage - 1)">
-            <svg
-              viewBox="0 0 24 24"
-              xml:space="preserve"
-              width="20px"
-              height="20px"
-            >
-              <polyline
-                fill="none"
-                points="17.5,3 8.5,12 17.5,21 "
-                stroke="#000000"
-                stroke-miterlimit="10"
-                stroke-width="2"
-              />
-            </svg>
-          </span>
-          <div class="pages">
-            <div
-              v-for="i in totalPages"
-              class="page"
-              :style="isSelectedPage(i)"
-              @click="changePage(i)"
-            >
-              {{ i }}
-            </div>
-          </div>
-          <span class="button" @click="changePage(currentPage + 1)">
-            <svg
-              viewBox="0 0 24 24"
-              xml:space="preserve"
-              width="20px"
-              height="20px"
-            >
-              <polyline
-                fill="none"
-                points="8.5,3 17.5,12 8.5,21 "
-                stroke="#000000"
-                stroke-miterlimit="10"
-                stroke-width="2"
-              />
-            </svg>
-          </span>
-        </div>
-        <div class="footer-spacing"></div>
-        <Footer />
+        <label for="points">Max Recipe Time: {{ cookTime }} minutes</label>
+        <input
+          v-model.lazy="cookTime"
+          type="range"
+          id="points"
+          name="points"
+          min="0"
+          max="240"
+          step="15"
+          @change="getDishesWithoutTop"
+        />
+        <label for="points"
+          >Max Difficulty: {{ difficultyDict[difficulty] }}</label
+        >
+        <input
+          v-model.lazy="difficulty"
+          type="range"
+          id="points"
+          name="points"
+          min="1"
+          max="3"
+          step="1"
+          @change="getDishesWithoutTop"
+        />
       </div>
+      <Heading title="Today's Top Picks" />
+      <TopPicks :topDishes="this.topDishes" />
+      <Heading title="Explore" />
+      <div class="categories">
+        <div
+          v-for="(id, cat) in category_dict"
+          class="category"
+          @click="setCategory(cat)"
+          :style="getCategoryStyle(cat)"
+        >
+          {{ cat }}
+        </div>
+      </div>
+      <div v-if="totalPages === 0" class="sad">
+        <svg viewBox="0 0 64 64">
+          <title>sad</title>
+          <path
+            class="cls-1"
+            d="M11,23V51.87A9.13,9.13,0,0,0,20.13,61h2.93A3.94,3.94,0,0,0,27,57.06V54H37v3.06A3.94,3.94,0,0,0,40.94,61h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2h0A21,21,0,0,0,11,23Z"
+            id="id_173"
+            style="fill: rgb(255, 229, 232); stroke: rgb(255, 176, 189)"
+          ></path>
+          <path
+            class="cls-2"
+            d="M19,57.06a3.92,3.92,0,0,1-2,3.39,9.1,9.1,0,0,0,3.09.55h2.93A3.94,3.94,0,0,0,27,57.06V54H19Z"
+            id="id_174"
+          ></path>
+          <path
+            class="cls-2"
+            d="M32,2a21.09,21.09,0,0,0-4,.39A21,21,0,0,1,45,23V51.87a9.13,9.13,0,0,1-6,8.58,3.9,3.9,0,0,0,2,.55h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2Z"
+            id="id_175"
+          ></path>
+          <line
+            class="cls-3"
+            x1="24"
+            y1="54"
+            x2="40"
+            y2="54"
+            id="id_176"
+            style="stroke: rgb(235, 159, 176)"
+          ></line>
+          <circle class="cls-4" cx="20" cy="22" r="2" id="id_177"></circle>
+          <circle class="cls-4" cx="44" cy="22" r="2" id="id_178"></circle>
+          <path
+            class="cls-5"
+            d="M11,41v6a4,4,0,0,0,4,4h0a4,4,0,0,0,4-4V41Z"
+            id="id_179"
+            style="fill: rgb(255, 158, 174); stroke: rgb(240, 147, 162)"
+          ></path>
+          <path
+            class="cls-5"
+            d="M53,35v6a4,4,0,0,1-4,4h0a4,4,0,0,1-4-4V35Z"
+            id="id_180"
+            style="fill: rgb(255, 153, 170); stroke: rgb(240, 144, 160)"
+          ></path>
+          <path
+            class="cls-6"
+            d="M39,31.09C37.67,29.84,35,29,32,29a11.13,11.13,0,0,0-6.9,2"
+            id="id_181"
+            style="stroke: rgb(235, 103, 132)"
+          ></path>
+        </svg>
+        <div class="sad-text">No results found</div>
+      </div>
+      <Explore v-else :dishes="this.dishes" />
+      <div class="page-navigator">
+        <span class="nav-button" @click="changePage(currentPage - 1)">
+          <svg
+            viewBox="0 0 24 24"
+            xml:space="preserve"
+            width="20px"
+            height="20px"
+          >
+            <polyline
+              fill="none"
+              points="17.5,3 8.5,12 17.5,21 "
+              stroke="#000000"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+          </svg>
+        </span>
+        <div class="pages">
+          <div
+            v-for="i in totalPages"
+            class="page"
+            :style="isSelectedPage(i)"
+            @click="changePage(i)"
+          >
+            {{ i }}
+          </div>
+        </div>
+        <span class="nav-button" @click="changePage(currentPage + 1)">
+          <svg
+            viewBox="0 0 24 24"
+            xml:space="preserve"
+            width="20px"
+            height="20px"
+          >
+            <polyline
+              fill="none"
+              points="8.5,3 17.5,12 8.5,21 "
+              stroke="#000000"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+          </svg>
+        </span>
+      </div>
+      <div class="footer-spacing"></div>
+      <Footer />
     </div>
   </div>
 </template>
@@ -161,6 +159,7 @@
 <script>
 import axios from "axios";
 export default {
+  middleware: "auth",
   name: "Home",
   data() {
     return {
@@ -432,20 +431,14 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
 }
-.main {
-  position: relative;
-  height: 100%;
-}
+
 a {
   text-decoration: none;
   color: #302939;
 }
 .navbar-spacing {
-  height: 50px;
+  height: 60px;
 }
 .footer-spacing {
   height: 150px;
@@ -611,7 +604,7 @@ a {
       cursor: default;
     }
   }
-  .button {
+  .nav-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -632,6 +625,8 @@ a {
   align-items: center;
   padding: 0px;
   width: 100%;
+  position: relative;
+  height: 100%;
   min-width: 700px;
   position: relative;
 }

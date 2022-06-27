@@ -20,15 +20,12 @@
 <script>
 import Navbar from "~~/components/Navbar.vue";
 export default {
+  middleware: "auth",
   name: "About",
   components: { Navbar },
 };
 </script>
 <style lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-}
 a {
   text-decoration: none;
   color: #302939;
@@ -105,24 +102,6 @@ a {
         font-weight: 100;
         margin-top: 5px;
         margin-bottom: 20px;
-      }
-      .button {
-        background-color: $secondary-color;
-        border: none;
-        padding: 10px 26px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 4px 2px;
-        border-radius: 4px;
-        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-        transition: all 0.1s ease-in-out;
-        &:hover {
-          transform: translate(0, 2px);
-        }
-        cursor: pointer;
       }
     }
   }

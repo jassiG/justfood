@@ -7,8 +7,8 @@
       <div class="nav-text">
         <NuxtLink to="/"> Home </NuxtLink>
         <NuxtLink to="/About"> About </NuxtLink>
-        <!-- <NuxtLink to="/login"> Login </NuxtLink> -->
         <NuxtLink to="/form"> Submit </NuxtLink>
+        <NuxtLink to="/profile"> Profile </NuxtLink>
       </div>
     </div>
     <div class="social">

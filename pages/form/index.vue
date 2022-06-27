@@ -170,6 +170,7 @@
 <script>
 import Editor from "../../components/Editor.vue";
 export default {
+  middleware: "auth",
   components: {
     Editor,
   },
@@ -217,7 +218,8 @@ export default {
         {
           headers: {
             "Content-Type": "multipart/form-data", // required to post file as a binary
-            "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         }
       );
@@ -254,7 +256,8 @@ export default {
           this.form,
           {
             headers: {
-              "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+              "X-RCMS-API-ACCESS-TOKEN":
+                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
             },
           }
         );
@@ -320,23 +323,7 @@ button {
   }
   cursor: pointer;
 }
-.button {
-  background-color: $secondary-color;
-  border: none;
-  padding: 10px 26px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-  transition: all 0.1s ease-in-out;
-  &:hover {
-    transform: translate(0, 2px);
-  }
-  cursor: pointer;
-}
+
 .error {
   color: rgb(223, 87, 87);
   font-size: 0.8em;
