@@ -5,6 +5,13 @@
       <div class="navbar-spacing"></div>
       <div class="main-content">
         <h1>Profile Section</h1>
+        <div class="info">
+          <div v-for="(val, key) in profile" :key="key" class="info-field">
+            <div class="info-title">{{ key }}</div>
+            <div>:</div>
+            <div class="info-value">{{ val }}</div>
+          </div>
+        </div>
         <div class="button" @click="logout">Logout</div>
       </div>
       <div class="footer-spacing"></div>
@@ -18,7 +25,14 @@ export default {
   middleware: "auth",
   name: "Profile",
   data() {
-    return {};
+    return {
+      profile: {},
+    };
+  },
+  fetch() {
+    this.profile = this.$store.state.profile;
+    console.log("profile:", this.profile);
+    return;
   },
   methods: {
     ...mapActions(["logout"]),
@@ -46,5 +60,31 @@ export default {
   margin-top: 50px;
   color: #302939;
   font-family: "Poppins", sans-serif;
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .info-field {
+      display: flex;
+      flex-direction: row;
+      // justify-content: center;
+      width: 400px;
+      div {
+        margin: 4px 4px;
+      }
+      .info-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 1em;
+        width: 50%;
+        font-weight: bold;
+        text-align: right;
+      }
+      .info-value {
+        width: 50%;
+        font-family: "Poppins", sans-serif;
+        font-size: 1em;
+      }
+    }
+  }
 }
 </style>

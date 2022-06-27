@@ -5,6 +5,9 @@ export const state = () => ({
 export const getters = {
     authenticated (state) {
         return state.profile !== null
+    },
+    profile (state) {
+        return state.profile
     }
 }
 
@@ -34,7 +37,8 @@ export const actions = {
         commit('updateLocalStorage', { rcmsApiAccessToken: access_token.value })
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: access_token.value })
         const profileRes = await this.$axios.$get(process.env.BASE_URL + 'auth/profile')
-        commit('setProfile', { profile: profileRes.data })
+        commit('setProfile', { profile: profileRes })
+        // console.log(profileRes)
         this.$router.push('/')
     },
     async logout ({ commit }) {
