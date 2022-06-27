@@ -26,7 +26,7 @@
             min="0"
             max="240"
             step="15"
-            @change="getDishes"
+            @change="getDishesWithoutTop"
           />
           <label for="points"
             >Max Difficulty: {{ difficultyDict[difficulty] }}</label
@@ -39,7 +39,7 @@
             min="1"
             max="3"
             step="1"
-            @change="getDishes"
+            @change="getDishesWithoutTop"
           />
         </div>
         <Heading title="Today's Top Picks" />
@@ -195,9 +195,13 @@ export default {
     await this.getDishes();
     return;
   },
+  // async mounted() {
+  //   await this.getDishes();
+  // },
   // fetchDelay: 500,
   methods: {
     async getDishes() {
+      // console.log("getDishes");
       if (this.category === "") {
         let lol;
         [lol, this.topDishes] = await Promise.all([
@@ -212,7 +216,7 @@ export default {
       }
     },
     async getDishesWithoutTop() {
-      // console.log("getDishes called");
+      // console.log("getDishesWithoutTop called");
       if (this.category === "") {
         await this.getAllDishes();
       } else {
@@ -235,7 +239,8 @@ export default {
             pageID: this.currentPage,
           },
           headers: {
-            "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         if (!this.dishes) {
@@ -255,6 +260,7 @@ export default {
       this.currentPage = 1;
       let response;
       if (category === "top") {
+        // console.log("top is called");
         // Get dishes data
         const finalList = await axios.get(process.env.BASE_URL + "dish", {
           params: {
@@ -262,7 +268,8 @@ export default {
             pageID: 1,
           },
           headers: {
-            "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+            "X-RCMS-API-ACCESS-TOKEN":
+              "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
           },
         });
         return finalList.data.list;
@@ -287,7 +294,8 @@ export default {
               pageID: this.currentPage,
             },
             headers: {
-              "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+              "X-RCMS-API-ACCESS-TOKEN":
+                "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
             },
           });
           this.totalPages = response.data.pageInfo.totalPageCnt;
@@ -317,7 +325,8 @@ export default {
           pageID: this.currentPage,
         },
         headers: {
-          "X-RCMS-API-ACCESS-TOKEN": "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
+          "X-RCMS-API-ACCESS-TOKEN":
+            "3d4738ee303bbdd75f6c4dfc1e5c69587b6ca1de5f850cc8158e3fb83762853d",
         },
       });
       this.totalPages = response.data.pageInfo.totalPageCnt;
@@ -390,13 +399,21 @@ export default {
       //   "currentPage: ",
       //   this.currentPage
       // );
+      let limit = false;
+      if (page < 1 || page > this.totalPages) {
+        limit = true;
+      }
       page = page < 1 ? 1 : page;
       page = page > this.totalPages ? this.totalPages : page;
+
       if (this.currentPage === page) {
         return;
       }
       this.currentPage = page;
-      this.getDishesWithoutTop();
+      if (!limit) {
+        this.getDishesWithoutTop();
+      }
+      // this.getDishesWithoutTop();
     },
     isSelectedPage(page) {
       if (page === this.currentPage) {
