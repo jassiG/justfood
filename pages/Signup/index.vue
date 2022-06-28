@@ -227,9 +227,6 @@ export default {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    input {
-      // max-width: 150px;
-    }
   }
   .error {
     font-size: 0.7em;

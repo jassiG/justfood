@@ -164,7 +164,7 @@
 <script>
 import axios from "axios";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   name: "Home",
   data() {
     return {
@@ -177,7 +177,7 @@ export default {
       totalPages: 1,
       searchInput: "",
       category: "",
-      cookTime: 180,
+      cookTime: 195,
       difficulty: 3,
       difficultyDict: {
         1: "Easy",
@@ -240,14 +240,17 @@ export default {
           ? (tempQuery += "")
           : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
 
-        const response = await this.$axios.get(process.env.BASE_URL + "dish", {
-          params: {
-            // filter by keyword is not working in kuroco, doing it the simple way
-            filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
-            pageID: this.currentPage,
-          },
-          
-        });
+        const response = await axios.get(
+          process.env.BASE_URL.substring(0, process.env.BASE_URL.length - 3) +
+            "/6/dish",
+          {
+            params: {
+              // filter by keyword is not working in kuroco, doing it the simple way
+              filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
+              pageID: this.currentPage,
+            },
+          }
+        );
         if (!this.dishes) {
           this.dishes = [];
         }
@@ -267,13 +270,16 @@ export default {
       if (category === "top") {
         // console.log("top is called");
         // Get dishes data
-        const finalList = await this.$axios.get(process.env.BASE_URL + "dish", {
-          params: {
-            tag_id: [4],
-            pageID: 1,
-          },
-          
-        });
+        const finalList = await axios.get(
+          process.env.BASE_URL.substring(0, process.env.BASE_URL.length - 3) +
+            "/6/dish",
+          {
+            params: {
+              tag_id: [4],
+              pageID: 1,
+            },
+          }
+        );
         return finalList.data.list;
       } else {
         try {
@@ -286,17 +292,20 @@ export default {
           this.cookTime > 180
             ? (tempQuery += "")
             : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
-          const response = await this.$axios.get(process.env.BASE_URL + "dish", {
-            params: {
-              // filter by keyword is not working in kuroco, doing it the simple way
-              filter: `${tempQuery}
+          const response = await axios.get(
+            process.env.BASE_URL.substring(0, process.env.BASE_URL.length - 3) +
+              "/6/dish",
+            {
+              params: {
+                // filter by keyword is not working in kuroco, doing it the simple way
+                filter: `${tempQuery}
                     contents_type = ${[
                       this.category_dict[category],
                     ]} AND difficulty <= "${this.difficulty}"`,
-              pageID: this.currentPage,
-            },
-            
-          });
+                pageID: this.currentPage,
+              },
+            }
+          );
           this.totalPages = response.data.pageInfo.totalPageCnt;
           return response.data.list;
         } catch (e) {
@@ -320,14 +329,17 @@ export default {
       this.cookTime > 180
         ? (tempQuery += "")
         : (tempQuery += `timeInMinutes <= ${this.cookTime} AND `);
-      const response = await this.$axios.get(process.env.BASE_URL + "dish", {
-        params: {
-          id: idList,
-          filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
-          pageID: this.currentPage,
-        },
-        
-      });
+      const response = await axios.get(
+        process.env.BASE_URL.substring(0, process.env.BASE_URL.length - 3) +
+          "/6/dish",
+        {
+          params: {
+            id: idList,
+            filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
+            pageID: this.currentPage,
+          },
+        }
+      );
       this.totalPages = response.data.pageInfo.totalPageCnt;
       return response.data.list;
     },

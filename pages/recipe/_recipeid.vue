@@ -5,6 +5,7 @@
     <div v-else class="content-block">
       <div class="top-image">
         <img :src="this.dish.dishImage.url" alt="dish image" />
+        <div class="love"></div>
       </div>
       <div class="title">{{ this.dish.subject }}</div>
       <div class="description">{{ this.dish.description }}</div>
@@ -52,7 +53,9 @@ export default {
     async getDish() {
       try {
         const response = await this.$axios.get(
-          process.env.BASE_URL + "dish/" + this.$route.params.recipeid,
+          process.env.BASE_URL.substring(0, process.env.BASE_URL.length - 3) +
+            "/6/dish/" +
+            this.$route.params.recipeid,
           {
             headers: {
               "Content-Type": "multipart/form-data", // required to post file as a binary
@@ -60,8 +63,7 @@ export default {
           }
         );
         this.dish = response.data.details;
-        console.log("dish:", this.dish);
-        console.log(this.dish);
+        // console.log("dish:", this.dish);
         this.tags = this.dish.tag;
       } catch (error) {
         console.log(error);
@@ -109,12 +111,21 @@ a {
       align-items: center;
       width: 100%;
       height: 500px;
-      margin-top: 40px;
+      margin-top: 60px;
+      position: relative;
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         overflow: hidden;
+      }
+      .love {
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+        width: 40px;
+        height: 40px;
+        background-color: rgb(54, 54, 54);
       }
     }
     .title {

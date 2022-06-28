@@ -31,7 +31,7 @@ export default {
   },
   fetch() {
     this.profile = this.$store.state.profile;
-    console.log("profile:", this.profile);
+    // console.log("profile:", this.profile);
     return;
   },
   methods: {

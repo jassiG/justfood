@@ -5,10 +5,13 @@
         <a href="/"> JustFood </a>
       </div>
       <div class="nav-text">
-        <NuxtLink to="/"> Home </NuxtLink>
-        <NuxtLink to="/About"> About </NuxtLink>
-        <NuxtLink to="/form"> Submit </NuxtLink>
-        <NuxtLink to="/profile"> Profile </NuxtLink>
+        <NuxtLink to="/" class="link"> Home </NuxtLink>
+        <NuxtLink to="/About" class="link"> About </NuxtLink>
+        <NuxtLink v-if="loggedIn" to="/form" class="link"> Submit </NuxtLink>
+        <NuxtLink v-if="loggedIn" to="/profile" class="link">
+          Profile
+        </NuxtLink>
+        <NuxtLink v-if="!loggedIn" to="/login" class="link"> Login </NuxtLink>
       </div>
     </div>
     <div class="social">
@@ -55,6 +58,16 @@
 export default {
   name: "Navbar",
   data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  mounted() {
+    // console.log(this.$store.getters.authenticated);
+    if (this.$store.getters.authenticated) {
+      this.loggedIn = true;
+      // console.log(this.loggedIn);
+    }
     return {};
   },
 };
@@ -93,10 +106,13 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 0px;
       max-width: 300px;
       flex-grow: 1;
+      .link {
+        margin-inline: 5px;
+      }
     }
   }
   .social {

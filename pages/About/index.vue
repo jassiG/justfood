@@ -20,7 +20,7 @@
 <script>
 import Navbar from "~~/components/Navbar.vue";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   name: "About",
   components: { Navbar },
 };

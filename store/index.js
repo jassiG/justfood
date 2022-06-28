@@ -1,5 +1,6 @@
 export const state = () => ({
-    profile: null
+    profile: null,
+    role: null,
 })
 
 export const getters = {
@@ -8,12 +9,18 @@ export const getters = {
     },
     profile (state) {
         return state.profile
+    },
+    role (state) {
+        return state.role
     }
 }
 
 export const mutations = {
     setProfile (state, { profile }) {
         state.profile = profile
+    },
+    setRole(state, { role }) {
+        state.role = role
     },
     updateLocalStorage (state, payload) {
         Object.entries(payload).forEach(([key, val]) => {
@@ -38,7 +45,21 @@ export const actions = {
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: access_token.value })
         const profileRes = await this.$axios.$get(process.env.BASE_URL + 'auth/profile')
         commit('setProfile', { profile: profileRes })
-        // console.log(profileRes)
+        for (let role of Object.values(profileRes.group_ids)){
+            console.log("local role was: ", role)
+            switch (role) {
+                case 'Admin':
+                    commit('setRole', { role: 'admin' })
+                    break;
+                case 'Moderator':
+                    commit('setRole', { role: 'moderator' })
+                    break;
+                default :
+                    commit('setRole', { role: 'user' })
+            }
+        }
+        // console.log("PROFILE", profileRes)
+        // console.log("ROLE", this.state.role)
         this.$router.push('/')
     },
     async logout ({ commit }) {
@@ -52,7 +73,7 @@ export const actions = {
         commit('updateLocalStorage', { rcmsApiAccessToken: null })
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: null })
 
-        this.$router.push('/login')
+        this.$router.push('/')
     },
     async restoreLoginState ({ commit, dispatch }) {
         const rcmsApiAccessToken = localStorage.getItem('rcmsApiAccessToken')
