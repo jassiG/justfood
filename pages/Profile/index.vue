@@ -16,11 +16,13 @@
               <div v-else class="info-value">{{ val }}</div>
             </div>
           </div>
-          <div class="profile-pic"></div>
+          <div class="profile-pic">
+            <img src="../../assets/icons/pp.png" />
+          </div>
         </div>
         <div class="button shrink" @click="logout">Logout</div>
 
-        <div class="grad-secondary tile padding">Recent Favourites</div>
+        <div class="grad-secondary tile margin heading">Recent Favourites</div>
         <div v-if="totalPages === 0" class="sad">
           <svg viewBox="0 0 64 64">
             <title>sad</title>
@@ -72,9 +74,16 @@
           </svg>
           <div class="sad-text">No Favourites</div>
         </div>
-        <div v-for="dish of favs" class="grad-primary tile margin">
-          {{ dish.title }}
-        </div>
+        <nuxt-link
+          v-for="dish of favs"
+          :key="dish.topics_id"
+          :to="'/recipe/' + dish.topics_id"
+        >
+          <div class="grad-primary tile">
+            <div>{{ dish.title }}</div>
+            <img src="../../assets/icons/arrowR.png" />
+          </div>
+        </nuxt-link>
       </div>
       <div class="footer-spacing"></div>
       <Footer />
@@ -161,6 +170,11 @@ export default {
       border-radius: 50%;
       background-color: #f5f5f5;
       margin: 4px;
+      overflow: hidden;
+      object-fit: cover;
+      img {
+        width: 200px;
+      }
     }
     .info {
       flex-grow: 1;
@@ -205,6 +219,47 @@ export default {
         }
       }
     }
+  }
+  .tile {
+    width: 100%;
+    margin: 6px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+
+    // box-shadow: 0px 2px 6px rgba(82, 81, 81, 0.15);
+  }
+  .grad-primary {
+    background-color: $primary-color;
+    box-shadow: 0px 2px 6px rgba(82, 81, 81, 0.15);
+    display: flex;
+    justify-content: space-between;
+    &:hover {
+      transform: translate(0px, -2px);
+    }
+    img {
+      width: 24px;
+      height: 24px;
+      opacity: 0.7;
+    }
+  }
+  .grad-secondary {
+    background: linear-gradient(
+      90deg,
+      $secondary-color 0%,
+      rgba(0, 213, 255, 0) 100%
+    );
+  }
+  .margin {
+    margin-top: 1.6em;
+    margin-bottom: 0.5em;
+  }
+  .heading {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    // display: flex;
+    // justify-content: center;
   }
 }
 </style>

@@ -73,6 +73,7 @@ export default {
       tags: [],
       isFav: false,
       guestMode: true,
+      halt: false,
     };
   },
   async fetch() {
@@ -134,6 +135,7 @@ export default {
       }
     },
     async addFav(id) {
+      this.halt = true;
       try {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/add",
@@ -148,9 +150,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.halt = false;
       return;
     },
     async removeFav(id) {
+      this.halt = true;
       try {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/remove",
@@ -165,6 +169,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.halt = false;
       return;
     },
     favStyle() {
@@ -175,14 +180,16 @@ export default {
       }
     },
     async changeFav() {
-      // call api and await response
-      if (this.isFav) {
-        await this.removeFav(this.$route.params.recipeid);
-      } else {
-        await this.addFav(this.$route.params.recipeid);
+      if (!this.halt) {
+        // call api and await response
+        if (this.isFav) {
+          await this.removeFav(this.$route.params.recipeid);
+        } else {
+          await this.addFav(this.$route.params.recipeid);
+        }
+        this.isFav = !this.isFav;
+        console.log("Fav changed");
       }
-      this.isFav = !this.isFav;
-      console.log("Fav changed");
     },
   },
 };
@@ -239,6 +246,7 @@ a {
         bottom: 4px;
         width: 40px;
         height: 40px;
+        transition: all 0.2s ease-in-out;
         polygon {
           transition: 0.2s;
           -webkit-transform-origin: center center;
