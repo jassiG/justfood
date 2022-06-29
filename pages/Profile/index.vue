@@ -8,8 +8,11 @@
         <div class="info">
           <div v-for="(val, key) in profile" :key="key" class="info-field">
             <div class="info-title">{{ key }}</div>
-            <div>:</div>
-            <div class="info-value">{{ val }}</div>
+            <div class="seperator">:</div>
+            <div v-if="typeof val === 'object'" class="obj">
+              <div v-for="v of val" class="info-value">{{ v }}</div>
+            </div>
+            <div v-else class="info-value">{{ val }}</div>
           </div>
         </div>
         <div class="button" @click="logout">Logout</div>
@@ -69,20 +72,36 @@ export default {
       flex-direction: row;
       // justify-content: center;
       width: 400px;
-      div {
-        margin: 4px 4px;
-      }
+      // div {
+      //   margin: 4px 4px;
+      // }
       .info-title {
         font-family: "Poppins", sans-serif;
         font-size: 1em;
         width: 50%;
         font-weight: bold;
         text-align: right;
+        margin: 4px 4px;
+      }
+      .seperator {
+        margin: 4px;
       }
       .info-value {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
         width: 50%;
         font-family: "Poppins", sans-serif;
+        margin: 4px 4px;
         font-size: 1em;
+        .obj {
+          // width: 100%;
+          margin: 0px;
+          flex-grow: 1;
+          .info-value {
+            // width: 100%;
+          }
+        }
       }
     }
   }
