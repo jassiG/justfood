@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="navbar-container">
       <div class="navbar-logo">
-        <a href="/"> JustFood </a>
+        <NuxtLink to="/" class="link"> JustFood </NuxtLink>
       </div>
       <div class="nav-text">
         <NuxtLink to="/" class="link"> Home </NuxtLink>
@@ -62,7 +62,7 @@ export default {
       loggedIn: false,
     };
   },
-  mounted() {
+  fetch() {
     // console.log(this.$store.getters.authenticated);
     if (this.$store.getters.authenticated) {
       this.loggedIn = true;

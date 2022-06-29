@@ -5,7 +5,36 @@
     <div v-else class="content-block">
       <div class="top-image">
         <img :src="this.dish.dishImage.url" alt="dish image" />
-        <div class="love"></div>
+        <div v-if="!guestMode" class="love">
+          <svg
+            x="0px"
+            y="0px"
+            viewBox="0 0 426.667 426.667"
+            xml:space="preserve"
+            @click="changeFav"
+          >
+            <polygon
+              :style="favStyle()"
+              points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91 81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "
+              id="id_101"
+            ></polygon>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
+        </div>
       </div>
       <div class="title">{{ this.dish.subject }}</div>
       <div class="description">{{ this.dish.description }}</div>
@@ -42,10 +71,25 @@ export default {
     return {
       dish: {},
       tags: [],
+      isFav: false,
+      guestMode: true,
+      halt: false,
     };
   },
   async fetch() {
-    await this.getDish();
+    if (this.$store.getters.authenticated) {
+      this.guestMode = false;
+      // console.log(this.loggedIn);
+    }
+    if (this.guestMode) {
+      this.dish = await this.getDish();
+    } else {
+      [this.dish, this.isFav] = await Promise.all([
+        this.getDish(),
+        this.checkFav(),
+      ]);
+      console.log("Is this favorite: ", this.isFav);
+    }
     return;
   },
   fetchDelay: 500,
@@ -62,13 +106,90 @@ export default {
             },
           }
         );
-        this.dish = response.data.details;
         // console.log("dish:", this.dish);
         this.tags = this.dish.tag;
+        return response.data.details;
       } catch (error) {
         console.log(error);
       }
       return;
+    },
+    async checkFav() {
+      let dishId = Number(this.$route.params.recipeid);
+      try {
+        const response = await this.$axios.get(
+          process.env.BASE_URL + "dish/user-favorite",
+          {
+            params: {
+              id: dishId,
+            },
+          }
+        );
+        if (response.data.pageInfo.totalCnt > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addFav(id) {
+      this.halt = true;
+      try {
+        const response = await this.$axios.post(
+          process.env.BASE_URL + "favorite/add",
+          {
+            params: {
+              module_type: "topics",
+              module_id: id,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+      this.halt = false;
+      return;
+    },
+    async removeFav(id) {
+      this.halt = true;
+      try {
+        const response = await this.$axios.post(
+          process.env.BASE_URL + "favorite/remove",
+          {
+            params: {
+              module_type: "topics",
+              module_id: id,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+      this.halt = false;
+      return;
+    },
+    favStyle() {
+      if (this.isFav) {
+        return "fill: #fac917; transform: rotate(144deg);";
+      } else {
+        return "fill: #fff;";
+      }
+    },
+    async changeFav() {
+      if (!this.halt) {
+        // call api and await response
+        if (this.isFav) {
+          await this.removeFav(this.$route.params.recipeid);
+        } else {
+          await this.addFav(this.$route.params.recipeid);
+        }
+        this.isFav = !this.isFav;
+        console.log("Fav changed");
+      }
     },
   },
 };
@@ -125,7 +246,11 @@ a {
         bottom: 4px;
         width: 40px;
         height: 40px;
-        background-color: rgb(54, 54, 54);
+        transition: all 0.2s ease-in-out;
+        polygon {
+          transition: 0.2s;
+          -webkit-transform-origin: center center;
+        }
       }
     }
     .title {
