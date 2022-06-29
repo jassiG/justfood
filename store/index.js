@@ -27,6 +27,9 @@ export const mutations = {
             localStorage.setItem(key, val)
         })
     },
+    deleteLocalStorage (state, payload) {
+        localStorage.clear();
+    },
     setAccessTokenOnRequestHeader (state, { rcmsApiAccessToken }) {
         this.$axios.defaults.headers.common = {
             'X-RCMS-API-ACCESS-TOKEN': rcmsApiAccessToken
@@ -45,6 +48,7 @@ export const actions = {
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: access_token.value })
         const profileRes = await this.$axios.$get(process.env.BASE_URL + 'auth/profile')
         commit('setProfile', { profile: profileRes })
+        commit('updateLocalStorage', { profile: JSON.stringify(profileRes) })
         for (let role of Object.values(profileRes.group_ids)){
             console.log("local role was: ", role)
             switch (role) {
@@ -71,6 +75,7 @@ export const actions = {
         }
         commit('setProfile', { profile: null })
         commit('updateLocalStorage', { rcmsApiAccessToken: null })
+        commit('deleteLocalStorage', {})
         commit('setAccessTokenOnRequestHeader', { rcmsApiAccessToken: null })
 
         this.$router.push('/')

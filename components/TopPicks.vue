@@ -11,6 +11,7 @@
         :time="dish.timeInMinutes"
         :difficulty="dish.difficulty"
         :dishImage="dish.dishImage.url"
+        :favCount="dish.favorite_cnt"
       />
     </nuxt-link>
   </div>

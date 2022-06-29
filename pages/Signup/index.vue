@@ -59,7 +59,7 @@ export default {
   //   middleware: "auth",
   data() {
     return {
-      signupDone: true,
+      signupDone: false,
 
       user: {
         name1: "",
