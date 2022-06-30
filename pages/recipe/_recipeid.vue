@@ -1,6 +1,8 @@
 <template>
   <div class="recipe">
-    <Navbar />
+    <client-only>
+      <Navbar />
+    </client-only>
     <Loading v-if="$fetchState.pending" />
     <div v-else class="content-block">
       <div class="top-image">
@@ -76,11 +78,14 @@ export default {
       halt: false,
     };
   },
-  async fetch() {
+  async mounted() {
+    console.log("checking for profile in mounted in _recipe");
     if (localStorage.getItem("profile")) {
       this.guestMode = false;
       // console.log(this.loggedIn);
     }
+  },
+  async fetch() {
     if (this.guestMode) {
       this.dish = await this.getDish();
     } else {

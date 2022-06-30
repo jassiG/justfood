@@ -1,7 +1,9 @@
 <template>
   <!-- navbar -->
   <div class="home">
-    <Navbar />
+    <client-only>
+      <Navbar />
+    </client-only>
     <Loading v-if="$fetchState.pending" />
     <div v-else class="body">
       <div class="navbar-spacing"></div>

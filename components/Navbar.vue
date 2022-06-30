@@ -71,11 +71,11 @@ export default {
   },
   fetch() {
     // console.log(this.$store.getters.authenticated);
-    console.log("checking for auth state in navbar");
-    if (localStorage.getItem("profile")) {
-      this.loggedIn = true;
-      console.log(this.loggedIn);
-    }
+    // console.log("checking for auth state in navbar");
+    // if (localStorage.getItem("profile")) {
+    //   this.loggedIn = true;
+    //   console.log(this.loggedIn);
+    // }
     return {};
   },
 };
