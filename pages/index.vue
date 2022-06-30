@@ -5,6 +5,41 @@
     <Loading v-if="$fetchState.pending" />
     <div v-else class="body">
       <div class="navbar-spacing"></div>
+      <div class="shrink">
+        <div class="row">
+          <label v-if="cookTime > 180" for="points"
+            >Max Recipe Time: 180+ minutes</label
+          >
+          <label v-else for="points"
+            >Max Recipe Time: {{ cookTime }} minutes</label
+          >
+          <input
+            v-model.lazy="cookTime"
+            type="range"
+            id="points"
+            name="points"
+            min="15"
+            max="195"
+            step="15"
+            @change="getDishesWithoutTop"
+          />
+        </div>
+        <div class="row">
+          <label for="points"
+            >Max Difficulty: {{ difficultyDict[difficulty] }}</label
+          >
+          <input
+            v-model.lazy="difficulty"
+            type="range"
+            id="points"
+            name="points"
+            min="1"
+            max="3"
+            step="1"
+            @change="getDishesWithoutTop"
+          />
+        </div>
+      </div>
       <!-- Search -->
       <div class="search-field">
         <div class="search">
@@ -16,35 +51,6 @@
             v-model.lazy="searchInput"
           />
         </div>
-        <label v-if="cookTime > 180" for="points"
-          >Max Recipe Time: 180+ minutes</label
-        >
-        <label v-else for="points"
-          >Max Recipe Time: {{ cookTime }} minutes</label
-        >
-        <input
-          v-model.lazy="cookTime"
-          type="range"
-          id="points"
-          name="points"
-          min="15"
-          max="195"
-          step="15"
-          @change="getDishesWithoutTop"
-        />
-        <label for="points"
-          >Max Difficulty: {{ difficultyDict[difficulty] }}</label
-        >
-        <input
-          v-model.lazy="difficulty"
-          type="range"
-          id="points"
-          name="points"
-          min="1"
-          max="3"
-          step="1"
-          @change="getDishesWithoutTop"
-        />
       </div>
       <Heading title="Today's Top Picks" />
       <TopPicks :topDishes="this.topDishes" />
@@ -110,7 +116,74 @@
         </svg>
         <div class="sad-text">No results found</div>
       </div>
-      <Explore v-else :dishes="this.dishes" />
+      <div v-else class="explore-body">
+        <div class="sort"></div>
+        <div class="sort"></div>
+        <Explore :dishes="this.dishes" />
+        <div class="sort">
+          Sort By:
+          <label
+            ><input
+              v-model="sortBy"
+              type="radio"
+              id="date"
+              name="sortType"
+              value="date"
+              @change="setSort"
+              checked
+            />
+            <span>Newest</span></label
+          >
+          <label
+            ><input
+              v-model="sortBy"
+              type="radio"
+              id="time"
+              name="sortType"
+              value="time"
+              @change="setSort"
+            />
+            <span>Time</span></label
+          >
+          <label
+            ><input
+              v-model="sortBy"
+              type="radio"
+              id="name"
+              name="sortType"
+              value="name"
+              @change="setSort"
+            />
+            <span>Name</span></label
+          >
+        </div>
+        <div class="sort sort-narrow">
+          Order:
+          <label
+            ><input
+              v-model="sortOrder"
+              type="radio"
+              id="asc"
+              name="sortOrder"
+              value="ASC"
+              @change="setSort"
+            />
+            <span>⬆️</span></label
+          >
+          <label
+            ><input
+              v-model="sortOrder"
+              type="radio"
+              id="desc"
+              name="sortOrder"
+              value="DESC"
+              checked
+              @change="setSort"
+            />
+            <span>⬇️</span></label
+          >
+        </div>
+      </div>
       <div class="page-navigator">
         <span class="nav-button" @click="changePage(currentPage - 1)">
           <svg
@@ -179,6 +252,9 @@ export default {
       category: "",
       cookTime: 195,
       difficulty: 3,
+      sortBy: "date",
+      sortQuery: "",
+      sortOrder: "DESC",
       difficultyDict: {
         1: "Easy",
         2: "Medium",
@@ -195,8 +271,11 @@ export default {
       },
     };
   },
-  async fetch() {
+  async mounted() {
     await this.getDishes();
+    return;
+  },
+  async fetch() {
     return;
   },
   // async mounted() {
@@ -248,6 +327,7 @@ export default {
               // filter by keyword is not working in kuroco, doing it the simple way
               filter: `${tempQuery}difficulty <= "${this.difficulty}"`,
               pageID: this.currentPage,
+              order_query: this.sortQuery,
             },
           }
         );
@@ -303,6 +383,7 @@ export default {
                       this.category_dict[category],
                     ]} AND difficulty <= "${this.difficulty}"`,
                 pageID: this.currentPage,
+                order_query: this.sortQuery,
               },
             }
           );
@@ -343,7 +424,25 @@ export default {
       this.totalPages = response.data.pageInfo.totalPageCnt;
       return response.data.list;
     },
-
+    async setSort() {
+      console.log("setsort called");
+      switch (this.sortBy) {
+        case "time":
+          this.sortQuery = "timeInMinutes=" + this.sortOrder;
+          break;
+        case "date":
+          this.sortQuery = "ymd=" + this.sortOrder;
+          break;
+        case "name":
+          this.sortQuery = "subject=" + this.sortOrder;
+          break;
+        default:
+          this.sortQuery = "";
+          break;
+      }
+      await this.getDishesWithoutTop();
+      return;
+    },
     // Helper Functions
     async setCategory(category) {
       // console.log("setCategory called");
@@ -463,6 +562,7 @@ a {
   max-width: 350px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   .search {
     display: flex;
     flex-direction: row;
@@ -485,6 +585,33 @@ a {
     }
   }
 }
+.shrink {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  font-family: "Poppins", sans-serif;
+  .row {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-inline: 6px;
+    label {
+      font-size: 0.75em;
+    }
+    input {
+      width: 188px;
+    }
+  }
+  .sort {
+    font-size: 0.8em;
+  }
+}
+
 .categories {
   display: flex;
   flex-direction: row;

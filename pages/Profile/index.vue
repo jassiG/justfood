@@ -115,9 +115,10 @@ export default {
     this.$axios.defaults.headers.common = {
       "X-RCMS-API-ACCESS-TOKEN": token,
     };
+    this.getFavs();
   },
   fetch() {
-    this.getFavs();
+    // this.getFavs();
     return;
   },
   methods: {
