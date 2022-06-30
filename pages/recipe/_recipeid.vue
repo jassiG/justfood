@@ -77,7 +77,7 @@ export default {
     };
   },
   async fetch() {
-    if (this.$store.getters.authenticated) {
+    if (localStorage.getItem("profile")) {
       this.guestMode = false;
       // console.log(this.loggedIn);
     }
@@ -140,10 +140,8 @@ export default {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/add",
           {
-            params: {
-              module_type: "topics",
-              module_id: id,
-            },
+            module_type: "topics",
+            module_id: Number(id),
           }
         );
         console.log(response);
@@ -159,10 +157,8 @@ export default {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/remove",
           {
-            params: {
-              module_type: "topics",
-              module_id: id,
-            },
+            module_type: "topics",
+            module_id: Number(id),
           }
         );
         console.log(response);

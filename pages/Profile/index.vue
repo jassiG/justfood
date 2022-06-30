@@ -105,7 +105,7 @@ export default {
   },
   mounted() {
     this.profile = JSON.parse(localStorage.getItem("profile"));
-    console.log("profile gor it proofile UI:", this.profile);
+    console.log("profile got in proofile UI using localStorage:", this.profile);
   },
   fetch() {
     this.getFavs();

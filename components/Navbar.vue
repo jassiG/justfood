@@ -64,7 +64,7 @@ export default {
   },
   mounted() {
     console.log("checking for auth state in navbar, but in mounted");
-    if (this.$store.getters.authenticated) {
+    if (localStorage.getItem("profile")) {
       this.loggedIn = true;
       console.log(this.loggedIn);
     }
@@ -72,7 +72,7 @@ export default {
   fetch() {
     // console.log(this.$store.getters.authenticated);
     console.log("checking for auth state in navbar");
-    if (this.$store.getters.authenticated) {
+    if (localStorage.getItem("profile")) {
       this.loggedIn = true;
       console.log(this.loggedIn);
     }
