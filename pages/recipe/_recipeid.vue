@@ -1,6 +1,6 @@
 <template>
   <div class="recipe">
-      <Navbar />
+    <Navbar />
     <Loading v-if="$fetchState.pending" />
     <div v-else class="content-block">
       <div class="top-image">
@@ -74,12 +74,21 @@ export default {
       isFav: false,
       guestMode: true,
       halt: false,
+      // token: "",
     };
   },
   async mounted() {
     console.log("checking for profile in mounted in _recipe");
     if (localStorage.getItem("profile")) {
       this.guestMode = false;
+      console.log(
+        "token to be parsed in profile is:",
+        localStorage.getItem("rcmsApiAccessToken")
+      );
+      const token = localStorage.getItem("rcmsApiAccessToken");
+      this.$axios.defaults.headers.common = {
+        "X-RCMS-API-ACCESS-TOKEN": token,
+      };
       console.log("profile found in localStorage in mounted");
     }
   },
@@ -111,6 +120,7 @@ export default {
           {
             headers: {
               "Content-Type": "multipart/form-data", // required to post file as a binary
+              // "X-RCMS-API-ACCESS-TOKEN": this.token,
             },
           }
         );

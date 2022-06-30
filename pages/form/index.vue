@@ -210,6 +210,7 @@ export default {
         amount: [""],
         aditionalTags: [""],
       },
+      token: "",
     };
   },
   methods: {

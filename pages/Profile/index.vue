@@ -1,96 +1,94 @@
 <template>
-    <div class="home">
-      <Navbar />
-      <div class="body">
-        <div class="navbar-spacing"></div>
-        <div class="main-content">
-          <h1>Profile Section</h1>
-          <div class="profile">
-            <div class="info">
-              <div v-for="(val, key) in profile" :key="key" class="info-field">
-                <div class="info-title">{{ key }}</div>
-                <div class="seperator">:</div>
-                <div v-if="typeof val === 'object'" class="obj">
-                  <div v-for="v of val" class="info-value">{{ v }}</div>
-                </div>
-                <div v-else class="info-value">{{ val }}</div>
+  <div class="home">
+    <Navbar />
+    <div class="body">
+      <div class="navbar-spacing"></div>
+      <div class="main-content">
+        <h1>Profile Section</h1>
+        <div class="profile">
+          <div class="info">
+            <div v-for="(val, key) in profile" :key="key" class="info-field">
+              <div class="info-title">{{ key }}</div>
+              <div class="seperator">:</div>
+              <div v-if="typeof val === 'object'" class="obj">
+                <div v-for="v of val" class="info-value">{{ v }}</div>
               </div>
-            </div>
-            <div class="profile-pic">
-              <img src="../../assets/icons/pp.png" />
+              <div v-else class="info-value">{{ val }}</div>
             </div>
           </div>
-          <div class="button shrink" @click="logout">Logout</div>
-
-          <div class="grad-secondary tile margin heading">
-            Recent Favourites
+          <div class="profile-pic">
+            <img src="../../assets/icons/pp.png" />
           </div>
-          <div v-if="totalPages === 0" class="sad">
-            <svg viewBox="0 0 64 64">
-              <title>sad</title>
-              <path
-                class="cls-1"
-                d="M11,23V51.87A9.13,9.13,0,0,0,20.13,61h2.93A3.94,3.94,0,0,0,27,57.06V54H37v3.06A3.94,3.94,0,0,0,40.94,61h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2h0A21,21,0,0,0,11,23Z"
-                id="id_173"
-                style="fill: rgb(255, 229, 232); stroke: rgb(255, 176, 189)"
-              ></path>
-              <path
-                class="cls-2"
-                d="M19,57.06a3.92,3.92,0,0,1-2,3.39,9.1,9.1,0,0,0,3.09.55h2.93A3.94,3.94,0,0,0,27,57.06V54H19Z"
-                id="id_174"
-              ></path>
-              <path
-                class="cls-2"
-                d="M32,2a21.09,21.09,0,0,0-4,.39A21,21,0,0,1,45,23V51.87a9.13,9.13,0,0,1-6,8.58,3.9,3.9,0,0,0,2,.55h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2Z"
-                id="id_175"
-              ></path>
-              <line
-                class="cls-3"
-                x1="24"
-                y1="54"
-                x2="40"
-                y2="54"
-                id="id_176"
-                style="stroke: rgb(235, 159, 176)"
-              ></line>
-              <circle class="cls-4" cx="20" cy="22" r="2" id="id_177"></circle>
-              <circle class="cls-4" cx="44" cy="22" r="2" id="id_178"></circle>
-              <path
-                class="cls-5"
-                d="M11,41v6a4,4,0,0,0,4,4h0a4,4,0,0,0,4-4V41Z"
-                id="id_179"
-                style="fill: rgb(255, 158, 174); stroke: rgb(240, 147, 162)"
-              ></path>
-              <path
-                class="cls-5"
-                d="M53,35v6a4,4,0,0,1-4,4h0a4,4,0,0,1-4-4V35Z"
-                id="id_180"
-                style="fill: rgb(255, 153, 170); stroke: rgb(240, 144, 160)"
-              ></path>
-              <path
-                class="cls-6"
-                d="M39,31.09C37.67,29.84,35,29,32,29a11.13,11.13,0,0,0-6.9,2"
-                id="id_181"
-                style="stroke: rgb(235, 103, 132)"
-              ></path>
-            </svg>
-            <div class="sad-text">No Favourites</div>
-          </div>
-          <nuxt-link
-            v-for="dish of favs"
-            :key="dish.topics_id"
-            :to="'/recipe/' + dish.topics_id"
-          >
-            <div class="grad-primary tile">
-              <div>{{ dish.title }}</div>
-              <img src="../../assets/icons/arrowR.png" />
-            </div>
-          </nuxt-link>
         </div>
-        <div class="footer-spacing"></div>
-        <Footer />
+        <div class="button shrink" @click="logout">Logout</div>
+
+        <div class="grad-secondary tile margin heading">Recent Favourites</div>
+        <div v-if="totalPages === 0" class="sad">
+          <svg viewBox="0 0 64 64">
+            <title>sad</title>
+            <path
+              class="cls-1"
+              d="M11,23V51.87A9.13,9.13,0,0,0,20.13,61h2.93A3.94,3.94,0,0,0,27,57.06V54H37v3.06A3.94,3.94,0,0,0,40.94,61h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2h0A21,21,0,0,0,11,23Z"
+              id="id_173"
+              style="fill: rgb(255, 229, 232); stroke: rgb(255, 176, 189)"
+            ></path>
+            <path
+              class="cls-2"
+              d="M19,57.06a3.92,3.92,0,0,1-2,3.39,9.1,9.1,0,0,0,3.09.55h2.93A3.94,3.94,0,0,0,27,57.06V54H19Z"
+              id="id_174"
+            ></path>
+            <path
+              class="cls-2"
+              d="M32,2a21.09,21.09,0,0,0-4,.39A21,21,0,0,1,45,23V51.87a9.13,9.13,0,0,1-6,8.58,3.9,3.9,0,0,0,2,.55h2.93A9.13,9.13,0,0,0,53,51.87V23A21,21,0,0,0,32,2Z"
+              id="id_175"
+            ></path>
+            <line
+              class="cls-3"
+              x1="24"
+              y1="54"
+              x2="40"
+              y2="54"
+              id="id_176"
+              style="stroke: rgb(235, 159, 176)"
+            ></line>
+            <circle class="cls-4" cx="20" cy="22" r="2" id="id_177"></circle>
+            <circle class="cls-4" cx="44" cy="22" r="2" id="id_178"></circle>
+            <path
+              class="cls-5"
+              d="M11,41v6a4,4,0,0,0,4,4h0a4,4,0,0,0,4-4V41Z"
+              id="id_179"
+              style="fill: rgb(255, 158, 174); stroke: rgb(240, 147, 162)"
+            ></path>
+            <path
+              class="cls-5"
+              d="M53,35v6a4,4,0,0,1-4,4h0a4,4,0,0,1-4-4V35Z"
+              id="id_180"
+              style="fill: rgb(255, 153, 170); stroke: rgb(240, 144, 160)"
+            ></path>
+            <path
+              class="cls-6"
+              d="M39,31.09C37.67,29.84,35,29,32,29a11.13,11.13,0,0,0-6.9,2"
+              id="id_181"
+              style="stroke: rgb(235, 103, 132)"
+            ></path>
+          </svg>
+          <div class="sad-text">No Favourites</div>
+        </div>
+        <nuxt-link
+          v-for="dish of favs"
+          :key="dish.topics_id"
+          :to="'/recipe/' + dish.topics_id"
+        >
+          <div class="grad-primary tile">
+            <div>{{ dish.title }}</div>
+            <img src="../../assets/icons/arrowR.png" />
+          </div>
+        </nuxt-link>
       </div>
+      <div class="footer-spacing"></div>
+      <Footer />
     </div>
+  </div>
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -109,6 +107,14 @@ export default {
     console.log("getting profile in mounted in Profile");
     this.profile = JSON.parse(localStorage.getItem("profile"));
     console.log("profile got in proofile UI using localStorage:", this.profile);
+    console.log(
+      "token to be parsed in profile is:",
+      localStorage.getItem("rcmsApiAccessToken")
+    );
+    const token = localStorage.getItem("rcmsApiAccessToken");
+    this.$axios.defaults.headers.common = {
+      "X-RCMS-API-ACCESS-TOKEN": token,
+    };
   },
   fetch() {
     this.getFavs();

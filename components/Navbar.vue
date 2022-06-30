@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    console.log("checking for auth state in navbar, but in mounted");
+    console.log("checking for auth state in navbar in mounted");
     if (localStorage.getItem("profile")) {
       this.loggedIn = true;
     }
