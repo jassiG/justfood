@@ -66,8 +66,8 @@ export default {
     console.log("checking for auth state in navbar, but in mounted");
     if (localStorage.getItem("profile")) {
       this.loggedIn = true;
-      console.log(this.loggedIn);
     }
+    console.log("this.loggedIn: " + this.loggedIn);
   },
   fetch() {
     // console.log(this.$store.getters.authenticated);

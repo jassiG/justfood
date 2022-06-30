@@ -1,8 +1,6 @@
 <template>
   <div class="body">
-    <client-only>
       <Navbar />
-    </client-only>
     <div class="navbar-spacing"></div>
     <!-- <h1>Form page</h1> -->
     <form v-if="!submitted" ref="form" @submit.prevent="handleOnSubmit2">

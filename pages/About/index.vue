@@ -1,8 +1,6 @@
 <template>
   <div class="about">
-    <client-only>
       <Navbar />
-    </client-only>
     <div class="mainbody">
       <div class="about-container">
         <div class="slogan">Made with love and a laptop ❣️</div>

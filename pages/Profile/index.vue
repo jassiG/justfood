@@ -1,5 +1,4 @@
 <template>
-  <client-only>
     <div class="home">
       <Navbar />
       <div class="body">
@@ -92,7 +91,6 @@
         <Footer />
       </div>
     </div>
-  </client-only>
 </template>
 <script>
 import { mapActions } from "vuex";
