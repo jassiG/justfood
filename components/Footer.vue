@@ -4,7 +4,7 @@
     <div class="support">
       <div class="feedback">Send you love and feedback</div>
       <div class="email">support@yettocomecompany.com</div>
-      version: 1.0.0
+      version: 1.0.2
       <!-- <div class="button">Buy Me a coffee 🍵</div> -->
     </div>
     <div class="footer-container">

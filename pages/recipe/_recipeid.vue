@@ -1,6 +1,8 @@
 <template>
   <div class="recipe">
-    <Navbar />
+    <client-only>
+      <Navbar />
+    </client-only>
     <Loading v-if="$fetchState.pending" />
     <div v-else class="content-block">
       <div class="top-image">
@@ -76,11 +78,14 @@ export default {
       halt: false,
     };
   },
-  async fetch() {
-    if (this.$store.getters.authenticated) {
+  async mounted() {
+    console.log("checking for profile in mounted in _recipe");
+    if (localStorage.getItem("profile")) {
       this.guestMode = false;
       // console.log(this.loggedIn);
     }
+  },
+  async fetch() {
     if (this.guestMode) {
       this.dish = await this.getDish();
     } else {
@@ -140,10 +145,8 @@ export default {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/add",
           {
-            params: {
-              module_type: "topics",
-              module_id: id,
-            },
+            module_type: "topics",
+            module_id: Number(id),
           }
         );
         console.log(response);
@@ -159,10 +162,8 @@ export default {
         const response = await this.$axios.post(
           process.env.BASE_URL + "favorite/remove",
           {
-            params: {
-              module_type: "topics",
-              module_id: id,
-            },
+            module_type: "topics",
+            module_id: Number(id),
           }
         );
         console.log(response);

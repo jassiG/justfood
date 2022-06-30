@@ -64,18 +64,18 @@ export default {
   },
   mounted() {
     console.log("checking for auth state in navbar, but in mounted");
-    if (this.$store.getters.authenticated) {
+    if (localStorage.getItem("profile")) {
       this.loggedIn = true;
       console.log(this.loggedIn);
     }
   },
   fetch() {
     // console.log(this.$store.getters.authenticated);
-    console.log("checking for auth state in navbar");
-    if (this.$store.getters.authenticated) {
-      this.loggedIn = true;
-      console.log(this.loggedIn);
-    }
+    // console.log("checking for auth state in navbar");
+    // if (localStorage.getItem("profile")) {
+    //   this.loggedIn = true;
+    //   console.log(this.loggedIn);
+    // }
     return {};
   },
 };
