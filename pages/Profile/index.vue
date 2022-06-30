@@ -20,7 +20,7 @@
             <img src="../../assets/icons/pp.png" />
           </div>
         </div>
-        <div class="button shrink" @click="logout">Logout</div>
+        <div class="button shrink-button" @click="logout">Logout</div>
 
         <div class="grad-secondary tile margin heading">Recent Favourites</div>
         <div v-if="totalPages === 0" class="sad">
@@ -169,7 +169,7 @@ export default {
     font-size: 36px;
     text-align: center;
   }
-  .shrink {
+  .shrink-button {
     width: fit-content;
   }
   .profile {
