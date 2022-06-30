@@ -62,11 +62,19 @@ export default {
       loggedIn: false,
     };
   },
-  fetch() {
-    // console.log(this.$store.getters.authenticated);
+  mounted() {
+    console.log("checking for auth state in navbar, but in mounted");
     if (this.$store.getters.authenticated) {
       this.loggedIn = true;
-      // console.log(this.loggedIn);
+      console.log(this.loggedIn);
+    }
+  },
+  fetch() {
+    // console.log(this.$store.getters.authenticated);
+    console.log("checking for auth state in navbar");
+    if (this.$store.getters.authenticated) {
+      this.loggedIn = true;
+      console.log(this.loggedIn);
     }
     return {};
   },
