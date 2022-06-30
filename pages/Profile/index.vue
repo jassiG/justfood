@@ -103,10 +103,12 @@ export default {
       currentPage: 1,
     };
   },
-  fetch() {
+  mounted() {
     this.profile = JSON.parse(localStorage.getItem("profile"));
+    console.log("profile gor it proofile UI:", this.profile);
+  },
+  fetch() {
     this.getFavs();
-    // console.log("profile:", JSON.parse(localStorage.getItem("profile")));
     return;
   },
   methods: {

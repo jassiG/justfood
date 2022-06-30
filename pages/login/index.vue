@@ -85,7 +85,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-image: url("../../assets/login.png");
-  background-size: fit;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 
