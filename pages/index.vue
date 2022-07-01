@@ -255,6 +255,7 @@ export default {
       sortBy: "date",
       sortQuery: "",
       sortOrder: "DESC",
+      throttle: false,
       difficultyDict: {
         1: "Easy",
         2: "Medium",
@@ -300,11 +301,13 @@ export default {
     },
     async getDishesWithoutTop() {
       // console.log("getDishesWithoutTop called");
+      this.throttle = true;
       if (this.category === "") {
         await this.getAllDishes();
       } else {
         this.dishes = await this.getDishesByCategory();
       }
+      this.throttle = false;
     },
     async getAllDishes() {
       // console.log("getAllDishes called");
@@ -425,22 +428,24 @@ export default {
       return response.data.list;
     },
     async setSort() {
-      console.log("setsort called");
-      switch (this.sortBy) {
-        case "time":
-          this.sortQuery = "timeInMinutes=" + this.sortOrder;
-          break;
-        case "date":
-          this.sortQuery = "ymd=" + this.sortOrder;
-          break;
-        case "name":
-          this.sortQuery = "subject=" + this.sortOrder;
-          break;
-        default:
-          this.sortQuery = "";
-          break;
+      if (!this.throttle) {
+        console.log("setsort called");
+        switch (this.sortBy) {
+          case "time":
+            this.sortQuery = "timeInMinutes=" + this.sortOrder;
+            break;
+          case "date":
+            this.sortQuery = "ymd=" + this.sortOrder;
+            break;
+          case "name":
+            this.sortQuery = "subject=" + this.sortOrder;
+            break;
+          default:
+            this.sortQuery = "";
+            break;
+        }
+        await this.getDishesWithoutTop();
       }
-      await this.getDishesWithoutTop();
       return;
     },
     // Helper Functions
@@ -480,27 +485,6 @@ export default {
         return "background-color:#ffb1c1; border:1px solid #DEFCFC;";
       } else {
         return "background-color:#FFE6EB;";
-      }
-    },
-
-    async easyMode() {
-      this.isEasyMode = !this.isEasyMode;
-      this.isHardMode = false;
-      if (this.isEasyMode) {
-        // this.searchByTags("easy");
-        this.isEasyMode = true;
-      } else {
-        this.reset();
-      }
-    },
-    async hardMode() {
-      this.isHardMode = !this.isHardMode;
-      this.isEasyMode = false;
-      if (this.isHardMode) {
-        // this.searchByTags("hard");
-        this.isHardMode = true;
-      } else {
-        this.reset();
       }
     },
     async changePage(page) {

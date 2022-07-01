@@ -91,7 +91,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 95%;
+  width: 96%;
   .explore {
     display: flex;
     flex-direction: row;
