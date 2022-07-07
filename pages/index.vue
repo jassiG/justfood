@@ -316,6 +316,7 @@ export default {
         if (this.searchInput !== "") {
           tempQuery = `title icontains "${this.searchInput}" OR
                     description icontains "${this.searchInput}" OR
+                    ingredient icontains "${this.searchInput}" OR
                     aditionalTags icontains "${this.searchInput}" AND `;
         }
         this.cookTime > 180
@@ -370,6 +371,7 @@ export default {
           if (this.searchInput !== "") {
             tempQuery = `(title icontains "${this.searchInput}" OR
                     description icontains "${this.searchInput}" OR
+                    ingredient icontains "${this.searchInput}" OR
                     aditionalTags icontains "${this.searchInput}") AND `;
           }
           this.cookTime > 180
@@ -408,6 +410,7 @@ export default {
       if (this.searchInput !== "") {
         tempQuery = `title icontains "${this.searchInput}" OR
                 description icontains "${this.searchInput}" OR
+                ingredient icontains "${this.searchInput}" OR
                 aditionalTags icontains "${this.searchInput}" AND `;
       }
       this.cookTime > 180
@@ -475,7 +478,7 @@ export default {
     },
     async reset() {
       // console.log("reset called");
-      this.searchInput = "";
+      // this.searchInput = "";
       this.currentPage = 1;
       this.getDishesWithoutTop();
       return;
