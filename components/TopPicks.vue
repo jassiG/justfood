@@ -12,6 +12,7 @@
         :difficulty="dish.difficulty"
         :dishImage="dish.dishImage.url"
         :favCount="dish.favorite_cnt"
+        :aditionalTags="dish.aditionalTags"
       />
     </nuxt-link>
   </div>

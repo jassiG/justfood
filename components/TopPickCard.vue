@@ -17,8 +17,8 @@
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 60.35 64"
-                width="20px"
-                height="20px"
+                width="16px"
+                height="16px"
               >
                 <g id="Layer_2" data-name="Layer 2">
                   <g id="Layer_1-2" data-name="Layer 1">
@@ -51,8 +51,8 @@
                 y="0px"
                 viewBox="0 0 426.667 426.667"
                 xml:space="preserve"
-                width="20px"
-                height="20px"
+                width="16px"
+                height="16px"
               >
                 <polygon
                   style="fill: #eeeeee"
@@ -84,8 +84,8 @@
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
-              width="20px"
-              height="20px"
+              width="16px"
+              height="16px"
             >
               <path
                 class="st0"
@@ -98,6 +98,9 @@
             </svg>
           </div>
           <div class="tag-text">{{ difficulty.label + " Difficulty" }}</div>
+        </div>
+        <div class="row">
+          <div class="hashtag" v-for="tag in aditionalTags">{{'#' + tag.replace(/[^\w\s]/gi, '') }}</div>
         </div>
       </div>
     </div>
@@ -120,6 +123,7 @@ export default {
     difficulty: Object,
     dishImage: String,
     favCount: Number,
+    aditionalTags: Array,
   },
   data() {
     return {
@@ -165,7 +169,7 @@ $card-color: #ffd8d8; //#D8FFFF;
     .info-text {
       .info-panel-title {
         font-family: "Poppins", sans-serif;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: bold;
         color: #302939;
         margin: 15px 0px 5px 0px;
@@ -174,7 +178,7 @@ $card-color: #ffd8d8; //#D8FFFF;
       }
       .info-panel-description {
         font-family: "Poppins", sans-serif;
-        font-size: 14px;
+        font-size: 13px;
         color: #50595c;
         margin: 0px 15px;
         line-height: 1.2em;
@@ -195,7 +199,7 @@ $card-color: #ffd8d8; //#D8FFFF;
         margin: 0px 15px;
         background-color: #50595c;
         border-radius: 8px;
-        padding: 6px;
+        padding: 5px;
         padding-bottom: 2px;
         margin: 2px;
         .svg {
@@ -208,6 +212,16 @@ $card-color: #ffd8d8; //#D8FFFF;
           font-size: 12px;
           text-align: center;
         }
+      }
+      .hashtag{
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        font-weight: 100;
+        color: #50595c;
+        margin-right: 6px;
+        margin-top: 2px;
+        text-align: center;
+        line-height: 1.2em;
       }
     }
   }
