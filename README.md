@@ -3,14 +3,19 @@
 A web app that provides cooking recipes. Made using Kuroco-Front and Nuxtjs-3.
 Technologies Used: Nuxtjs, Vue, Js, SCSS
 
+## Deployment
+https://sample-jassi.g.kuroco-front.app
+
 ## Running the app
 ```
 npm install
 npm run dev
 ```
-## Design
-<p align="center">
-<img src="https://user-images.githubusercontent.com/55924890/174497378-f5e77f51-7af4-40ef-aca0-f4252068866b.png">
-<img src="https://user-images.githubusercontent.com/55924890/174497380-45b38083-c9af-4528-8222-ae5ddba30418.png">
-<img src="https://user-images.githubusercontent.com/55924890/174497382-3ae0c5bf-422a-41f5-a94d-2b547d7eea1b.png">
-</p>
+## Site
+![image](https://user-images.githubusercontent.com/55924890/179394269-56051294-1a10-4cf2-815d-b1e1f0b3e029.png)
+
+![image](https://user-images.githubusercontent.com/55924890/179394411-f090dd63-9180-4133-b5bd-1fbd40f9da99.png)
+
+![image](https://user-images.githubusercontent.com/55924890/179394331-cd755e53-f8ab-4578-a8bb-bc444836823a.png)
+
+![image](https://user-images.githubusercontent.com/55924890/179394386-eaf596ed-7a5f-458c-a295-dc31feada09d.png)
